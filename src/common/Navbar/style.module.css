@@ -1,0 +1,21 @@
+@import url("../../styles/fonts.css");
+
+.wildparkName {
+  font-family: "Degradasi" !important;
+}
+.navbarWild {
+  color: #7c0902 !important;
+  margin-left: 2px !important;
+  margin-right: 0 !important;
+  font-size: 25px !important;
+}
+
+.navbarPark {
+  color: #f7b538 !important;
+  font-size: 25px !important;
+}
+
+.navbarItems {
+  font-family: "Poppins-Medium" !important;
+  color: #0d0630 !important;
+}
