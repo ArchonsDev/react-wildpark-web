@@ -1,11 +1,21 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import Modal from '../Modal';
 
 const Navbar = () => {
   const location = useLocation();
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const toggleShowLoginModal = () => {
+    setShowLoginModal(!showLoginModal);
+  }
+
+  const closeLoginModal = () => {
+    setShowLoginModal(false);
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -94,6 +104,7 @@ const Navbar = () => {
           <button
             type="button"
             className={`btn btn-primary ${styles.loginButton}`}
+            onClick={toggleShowLoginModal}
           >
             Login
           </button>
@@ -103,6 +114,12 @@ const Navbar = () => {
           >
             Register
           </button>
+          <Modal
+            showModal={showLoginModal}
+            closeCallback={closeLoginModal}
+          >
+            <h1>HELLO I AM A DAMN MODAL</h1>
+          </Modal>
         </div>
       </div>
     </nav>
