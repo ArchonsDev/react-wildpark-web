@@ -78,6 +78,19 @@ const Navbar = () => {
               </ul>
             </li>
           </ul>
+
+          <button
+            type="button"
+            className={`btn btn-primary ${styles.loginButton}`}
+          >
+            Login
+          </button>
+          <button
+            type="button"
+            className={`btn btn-primary ${styles.signupButton}`}
+          >
+            Register
+          </button>
           <form className="d-flex">
             <input
               className="form-control me-2"
