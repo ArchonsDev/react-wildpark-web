@@ -1,0 +1,54 @@
+html body .registerBackground {
+  background: linear-gradient(to bottom, #f7b538, #7c0902);
+  background-size: cover;
+}
+.formContainer {
+  position: absolute;
+  border: 1px solid black;
+  background-color: white;
+  padding: 20px;
+  margin: 0 auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 35% !important;
+  min-height: 300px;
+  border-radius: 10px;
+}
+
+.inputNameBox {
+  margin-right: 40px;
+}
+
+.logoStyle {
+  width: 70px;
+  height: 70px;
+}
+
+.registerTitle {
+  font-family: "Degradasi";
+  color: #7c0902;
+}
+
+.titleForm {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.submitButton {
+  background-color: #7c0902;
+  margin-right: 10px;
+  color: #f7b538;
+  border: none;
+  border-radius: 500px;
+  width: 100px;
+  height: 35px;
+  font-family: "Degradasi";
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.inputMargin {
+  margin-bottom: 20px;
+}
