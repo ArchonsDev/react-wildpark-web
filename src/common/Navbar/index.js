@@ -1,25 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./style.module.css";
-import logo from "../../images/logo.svg";
+import logo from "../../images/logo.png";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <div className="container-fluid">
-        <img
-          src={logo}
-          width="50"
-          height="50"
-          className="d-inline-block align-top"
-          alt="wildpark-logo"
-        />
+      <div className="container">
+        <Link to="/">
+          <img
+            src={logo}
+            width="50"
+            height="50"
+            className="d-inline-block align-top"
+            alt="wildpark-logo"
+          />
+        </Link>
         <div className={`${styles.wildparkName}`}>
-          <a className={`navbar-brand ${styles.navbarWild}`} href="#">
+          <Link to="/" className={`navbar-brand ${styles.navbarWild}`} href="#">
             WILD
-          </a>
-          <a className={`navbar-brand ${styles.navbarPark}`} href="#">
+          </Link>
+          <Link to="/" className={`navbar-brand ${styles.navbarPark}`} href="#">
             PARK
-          </a>
+          </Link>
         </div>
         <button
           className="navbar-toggler"
@@ -37,34 +43,40 @@ const Navbar = () => {
             className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}
           >
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#">
-                Overview
-              </a>
+              <Link to="/" className={`nav-link ${location.pathname === "/" ? 'active' : ''}`}>
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link active" href="#">
-                News & Updates
-              </a>
+              <Link to="/about" className={`nav-link ${location.pathname === "/about" ? 'active' : ''}`}>
+                About Us
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/support" className={`nav-link ${location.pathname === "/support" ? 'active' : ''}`}>
+                Support
+              </Link>
             </li>
             <li className="nav-item dropdown">
-              <a
+              <Link
+                to="/downloads"
                 className="nav-link dropdown-toggle"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                Dropdown
-              </a>
+                Downloads
+              </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
                   <a className="dropdown-item" href="#">
-                    Action
+                    WildPark Mobile
                   </a>
                 </li>
                 <li>
                   <a className="dropdown-item" href="#">
-                    Another action
+                    WildPark Web
                   </a>
                 </li>
                 <li>
@@ -91,17 +103,6 @@ const Navbar = () => {
           >
             Register
           </button>
-          <form className="d-flex">
-            <input
-              className="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-            />
-            <button className="btn btn-outline-success" type="submit">
-              Search
-            </button>
-          </form>
         </div>
       </div>
     </nav>
