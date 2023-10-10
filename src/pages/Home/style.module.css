@@ -1,6 +1,24 @@
 .Home {
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.backdrop {
+    background-image: url('../../images/homepage.jpg');
+    background-size: cover;
+    height: 100vh;
+}
+
+.credits {
+    text-decoration: none;
+    color: #e9e9e9;
+    position: absolute;
+    bottom: 0.3em;
+    right: 0.5em;
+}
+
+.content {
+    height: 100%;
 }
 
 .tagline {
@@ -8,16 +26,33 @@
     font-family: "Degradasi";
     text-align: center;
     color: white;
-    margin-top: 4em;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .highlighted-text {
     font-family: "Poppins-Bold";
-    color: #F7B538;
+    color: #7C0902;
     text-decoration: underline;
     font-weight: bolder;
 }
+
+.cta-button {
+    background-color: #F7B538;
+    color: black;
+    font-family: "Poppins-Medium";
+    font-size: 1.5em;
+    border-radius: 0.5em;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* .Home {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+
 
 .banner {
     background-image: url('../../images/homepage.jpg');
@@ -28,15 +63,6 @@
     position: relative;
 }
 
-/* .banner::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 20vh;
-    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
-} */
 
 .credits {
     text-decoration: none;
@@ -49,8 +75,6 @@
 .content {
     background-color: white;
     border-radius: 1em;
-    padding: 1em 2em;
-    margin-top: 3em;
     box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
     font-family: "Poppins-Regular";
-}
+} */
