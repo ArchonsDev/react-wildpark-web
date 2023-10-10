@@ -1,32 +1,19 @@
 import React from "react";
 import styles from './style.module.css';
-import banner from '../../images/homepage.jpg';
 
 const Home = () => {
-    const bannerStyle = {
-        backgroundImage: `url(${banner})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: '25vh',
-        width: 'auto',
-        position: 'relative',
-    }
 
-    const textStyle = {
-        textDecoration: 'none',
-        color: '#e9e9e9',
-        position: 'absolute',
-        bottom: '0.3em',
-        right: '1em'
-    }
-
-    return (
-        <div className="container-fluid px-0">
-            <div className="container-fluid" style={bannerStyle}>
-                <small style={textStyle} href="http://www.freepik.com">Designed by upklyak / Freepik</small>
-            </div>
+  return (
+    <div className={`${styles.Home} container-fluid px-0`}>
+      <div className={`${styles.backdrop}`}>
+        <div className={`${styles.content} container d-flex flex-column justify-content-center align-items-center`}>
+            <p className={`${styles.tagline} col-md-10`}>Finding a <u className={`${styles['highlighted-text']}`}>parking space</u> has never been this easy!</p>
+            <div className={`${styles['cta-button']} px-5 py-3 mt-3`}>Get Started</div>
         </div>
-    );
+      </div>
+      <small className={`${styles['credits']}`} href="http://www.freepik.com">Header designed by upklyak / Freepik</small>
+    </div>
+  );
 }
 
 export default Home;

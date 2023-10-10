@@ -1,0 +1,80 @@
+.Home {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.backdrop {
+    background-image: url('../../images/homepage.jpg');
+    background-size: cover;
+    height: 100vh;
+}
+
+.credits {
+    text-decoration: none;
+    color: #e9e9e9;
+    position: absolute;
+    bottom: 0.3em;
+    right: 0.5em;
+}
+
+.content {
+    height: 100%;
+}
+
+.tagline {
+    font-size: 3em;
+    font-family: "Degradasi";
+    text-align: center;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.highlighted-text {
+    font-family: "Poppins-Bold";
+    color: #7C0902;
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.cta-button {
+    background-color: #F7B538;
+    color: black;
+    font-family: "Poppins-Medium";
+    font-size: 1.5em;
+    border-radius: 0.5em;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* .Home {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+
+
+
+
+.banner {
+    background-image: url('../../images/homepage.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: auto;
+    position: relative;
+}
+
+
+.credits {
+    text-decoration: none;
+    color: #e9e9e9;
+    position: absolute;
+    top: 0.3em;
+    right: 1em;
+}
+
+.content {
+    background-color: white;
+    border-radius: 1em;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: "Poppins-Regular";
+} */
