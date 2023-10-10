@@ -1,19 +1,22 @@
-html body .registerBackground {
+.customContainer {
   background: linear-gradient(to bottom, #f7b538, #7c0902);
   background-size: cover;
+  height: 100vh;
 }
-.formContainer {
+
+.formBox {
   position: absolute;
-  border: 1px solid black;
   background-color: white;
-  padding: 20px;
+  padding: 50px;
   margin: 0 auto;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 35% !important;
+  width: 80vw;
+  max-width: 400px;
   min-height: 300px;
   border-radius: 10px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .inputNameBox {
@@ -51,4 +54,8 @@ html body .registerBackground {
 
 .inputMargin {
   margin-bottom: 20px;
+  border: none !important;
+  border-bottom: 1px solid #384e77 !important;
+  border-radius: 0 !important;
+  outline: none !important;
 }
