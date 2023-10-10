@@ -34,12 +34,12 @@
 }
 
 .signupButton {
-  background-color: #f7b538 !important;
-  color: #7c0902 !important;
-  border: none !important;
-  border-radius: 500px !important;
-  width: 150px !important;
+  background-color: #f7b538;
+  color: #7c0902;
+  border: none;
+  border-radius: 500px;
+  width: 150px;
   height: 35px;
-  font-family: "Degradasi" !important;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3) !important;
+  font-family: "Degradasi";
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
