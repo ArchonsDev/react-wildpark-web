@@ -4,6 +4,22 @@
   height: 100vh;
 }
 
+.registerTitle {
+  margin-bottom: 10px;
+}
+
+.inputContainer {
+  position: relative;
+}
+
+.iconStyle {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  color: #384e77;
+}
+
 .formBox {
   position: absolute;
   background-color: white;
@@ -17,10 +33,6 @@
   min-height: 300px;
   border-radius: 10px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.inputNameBox {
-  margin-right: 40px;
 }
 
 .logoStyle {
@@ -56,6 +68,10 @@
   margin-bottom: 20px;
   border: none !important;
   border-bottom: 1px solid #384e77 !important;
-  border-radius: 0 !important;
+  border-radius: 6px !important;
+  padding-left: 40px !important;
+}
+
+.inputMargin:focus {
   outline: none !important;
 }

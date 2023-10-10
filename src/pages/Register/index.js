@@ -9,56 +9,73 @@ const Register = () => {
         <form>
           {/* Register section: Title */}
           <div className={`${styles.titleForm}`}>
-            <img src={logo} className={`${styles.logoStyle}`} />
+            <img
+              src={logo}
+              className={`${styles.logoStyle}`}
+              alt="wildpark_logo"
+            />
             <h3 className={`${styles.registerTitle}`}>Register</h3>
           </div>
+
           {/* Register section: Name */}
-          <div className="form-group d-flex">
-            <div className={`mr-2 ${styles.inputNameBox}`}>
-              <label htmlFor="inputFirstname">First name</label>
-              <input
-                type="text"
-                className={`form-control ${styles.inputMargin}`}
-                id="inputFirstname"
-                aria-describedby="fnameHelp"
-              />
+          <div className="row">
+            <div className="col">
+              <div className={`${styles.inputContainer}`}>
+                <i className={`fa fa-user icon ${styles.iconStyle}`}></i>
+                <input
+                  type="text"
+                  className={`form-control ${styles.inputMargin}`}
+                  placeholder="First name"
+                />
+              </div>
             </div>
-            <div>
-              <label htmlFor="inputLastname">Last name</label>
-              <input
-                type="text"
-                className={`form-control ${styles.inputMargin}`}
-                id="inputLastname"
-                aria-describedby="lnameHelp"
-              />
+            <div className="col">
+              <div className={`${styles.inputContainer}`}>
+                <i className={`fa fa-user icon ${styles.iconStyle}`}></i>
+                <input
+                  type="text"
+                  className={`form-control ${styles.inputMargin}`}
+                  placeholder="Last name"
+                />
+              </div>
             </div>
           </div>
+
           {/* Register section: Email */}
           <div className="form-group">
-            <label for="inputEmail">Email address</label>
-            <input
-              type="email"
-              class={`form-control ${styles.inputMargin}`}
-              id="exampleInputEmail1"
-              aria-describedby="emailHelp"
-            />
+            <div className={`${styles.inputContainer}`}>
+              <i className={`fa-solid fa-envelope ${styles.iconStyle}`}></i>
+              <input
+                type="email"
+                class={`form-control ${styles.inputMargin}`}
+                id="exampleInputEmail1"
+                placeholder="E-mail address"
+              />
+            </div>
           </div>
+
           {/* Register section: Password */}
           <div className="form-group">
-            <label for="inputPassword">Password</label>
-            <input
-              type="password"
-              class={`form-control ${styles.inputMargin}`}
-              id="inputPassword"
-            />
+            <div className={`${styles.inputContainer}`}>
+              <i class={`fa-solid fa-lock ${styles.iconStyle}`}></i>
+              <input
+                type="password"
+                class={`form-control ${styles.inputMargin}`}
+                id="inputPassword"
+                placeholder="Password"
+              />
+            </div>
           </div>
           <div className="form-group">
-            <label for="inputConfirmPassword">Confirm Password</label>
-            <input
-              type="password"
-              class={`form-control ${styles.inputMargin}`}
-              id="inputConfirmPassword"
-            />
+            <div className={`${styles.inputContainer}`}>
+              <i class={`fa-solid fa-lock ${styles.iconStyle}`}></i>
+              <input
+                type="password"
+                class={`form-control ${styles.inputMargin}`}
+                id="inputConfirmPassword"
+                placeholder="Confirm Password"
+              />
+            </div>
           </div>
           <div className="row justify-content-center">
             <div className="col-auto">
