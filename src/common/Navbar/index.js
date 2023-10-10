@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Modal from '../Modal';
+import Modal from "../Modal";
 
 const Navbar = () => {
   const location = useLocation();
@@ -11,11 +11,15 @@ const Navbar = () => {
 
   const toggleShowLoginModal = () => {
     setShowLoginModal(!showLoginModal);
-  }
+  };
 
   const closeLoginModal = () => {
     setShowLoginModal(false);
-  }
+  };
+
+  const openRegister = () => {
+    window.open("/register", "_blank");
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -53,17 +57,32 @@ const Navbar = () => {
             className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}
           >
             <li className="nav-item">
-              <Link to="/" className={`nav-link ${location.pathname === "/" ? 'active' : ''}`}>
+              <Link
+                to="/"
+                className={`nav-link ${
+                  location.pathname === "/" ? "active" : ""
+                }`}
+              >
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className={`nav-link ${location.pathname === "/about" ? 'active' : ''}`}>
+              <Link
+                to="/about"
+                className={`nav-link ${
+                  location.pathname === "/about" ? "active" : ""
+                }`}
+              >
                 About Us
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/support" className={`nav-link ${location.pathname === "/support" ? 'active' : ''}`}>
+              <Link
+                to="/support"
+                className={`nav-link ${
+                  location.pathname === "/support" ? "active" : ""
+                }`}
+              >
                 Support
               </Link>
             </li>
@@ -103,21 +122,19 @@ const Navbar = () => {
 
           <button
             type="button"
-            className={`btn btn-primary ${styles.loginButton}`}
+            className={`${styles.loginButton}`}
             onClick={toggleShowLoginModal}
           >
             Login
           </button>
           <button
             type="button"
-            className={`btn btn-primary ${styles.signupButton}`}
+            className={`${styles.signupButton}`}
+            onClick={openRegister}
           >
             Register
           </button>
-          <Modal
-            showModal={showLoginModal}
-            closeCallback={closeLoginModal}
-          >
+          <Modal showModal={showLoginModal} closeCallback={closeLoginModal}>
             <h1>HELLO I AM A DAMN MODAL</h1>
           </Modal>
         </div>

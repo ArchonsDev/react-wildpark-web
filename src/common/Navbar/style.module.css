@@ -22,21 +22,24 @@
 }
 
 .loginButton {
-  background-color: #7c0902 !important;
+  background-color: #7c0902;
   margin-right: 10px;
-  color: #F7B538 !important;
+  color: #f7b538;
   border: none;
   border-radius: 500px;
-  width: 100px;
-  font-family: "Degradasi" !important;
+  width: 130px;
+  height: 35px;
+  font-family: "Degradasi";
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .signupButton {
-  background-color: #F7B538 !important;
-  margin-right: 10px;
-  color: #7c0902 !important;
+  background-color: #f7b538;
+  color: #7c0902;
   border: none;
   border-radius: 500px;
-  width: 120px;
-  font-family: "Degradasi" !important;
+  width: 150px;
+  height: 35px;
+  font-family: "Degradasi";
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
 }
