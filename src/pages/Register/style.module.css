@@ -10,6 +10,7 @@
 
 .inputContainer {
   position: relative;
+  box-sizing: border-box;
 }
 
 .iconStyle {
@@ -23,7 +24,7 @@
 .formBox {
   position: absolute;
   background-color: white;
-  padding: 50px;
+  padding: 30px;
   margin: 0 auto;
   top: 50%;
   left: 50%;
@@ -33,6 +34,7 @@
   min-height: 300px;
   border-radius: 10px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+  flex-wrap: wrap;
 }
 
 .logoStyle {
@@ -72,6 +74,18 @@
   padding-left: 40px !important;
 }
 
-.inputMargin:focus {
-  outline: none !important;
+@media only screen and (max-width: 375px) {
+  .formBox {
+    width: 90vw;
+    padding: 20px;
+  }
+
+  .row .col {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .inputContainer {
+    width: 100%;
+  }
 }
