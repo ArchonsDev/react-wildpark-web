@@ -118,22 +118,52 @@ const Navbar = () => {
           </>}
 
           {isUserLoggedIn && <>
-            <button
-              type="button"
-              className={`${styles.loginButton}`}
-              onClick={(e) => {
-                Cookie.remove('userToken');
-                setIsUserLoggedIn(false);
-              }}
-            >
-              Logout
-            </button>
+            <div className={`navbar-nav mb-2 mb-lg-0 ${styles.navbarItems}`}>
+              <div className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  id="accountDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  Account
+                </Link>
+                <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+                  <li>
+                    <button className="dropdown-item" type="button">
+                      Profile
+                    </button>
+                  </li>
+                  <li>
+                    <button className="dropdown-item" type="button">
+                      Settings
+                    </button>
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <button
+                      className="dropdown-item"
+                      type="button"
+                      onClick={(e) => {
+                        Cookie.remove('userToken');
+                        setIsUserLoggedIn(false);
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </>}
 
           <LoginModal show={showLoginModal} closeCallback={closeLoginModal} />
         </div>
       </div>
-    </nav>
+    </nav >
   );
 };
 
