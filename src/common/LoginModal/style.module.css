@@ -1,0 +1,77 @@
+.customContainer {
+    background: linear-gradient(to bottom, #f7b538, #7c0902);
+    background-size: cover;
+    height: 100vh;
+}
+
+.registerTitle {
+    margin-bottom: 10px;
+}
+
+.inputContainer {
+    position: relative;
+}
+
+.iconStyle {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #384e77;
+}
+
+.formBox {
+    position: absolute;
+    background-color: white;
+    padding: 50px;
+    margin: 0 auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vw;
+    max-width: 400px;
+    min-height: 300px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.logoStyle {
+    width: 70px;
+    height: 70px;
+}
+
+.registerTitle {
+    font-family: "Degradasi";
+    color: #7c0902;
+}
+
+.titleForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.submitButton {
+    background-color: #7c0902;
+    margin-right: 10px;
+    color: #f7b538;
+    border: none;
+    border-radius: 500px;
+    width: 100px;
+    height: 35px;
+    font-family: "Degradasi";
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.inputMargin {
+    margin-bottom: 20px;
+    border: none !important;
+    border-bottom: 1px solid #384e77 !important;
+    border-radius: 6px !important;
+    padding-left: 40px !important;
+}
+
+.inputMargin:focus {
+    outline: none !important;
+}

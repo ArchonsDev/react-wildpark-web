@@ -3,14 +3,14 @@ import styles from "./style.module.css";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
-import Modal from "../Modal";
+import LoginModal from "../LoginModal";
 
 const Navbar = () => {
   const location = useLocation();
   const [showLoginModal, setShowLoginModal] = useState(false);
 
-  const toggleShowLoginModal = () => {
-    setShowLoginModal(!showLoginModal);
+  const openLoginModal = () => {
+    setShowLoginModal(true);
   };
 
   const closeLoginModal = () => {
@@ -53,38 +53,15 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul
-            className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}
-          >
+          <ul className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}>
             <li className="nav-item">
-              <Link
-                to="/"
-                className={`nav-link ${
-                  location.pathname === "/" ? "active" : ""
-                }`}
-              >
-                Home
-              </Link>
+              <Link to="/" className={`nav-link ${location.pathname === "/" ? "active" : ""}`}>Home</Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/about"
-                className={`nav-link ${
-                  location.pathname === "/about" ? "active" : ""
-                }`}
-              >
-                About Us
-              </Link>
+              <Link to="/about" className={`nav-link ${location.pathname === "/about" ? "active" : ""}`}>About Us</Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/support"
-                className={`nav-link ${
-                  location.pathname === "/support" ? "active" : ""
-                }`}
-              >
-                Support
-              </Link>
+              <Link to="/support" className={`nav-link ${location.pathname === "/support" ? "active" : ""}`}>Support</Link>
             </li>
             <li className="nav-item dropdown">
               <Link
@@ -123,7 +100,7 @@ const Navbar = () => {
           <button
             type="button"
             className={`${styles.loginButton}`}
-            onClick={toggleShowLoginModal}
+            onClick={openLoginModal}
           >
             Login
           </button>
@@ -134,9 +111,8 @@ const Navbar = () => {
           >
             Register
           </button>
-          <Modal showModal={showLoginModal} closeCallback={closeLoginModal}>
-            <h1>HELLO I AM A DAMN MODAL</h1>
-          </Modal>
+
+          <LoginModal show={showLoginModal} closeCallback={closeLoginModal} />
         </div>
       </div>
     </nav>
