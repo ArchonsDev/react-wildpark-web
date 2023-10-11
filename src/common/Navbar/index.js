@@ -4,12 +4,14 @@ import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../LoginModal";
+import LogoutModal from '../LogoutModal';
 import UserLoggedInContext from '../../contexts/UserLoginContext';
 import Cookie from 'js-cookie';
 
 const Navbar = () => {
   const location = useLocation();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { isUserLoggedIn, setIsUserLoggedIn } = useContext(UserLoggedInContext);
 
   const openLoginModal = () => {
@@ -23,6 +25,13 @@ const Navbar = () => {
   const openRegister = () => {
     window.open("/register", "_blank");
   };
+
+  const handleConfirmLogout = () => {
+    Cookie.remove('userToken');
+    setIsUserLoggedIn(false);
+
+    setShowLogoutModal(false);
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -148,8 +157,7 @@ const Navbar = () => {
                       className="dropdown-item"
                       type="button"
                       onClick={(e) => {
-                        Cookie.remove('userToken');
-                        setIsUserLoggedIn(false);
+                        setShowLogoutModal(true);
                       }}
                     >
                       Logout
@@ -160,7 +168,15 @@ const Navbar = () => {
             </div>
           </>}
 
-          <LoginModal show={showLoginModal} closeCallback={closeLoginModal} />
+          <LogoutModal
+            show={showLogoutModal}
+            onHide={(e) => {
+              setShowLogoutModal(false);
+            }}
+            onConfirm={handleConfirmLogout} />
+          <LoginModal
+            show={showLoginModal}
+            closeCallback={closeLoginModal} />
         </div>
       </div>
     </nav >
