@@ -1,13 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import styles from "./style.module.css";
 import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../LoginModal";
+import UserLoggedInContext from '../../contexts/UserLoginContext';
+import Cookie from 'js-cookie';
 
 const Navbar = () => {
   const location = useLocation();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const { isUserLoggedIn, setIsUserLoggedIn } = useContext(UserLoggedInContext);
 
   const openLoginModal = () => {
     setShowLoginModal(true);
@@ -97,20 +100,35 @@ const Navbar = () => {
             </li>
           </ul>
 
-          <button
-            type="button"
-            className={`${styles.loginButton}`}
-            onClick={openLoginModal}
-          >
-            Login
-          </button>
-          <button
-            type="button"
-            className={`${styles.signupButton}`}
-            onClick={openRegister}
-          >
-            Register
-          </button>
+          {!isUserLoggedIn && <>
+            <button
+              type="button"
+              className={`${styles.loginButton}`}
+              onClick={openLoginModal}
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className={`${styles.signupButton}`}
+              onClick={openRegister}
+            >
+              Register
+            </button>
+          </>}
+
+          {isUserLoggedIn && <>
+            <button
+              type="button"
+              className={`${styles.loginButton}`}
+              onClick={(e) => {
+                Cookie.remove('userToken');
+                setIsUserLoggedIn(false);
+              }}
+            >
+              Logout
+            </button>
+          </>}
 
           <LoginModal show={showLoginModal} closeCallback={closeLoginModal} />
         </div>
