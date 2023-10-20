@@ -54,24 +54,35 @@
 }
 
 .cta-button {
-  background-color: #7c0902;
-  color: #f7b538;
+  background-color: #f7b538;
+  color: #7c0902;
   font-family: "Poppins-Bold";
   font-size: 1.5em;
   border-radius: 0.5em;
   border: none;
   position: relative;
+  transition: 0.4s ease-in;
+  z-index: 1;
+  box-shadow: inset 0 0 0 transparent; /*new*/
+}
+
+.cta-button::before,
+.cta-button::after {
+  position: absolute;
+  content: "";
+  z-index: -1;
 }
 
 .cta-button::after {
-  content: "";
-  position: absolute;
+  height: 0;
+  left: 0;
+  top: 0;
+  transition-duration: 0.6s;
   width: 100%;
-  height: 100%;
-  top: 7px;
-  left: 7px;
-  background-color: #f7b538;
-  border-radius: 0.5em;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-  z-index: -1;
+}
+
+.cta-button:hover {
+  background-color: #7c0902;
+  color: #f7b538;
+  box-shadow: inset 0 0 0 2px #f7b538;
 }
