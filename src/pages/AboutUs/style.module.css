@@ -1,0 +1,26 @@
+.header {
+    font-size: 3em;
+    font-family: "Degradasi";
+    text-align: center;
+    color: #f7b538;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    background-color: #7c0902;
+    border: none;
+    border-radius: 500px;
+    width: 500px;
+    
+}
+
+.imgcontainer {
+    display: flex;
+    align-items: center;
+    margin-top: 20px; 
+   
+}
+  
+.iconStyle {
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+}
+

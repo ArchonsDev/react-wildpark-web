@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import { useEffect, useState } from "react";
 import UserLoginContext from './contexts/UserLoginContext';
 import Cookie from 'js-cookie'
+import AboutUs from "./pages/AboutUs";
 
 const App = () => {
   const location = useLocation();
@@ -23,6 +24,7 @@ const App = () => {
         {location.pathname !== '/register' && <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutUs />}/>
           <Route path="/register" element={<Register />} />
         </Routes>
       </div>
