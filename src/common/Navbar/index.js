@@ -4,9 +4,9 @@ import logo from "../../images/logo.png";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../LoginModal";
-import LogoutModal from '../LogoutModal';
-import UserLoggedInContext from '../../contexts/UserLoginContext';
-import Cookie from 'js-cookie';
+import LogoutModal from "../LogoutModal";
+import UserLoggedInContext from "../../contexts/UserLoginContext";
+import Cookie from "js-cookie";
 
 const Navbar = () => {
   const location = useLocation();
@@ -27,11 +27,15 @@ const Navbar = () => {
   };
 
   const handleConfirmLogout = () => {
-    Cookie.remove('userToken');
+    Cookie.remove("userToken");
     setIsUserLoggedIn(false);
 
     setShowLogoutModal(false);
-  }
+  };
+
+  const getNavLink = (path) => {
+    return location.pathname === path ? styles.activePage : "";
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -60,20 +64,28 @@ const Navbar = () => {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}>
+          <ul
+            className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}>
             <li className="nav-item">
-              <Link to="/" className={`nav-link ${location.pathname === "/" ? "active" : ""}`}>Home</Link>
+              <Link to="/" className={`nav-link ${getNavLink("/")}`}>
+                Home
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className={`nav-link ${location.pathname === "/about" ? "active" : ""}`}>About Us</Link>
+              <Link to="/about" className={`nav-link ${getNavLink("/about")}`}>
+                About Us
+              </Link>
             </li>
             <li className="nav-item">
-              <Link to="/support" className={`nav-link ${location.pathname === "/support" ? "active" : ""}`}>Support</Link>
+              <Link
+                to="/support"
+                className={`nav-link ${getNavLink("/support")}`}>
+                Support
+              </Link>
             </li>
             <li className="nav-item dropdown">
               <Link
@@ -82,104 +94,92 @@ const Navbar = () => {
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
+                aria-expanded="false">
                 Downloads
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <a className="dropdown-item" href="#">
-                    WildPark Mobile
-                  </a>
+                  <span className="dropdown-item">WildPark Mobile</span>
                 </li>
                 <li>
-                  <a className="dropdown-item" href="#">
-                    WildPark Web
-                  </a>
-                </li>
-                <li>
-                  <hr className="dropdown-divider" />
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
+                  <span className="dropdown-item">WildPark Web</span>
                 </li>
               </ul>
             </li>
           </ul>
 
-          {!isUserLoggedIn && <>
-            <button
-              type="button"
-              className={`${styles.loginButton}`}
-              onClick={openLoginModal}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className={`${styles.signupButton}`}
-              onClick={openRegister}
-            >
-              Register
-            </button>
-          </>}
+          {!isUserLoggedIn && (
+            <>
+              <button
+                type="button"
+                className={`${styles.loginButton}`}
+                onClick={openLoginModal}>
+                Login
+              </button>
+              <button
+                type="button"
+                className={`${styles.signupButton}`}
+                onClick={openRegister}>
+                Register
+              </button>
+            </>
+          )}
 
-          {isUserLoggedIn && <>
-            <div className={`navbar-nav mb-2 mb-lg-0 ${styles.navbarItems}`}>
-              <div className="nav-item dropdown">
-                <Link
-                  className="nav-link dropdown-toggle"
-                  id="accountDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  Account
-                </Link>
-                <ul className="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
-                  <li>
-                    <button className="dropdown-item" type="button">
-                      Profile
-                    </button>
-                  </li>
-                  <li>
-                    <button className="dropdown-item" type="button">
-                      Settings
-                    </button>
-                  </li>
-                  <li>
-                    <hr className="dropdown-divider" />
-                  </li>
-                  <li>
-                    <button
-                      className="dropdown-item"
-                      type="button"
-                      onClick={(e) => {
-                        setShowLogoutModal(true);
-                      }}
-                    >
-                      Logout
-                    </button>
-                  </li>
-                </ul>
+          {isUserLoggedIn && (
+            <>
+              <div className={`navbar-nav mb-2 mb-lg-0 ${styles.navbarItems}`}>
+                <div className="nav-item dropdown">
+                  <Link
+                    className="nav-link dropdown-toggle"
+                    id="accountDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Account
+                  </Link>
+                  <ul
+                    className="dropdown-menu dropdown-menu-right"
+                    aria-labelledby="accountDropdown">
+                    <li>
+                      <button className="dropdown-item" type="button">
+                        Profile
+                      </button>
+                    </li>
+                    <li>
+                      <button className="dropdown-item" type="button">
+                        Settings
+                      </button>
+                    </li>
+                    <li>
+                      <hr className="dropdown-divider" />
+                    </li>
+                    <li>
+                      <button
+                        className="dropdown-item"
+                        type="button"
+                        onClick={(e) => {
+                          setShowLogoutModal(true);
+                        }}>
+                        Logout
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
-            </div>
-          </>}
+            </>
+          )}
 
           <LogoutModal
             show={showLogoutModal}
             onHide={(e) => {
               setShowLogoutModal(false);
             }}
-            onConfirm={handleConfirmLogout} />
-          <LoginModal
-            show={showLoginModal}
-            closeCallback={closeLoginModal} />
+            onConfirm={handleConfirmLogout}
+          />
+          <LoginModal show={showLoginModal} closeCallback={closeLoginModal} />
         </div>
       </div>
-    </nav >
+    </nav>
   );
 };
 
