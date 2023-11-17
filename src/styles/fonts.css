@@ -18,3 +18,10 @@
   font-weight: bold;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "Poppins-SemiBold";
+  src: url(./fonts/Poppins-SemiBold.ttf) format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
