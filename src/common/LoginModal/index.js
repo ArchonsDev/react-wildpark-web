@@ -27,7 +27,7 @@ const LoginModal = ({ show, closeCallback }) => {
         if (response.status === 200) {
           Cookie.set('userToken', response?.data?.token);
           setIsUserLoggedIn(true);
-          setTimeout(() => { closeCallback() }, 4500);
+          setTimeout(() => { closeCallback() }, 2000);
         }
       })
       .catch(error => {
