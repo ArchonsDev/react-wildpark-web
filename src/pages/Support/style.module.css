@@ -1,0 +1,307 @@
+@import url("../../styles/fonts.css"); 
+
+body {
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+}
+
+.backdrop {
+    background-image: url("../../images/homepage.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.whiteContainer {
+    position: absolute;
+    top: 300px;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background-color: white;
+    align-items: center;
+}
+
+.supportHeader {
+    font-size: 60px;
+    font-family: "Degradasi";
+    text-align: center;
+    color: #f7b538;
+    padding-top: 100px; 
+    padding-left: 60px; 
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* search */
+
+.question {
+    font-size: 40px;
+    font-family: "Poppins-SemiBold";
+    text-align: left;
+    color: #7c0902;
+    padding-top: 2.5em; 
+    padding-left: 300px; 
+}
+
+.searchContainer {
+    padding-left: 19em;
+}
+  
+.searchBar {
+    width: 60em;
+    padding-left: 4em; 
+    height: 4em;
+    border: #7c0902 3px solid;
+    border-radius: 1em;
+    
+}
+  
+.searchIcon {
+    position: absolute;
+    margin-top: 20px;
+    margin-left: 1em;
+    color: #7c0902;
+}
+
+/* Categories */
+
+.categoryHeader {
+    font-size: 30px;
+    font-family: "Poppins-SemiBold";
+    color: #18314F;
+    margin-left: 10em;
+    margin-top: 30px;
+}
+
+.gqButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 19em;
+    margin-top: 1em;
+    border: none;
+} 
+
+
+.accButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 34.5em;
+    margin-top: 1em;
+    border: none;
+}
+
+.vehButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 50.5em;
+    margin-top: 1em;
+    border: none;
+}
+
+.orgButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 66em;
+    margin-top: 1em;
+    border: none;
+}
+
+.bugrepButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 19em;
+    margin-top: 15em;
+    border: none;
+}
+
+.featreqButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 34.5em;
+    margin-top: 15em;
+    border: none;
+}
+
+.otherButton {
+    position: absolute;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Poppins-Medium";
+    width: 13em;
+    height: 12em;
+    border-radius: 1em;
+    margin-left: 50.5em;
+    margin-top: 15em;
+    border: none;
+}
+
+.Label {
+    font-family: "Poppins-Medium";
+    font-size: 22px;
+}
+
+/*assistance */
+
+.assistHeader {
+    position: absolute;
+    font-size: 30px;
+    font-family: "Poppins-SemiBold";
+    color: #18314F;
+    margin-left: 10em;
+    margin-top: 17em;
+}
+
+/*firstname */
+
+.fnameContainer {
+    position: absolute;
+    margin-left: 19em;
+    margin-top: 37em;
+}
+
+.fname {
+    font-family: "Poppins-Medium";
+    color: #18314F;
+    font-size: 23px;
+}
+
+.inputFname {
+    width: 25em;
+    padding-left: 1em; 
+    height: 3em;
+    border: #7c0902 3px solid;
+    border-radius: 1em;
+}
+
+/* Last */
+
+.lnameContainer {
+    position: absolute;
+    margin-left: 50em;
+    margin-top: 37em;
+}
+
+.lname {
+    font-family: "Poppins-Medium";
+    color: #18314F;
+    font-size: 23px;
+}
+
+.inputLname {
+    width: 25em;
+    padding-left: 1em; 
+    height: 3em;
+    border: #7c0902 3px solid;
+    border-radius: 1em;
+}
+
+/* Email */
+
+.emailContainer {
+    position: absolute;
+    margin-left: 19em;
+    margin-top: 44em;
+}
+
+.email {
+    font-family: "Poppins-Medium";
+    color: #18314F;
+    font-size: 23px;
+}
+
+.inputEmail {
+    width: 56em;
+    padding-left: 1em; 
+    height: 3em;
+    border: #7c0902 3px solid;
+    border-radius: 1em;
+}
+
+/* Message */
+
+.msgContainer {
+    position: absolute;
+    margin-left: 19em;
+    margin-top: 52em;
+}
+
+.msg {
+    font-family: "Poppins-Medium";
+    color: #18314F;
+    font-size: 23px;
+}
+
+.inputMsg {
+    width: 56em;
+    padding-left: 1em;
+    padding-bottom: 6em; 
+    height: 10em;
+    border: #7c0902 3px solid;
+    border-radius: 1em;
+    
+}
+
+.submitButton {
+    position: absolute;
+    margin-left: 42em;
+    margin-top: 67em;
+    width: 10em;
+    height: 2em;
+    background-color: #7c0902;
+    color: #f7b538;
+    font-family: "Degradasi";
+    border: none;
+    border-radius: 20px;
+}
+
+.submitButton:hover {
+    background-color: #f7b538;
+    color: #7c0902;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
