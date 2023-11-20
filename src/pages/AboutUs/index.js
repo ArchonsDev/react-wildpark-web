@@ -26,12 +26,25 @@ const AboutUs = () => {
         </div>
 
         <div className={styles.storyParagraph}>
-          <p>
+          {/* <p>
             sauna kita mi ang mga studyante sa cit galisod kay usa ra ka ticket
             ang gi allow sa cit per student unya perting mahala sad intawn kaayo
             tag 1k ang sa studyante nya sa faculty kay 200 unfair kaayo noh? ang
             studyante unta to ang 200 nya 1k sa faculty kay naa mana silay
             trabaho mga maderpaker shet
+          </p> */}
+
+          <p>
+            Inspiration struck as we saw the hurdles in parking
+            system—inefficiencies and unfriendly costs. Determined to bring
+            about change, we envisioned a solution not just for us but for
+            organizations everywhere. Thus, our journey to redefine parking
+            management began, born from a desire to make a difference. Welcome
+            to the genesis of innovation at{" "}
+            <span style={{ fontFamily: "Poppins-Bold", color: "#7c0902" }}>
+              WildPark
+            </span>
+            .
           </p>
         </div>
 
@@ -74,14 +87,27 @@ const AboutUs = () => {
         </div>
 
         <div className={styles.hiringParagraph}>
-          <p>
+          {/* <p>
             nangita mi ug inspirational and motivational na desperate na another
             team member kay mag bonding2 mi tanan naa pay libre dukol sa mo apil
             hehe mwa mwa
+          </p> */}
+          <p>
+            Discover a world of innovation at WildPark. We're hiring bright
+            minds to be part of our dynamic team. Explore opportunities now!
           </p>
+          <span style={{ fontFamily: "Poppins-Bold", color: "#7c0902" }}>
+            Contact Us:
+          </span>
+          <div style={{ color: "#7c0902" }}>
+            <i class="fa-solid fa-phone"></i> <span> (032) 234 8200</span>
+            <br />
+            <i class="fa-solid fa-envelope"></i>{" "}
+            <span> wildpark@gmail.com</span>
+          </div>
         </div>
 
-        <button className={styles.hiringButton}>Apply Now</button>
+        {/* <button className={styles.hiringButton}>Apply Now</button> */}
       </div>
     </div>
   );
