@@ -4,7 +4,7 @@ import Navbar from "./common/Navbar";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import { useEffect, useState } from "react";
-import UserLoginContext from "./contexts/UserLoginContext";
+import SessionUserContext from "./contexts/SessionUserContext";
 import Cookie from "js-cookie";
 import AboutUs from "./pages/AboutUs";
 import Support from "./pages/Support";
@@ -12,17 +12,15 @@ import Support from "./pages/Support";
 const App = () => {
   const location = useLocation();
 
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(
-    Cookie.get("userToken") ? true : false
-  );
-  const userLoggedInContextValue = { isUserLoggedIn, setIsUserLoggedIn };
+  const [sessionUser, setSessionUser] = useState(Cookie.get('userAccount'));
+  const sessionUserContextValue = { sessionUser, setSessionUser };
 
   useEffect(() => {
     console.log(location);
   }, [location]);
 
   return (
-    <UserLoginContext.Provider value={userLoggedInContextValue}>
+    <SessionUserContext.Provider value={sessionUserContextValue}>
       <div className={`${styles.App}`}>
         {location.pathname !== "/register" && <Navbar />}
         <Routes>
@@ -32,7 +30,7 @@ const App = () => {
           <Route path="/support" element={<Support />} />
         </Routes>
       </div>
-    </UserLoginContext.Provider>
+    </SessionUserContext.Provider>
   );
 };
 
