@@ -1,40 +1,89 @@
-@import url("../../styles/fonts.css"); 
+/* @import url("../../styles/fonts.css");  */
 
-body {
+/* body {
     margin: 0;
     padding: 0;
     overflow-y: auto;
-}
+} */
 
 .backdrop {
     background-image: url("../../images/homepage.jpg");
     background-size: cover;
+    background-repeat: no-repeat;
     background-position: center;
-    height: 100vh;
-    overflow: hidden;
+    overflow-y: hidden;
 }
 
+/* .backdropFilter::before {
+    content: "";
+    position: absolute;
+    top: 66px;
+    left: 0;
+    width: 100%;
+    height: calc(100% - 66px);
+    background-color: rgba(124, 9, 2, 0.3);
+    z-index: 1;
+} */
 
-.whiteContainer {
-  position: absolute;
-  top: 300px;
-  left: 0;
-  width: 100%;
-  height: 200%;
-  background-color: white;
+.about-content {
+    overflow-y: hidden;
 }
 
-.aboutHeader {
+.page-header {
     font-size: 65px;
     font-family: "Degradasi";
     text-align: center;
-    color: #f7b538;
-    padding-top: 100px; 
-    padding-left: 60px; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: #f7b538;
+    margin-top: 2em;
 }
 
-/* OUR STORY */
+.content-header {
+    font-size: 40px;
+    font-family: "Poppins-SemiBold";
+    text-align: left;
+    color: #7c0902;
+}
+
+.story-img {
+    height: 200px;
+    width: auto;
+}
+
+.divider {
+    width: 67%;
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.icon-style {
+    width: 155px;
+    height: 155px;
+    border-radius: 50%;
+    margin: 30px;
+}
+
+.text {
+    font-family: "Poppins-Medium";
+    text-align: justify;
+}
+
+.icon-text {
+    font-family: "Poppins-Medium";
+    text-align: center;
+}
+
+/* 
+.whiteContainer {
+    position: absolute;
+    top: 300px;
+    left: 0;
+    width: 100%;
+    height: 200%;
+    background-color: white;
+}
+
+
 
 .storyHeader {
     font-size: 40px;
@@ -68,27 +117,25 @@ body {
     background-color: rgba(0, 0, 0, 0.2); 
 }
 
-/* MEMBERS */
-
 .membersHeader {
     font-size: 40px;
     font-family: "Poppins-SemiBold";
     text-align: left;
     color: #7c0902;
-    padding-top: 8em; 
+    padding-top: 8em;
     padding-left: 300px;
 }
 
 .imgContainer {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     margin-top: 20px;
-    text-align: center;  
-   
+    text-align: center;
+
 }
-  
+
 .iconStyle {
     width: 155px;
     height: 155px;
@@ -98,7 +145,7 @@ body {
 
 .member {
     text-align: center;
-    margin: 10px; 
+    margin: 10px;
     font-family: "Poppins-Bold";
     color: #7c0902;
 }
@@ -108,11 +155,9 @@ body {
     margin-left: 16em;
     margin-top: 5em;
     width: 67%;
-    height: 3px; 
-    background-color: rgba(0, 0, 0, 0.2); 
+    height: 3px;
+    background-color: rgba(0, 0, 0, 0.2);
 }
-
-/* HIRING NI DIRI */
 
 .hiringPic {
     width: 60px;
@@ -126,7 +171,7 @@ body {
     font-size: 38px;
     font-family: "Poppins-SemiBold";
     text-align: center;
-    color: #7c0902; 
+    color: #7c0902;
     padding-left: 3.2em;
 }
 
@@ -154,7 +199,4 @@ body {
     color: #7c0902;
 }
 
-
-
-
-
+*/
