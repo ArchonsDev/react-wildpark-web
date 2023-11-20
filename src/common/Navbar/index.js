@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../LoginModal";
 import LogoutModal from "../LogoutModal";
-import UserLoggedInContext from "../../contexts/UserLoginContext";
+import SessionUserContext from "../../contexts/SessionUserContext";
 import Cookie from "js-cookie";
 
 const Navbar = () => {
   const location = useLocation();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const { isUserLoggedIn, setIsUserLoggedIn } = useContext(UserLoggedInContext);
+  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
   const openLoginModal = () => {
     setShowLoginModal(true);
@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const handleConfirmLogout = () => {
     Cookie.remove("userToken");
-    setIsUserLoggedIn(false);
+    setSessionUser(null);
 
     setShowLogoutModal(false);
   };
@@ -108,7 +108,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {!isUserLoggedIn && (
+          {!sessionUser && (
             <>
               <button
                 type="button"
@@ -125,7 +125,7 @@ const Navbar = () => {
             </>
           )}
 
-          {isUserLoggedIn && (
+          {sessionUser && (
             <>
               <div className={`navbar-nav mb-2 mb-lg-0 ${styles.navbarItems}`}>
                 <div className="nav-item dropdown">
@@ -135,7 +135,7 @@ const Navbar = () => {
                     role="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false">
-                    Account
+                    {sessionUser.email}
                   </Link>
                   <ul
                     className="dropdown-menu dropdown-menu-right"
