@@ -1,7 +1,10 @@
 import React from "react";
 import styles from "./style.module.css";
+import { useNavigate } from "react-router";
 
 const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={`${styles.Home} container-fluid px-0`}>
       <div className={`${styles.backdropFilter}`}>
@@ -15,11 +18,12 @@ const Home = () => {
               </span>{" "}
               has never been this easy!
             </p>
-            <button
+            <a
               type="button"
-              className={`${styles["cta-button"]} px-5 py-3 mt-3`}>
+              className={`${styles["cta-button"]} px-5 py-3 mt-3`}
+              onClick={e => window.open("/register", "_blank")}>
               Get Started
-            </button>
+            </a>
           </div>
         </div>
       </div>
