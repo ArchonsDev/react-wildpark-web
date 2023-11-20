@@ -91,7 +91,7 @@ body {
   
 .iconStyle {
     width: 155px;
-    height: 120px;
+    height: 155px;
     border-radius: 50%;
     margin: 30px;
 }
@@ -127,7 +127,7 @@ body {
     font-family: "Poppins-SemiBold";
     text-align: center;
     color: #7c0902; 
-    padding-left: 3em;
+    padding-left: 3.2em;
 }
 
 .hiringParagraph {
