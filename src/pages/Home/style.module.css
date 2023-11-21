@@ -1,15 +1,5 @@
 .Home {
-  height: 100vh;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.backdrop {
-  background-image: url("../../images/homepage.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
+  height: 100%;
 }
 
 .credits {
@@ -19,8 +9,6 @@
   bottom: 0.3em;
   right: 0.5em;
   z-index: 2;
-  overflow-y: hidden;
-  ;
 }
 
 .content {
