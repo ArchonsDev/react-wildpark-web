@@ -21,150 +21,93 @@ body {
     width: 100%;
     height: 200%;
     background-color: white;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;  
+    z-index: 2; 
+    padding-left: 200px;
+    padding-right:  200px;
 }
 
+
 .supportHeader {
-    font-size: 60px;
+    font-size: 4em;
     font-family: "Degradasi";
     text-align: center;
     color: #f7b538;
-    padding-top: 100px; 
-    padding-left: 60px; 
+    padding-top: 80px; 
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* search */
+.searchContainer {
+    position: relative;
+}
 
 .question {
-    font-size: 40px;
+    position: flex;
+    font-size: 2em;
     font-family: "Poppins-SemiBold";
-    text-align: left;
     color: #7c0902;
-    padding-top: 2.5em; 
-    padding-left: 300px; 
+    /* margin-top: 1vh;  */
+    margin-bottom: 10vh;
 }
 
-.searchContainer {
-    padding-left: 19em;
+.searchBox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-top: 2vh;
 }
-  
+
 .searchBar {
-    width: 60em;
-    padding-left: 4em; 
+    width: calc(70vw - 4em);
+    padding-left: 4em;
     height: 4em;
     border: #7c0902 3px solid;
     border-radius: 1em;
-    
-}
+    margin-bottom: 30px;
+  }
   
 .searchIcon {
     position: absolute;
-    margin-top: 20px;
+    top: 35%; 
+    transform: translateY(-50%);
     margin-left: 1em;
     color: #7c0902;
 }
 
 /* Categories */
 
+.categoryContainer {
+    /* display:flexbox; */
+    /* justify-content: center;
+    align-items: center; */
+    position: static;
+    margin-bottom: 50px;
+}
 .categoryHeader {
     font-size: 30px;
     font-family: "Poppins-SemiBold";
     color: #18314F;
-    margin-left: 10em;
-    margin-top: 30px;
+    /* margin-left: 10em;
+    margin-top: 40px; */
+    /* margin-left: auto;
+    margin-right: auto; */
+    margin-bottom: 20px;
 }
 
-.gqButton {
-    position: absolute;
+.categoryButton {
     background-color: #7c0902;
     color: #f7b538;
     font-family: "Poppins-Medium";
     width: 13em;
     height: 12em;
     border-radius: 1em;
-    margin-left: 19em;
-    margin-top: 1em;
+    /* margin-top: 1em; */
     border: none;
-} 
-
-
-.accButton {
-    position: absolute;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    margin-left: 34.5em;
-    margin-top: 1em;
-    border: none;
-}
-
-.vehButton {
-    position: absolute;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    margin-left: 50.5em;
-    margin-top: 1em;
-    border: none;
-}
-
-.orgButton {
-    position: absolute;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    margin-left: 66em;
-    margin-top: 1em;
-    border: none;
-}
-
-.bugrepButton {
-    position: absolute;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    margin-left: 19em;
-    margin-top: 15em;
-    border: none;
-}
-
-.featreqButton {
-    position: absolute;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    margin-left: 34.5em;
-    margin-top: 15em;
-    border: none;
-}
-
-.otherButton {
-    position: absolute;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    margin-left: 50.5em;
-    margin-top: 15em;
-    border: none;
+    
 }
 
 .Label {
@@ -175,20 +118,20 @@ body {
 /*assistance */
 
 .assistHeader {
-    position: absolute;
+    /* position: absolute; */
     font-size: 30px;
     font-family: "Poppins-SemiBold";
     color: #18314F;
-    margin-left: 10em;
+    margin-bottom: 10em;
     margin-top: 17em;
 }
 
 /*firstname */
 
 .fnameContainer {
-    position: absolute;
-    margin-left: 19em;
-    margin-top: 37em;
+    /* position: absolute; */
+    /* margin-left: 19em;
+    margin-top: 37em; */
 }
 
 .fname {
@@ -208,9 +151,9 @@ body {
 /* Last */
 
 .lnameContainer {
-    position: absolute;
+    /* position: absolute; */
     margin-left: 50em;
-    margin-top: 37em;
+    /* margin-top: 37em; */
 }
 
 .lname {
@@ -230,9 +173,9 @@ body {
 /* Email */
 
 .emailContainer {
-    position: absolute;
+    /* position: absolute; */
     margin-left: 19em;
-    margin-top: 44em;
+    /* margin-top: 44em; */
 }
 
 .email {
@@ -252,9 +195,9 @@ body {
 /* Message */
 
 .msgContainer {
-    position: absolute;
+    /* position: absolute; */
     margin-left: 19em;
-    margin-top: 52em;
+    /* margin-top: 52em; */
 }
 
 .msg {
@@ -274,9 +217,9 @@ body {
 }
 
 .submitButton {
-    position: absolute;
+    /* position: absolute; */
     margin-left: 42em;
-    margin-top: 67em;
+    /* margin-top: 67em; */
     width: 10em;
     height: 2em;
     background-color: #7c0902;
@@ -292,16 +235,23 @@ body {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+@media (max-width: 576px) {
+    .whiteContainer {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+  
+  @media (min-width: 577px) and (max-width: 767px) {
+    .whiteContainer {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+  
+  @media (min-width: 768px) and (max-width: 991px) {
+    .whiteContainer {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
