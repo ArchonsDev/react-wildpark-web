@@ -6,27 +6,29 @@ const Home = () => {
   const navigate = useNavigate();
 
   return (
-    <div className={`${styles.Home} container-fluid px-0`}>
-      <div className={`${styles.backdropFilter}`}>
-        <div className={`${styles.backdrop}`}>
-          <div
-            className={`${styles.content} container d-flex flex-column justify-content-center align-items-center`}>
-            <p className={`${styles.tagline} col-md-10`}>
-              Finding a{" "}
-              <span className={`${styles["highlighted-text"]}`}>
-                parking space
-              </span>{" "}
-              has never been this easy!
-            </p>
-            <a
-              type="button"
-              className={`${styles["cta-button"]} px-5 py-3 mt-3`}
-              onClick={e => window.open("/register", "_blank")}>
-              Get Started
-            </a>
+    <div className={`${styles.Home}`}>
+      <div className={`${styles.content} container d-flex flex-column justify-content-center align-items-center`}>
+
+        <div className="row d-flex justify-content-center">
+          <div className={`${styles.tagline} col-md-10`}>
+            Finding a{" "}
+            <span className={`${styles["highlighted-text"]}`}>
+              parking space
+            </span>{" "}
+            has never been this easy!
           </div>
         </div>
+
+        <div className="row">
+          <a
+            type="button"
+            className={`${styles["cta-button"]} col-md-12 px-5 py-3 mt-3`}
+            onClick={e => window.open("/register", "_blank")}>
+            Get Started
+          </a>
+        </div>
       </div>
+
       <small className={`${styles["credits"]}`} href="http://www.freepik.com">
         Header designed by upklyak / Freepik
       </small>

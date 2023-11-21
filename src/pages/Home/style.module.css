@@ -1,25 +1,5 @@
 .Home {
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.backdrop {
-  background-image: url("../../images/homepage.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-}
-
-.backdropFilter::before {
-  content: "";
-  position: absolute;
-  top: 66px;
-  left: 0;
-  width: 100%;
-  height: calc(100% - 66px);
-  background-color: rgba(124, 9, 2, 0.3);
-  z-index: 1;
+  height: 100%;
 }
 
 .credits {
