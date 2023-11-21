@@ -22,16 +22,16 @@
 }
 
 .divider {
-    width: 67%;
-    height: 3px;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 67%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .icon-style {
-    width: 155px;
-    height: 155px;
-    border-radius: 50%;
-    margin: 30px;
+  width: 155px;
+  height: 155px;
+  border-radius: 50%;
+  margin: 30px;
 }
 
 .text {

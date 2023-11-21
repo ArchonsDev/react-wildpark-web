@@ -64,12 +64,14 @@ const Navbar = () => {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul
-            className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}>
+            className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}
+          >
             <li className="nav-item">
               <Link to="/" className={`nav-link ${getNavLink("/")}`}>
                 Home
@@ -83,7 +85,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 to="/support"
-                className={`nav-link ${getNavLink("/support")}`}>
+                className={`nav-link ${getNavLink("/support")}`}
+              >
                 Support
               </Link>
             </li>
@@ -94,7 +97,8 @@ const Navbar = () => {
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false">
+                aria-expanded="false"
+              >
                 Downloads
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -113,13 +117,15 @@ const Navbar = () => {
               <button
                 type="button"
                 className={`${styles.loginButton}`}
-                onClick={openLoginModal}>
+                onClick={openLoginModal}
+              >
                 Login
               </button>
               <button
                 type="button"
                 className={`${styles.signupButton}`}
-                onClick={openRegister}>
+                onClick={openRegister}
+              >
                 Register
               </button>
             </>
@@ -134,12 +140,14 @@ const Navbar = () => {
                     id="accountDropdown"
                     role="button"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                  >
                     {sessionUser.email}
                   </Link>
                   <ul
                     className="dropdown-menu dropdown-menu-right"
-                    aria-labelledby="accountDropdown">
+                    aria-labelledby="accountDropdown"
+                  >
                     <li>
                       <button className="dropdown-item" type="button">
                         Profile
@@ -159,7 +167,8 @@ const Navbar = () => {
                         type="button"
                         onClick={(e) => {
                           setShowLogoutModal(true);
-                        }}>
+                        }}
+                      >
                         Logout
                       </button>
                     </li>

@@ -1,7 +1,7 @@
 .App {
-    background-image: url("../images/homepage.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 100vh;
+  background-image: url("../images/homepage.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
 }
