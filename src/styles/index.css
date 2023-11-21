@@ -11,22 +11,15 @@ body {
   width: 8px;
 }
 
-/* Track (the area where the scrollbar moves) */
 ::-webkit-scrollbar-track {
   background: transparent;
-  /* Set a background color for the track */
 }
 
-/* Handle (the draggable part of the scrollbar) */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  /* Set a background color for the handle */
   border-radius: 4px;
-  /* Add some border-radius for a softer look */
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-  /* Change handle color on hover */
 }
