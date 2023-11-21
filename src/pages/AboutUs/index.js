@@ -12,64 +12,115 @@ const AboutUs = () => {
     <div className={`${styles.About}`}>
       <div className={`${styles.backdropFilter}`}>
         <div className={`${styles.backdrop}`}>
-          <div className={`${styles['about-content']} container-fluid`}>
+          <div className={`${styles["about-content"]} container-fluid`}>
             <div className="row">
-              <span className={`${styles['page-header']} col-md-12`}>About Us</span>
+              <span className={`${styles["page-header"]} col-md-12`}>
+                About Us
+              </span>
             </div>
             <div className="row">
-              <div className={`${styles['about-content']} container-fluid bg-white d-flex align-items-center flex-column p-5`}>
+              <div
+                className={`${styles["about-content"]} container-fluid bg-white d-flex flex-column p-5`}
+              >
                 <div className="row">
-                  <span className={`${styles['content-header']}`}>Our Story</span>
+                  <div className="col-md-12">
+                    <span className={`${styles["content-header"]}`}>
+                      Our Story
+                    </span>
+                  </div>
                 </div>
                 <div className="row d-flex justify-content-center align-items-center mt-3">
-                  <div className="col-md-3 d-flex justify-content-center">
-                    <img className={`${styles['story-img']}`} src={sotryImg} />
-                  </div>
-                  <div className="col-md-6">
-                    <p className={`${styles.text}`}>Inspiration struck as we saw the hurdles in parking system—inefficiencies and unfriendly costs. Determined to bring about change, we envisioned a solution not just for us but for organizations everywhere. Thus, our journey to redefine parking management began, born from a desire to make a difference. Welcome to the genesis of innovation at <span style={{ fontFamily: "Poppins-Bold", color: "#7c0902" }}>WildPark</span>.</p>
-                  </div>
-                </div>
-                <hr className={`${styles.divider} m-5`} />
-                <div className="row">
-                  <span className={`${styles['content-header']}`}>Our Team</span>
-                </div>
-                <div className="row d-flex justify-content-center align-items-center mt-3">
-                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
-                    <img src={dogs1} alt="dogs1" className={`${styles['icon-style']}`} />
-                    <p className={`${styles['icon-text']}`}>Brent Empasis</p>
-                  </div>
-                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
-                    <img src={dogs2} alt="dogs1" className={`${styles['icon-style']}`} />
-                    <p className={`${styles['icon-text']}`}>Dawn Raine Dy</p>
-                  </div>
-                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
-                    <img src={dogs3} alt="dogs1" className={`${styles['icon-style']}`} />
-                    <p className={`${styles['icon-text']}`}>Cedrick Paglinawan</p>
-                  </div>
-                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
-                    <img src={dogs4} alt="dogs1" className={`${styles['icon-style']}`} />
-                    <p className={`${styles['icon-text']}`}>Harold Jamiro II</p>
-                  </div>
-                </div>
-                <hr className={`${styles.divider} m-5`} />
-                <div className="row">
-                  <span className={`${styles['content-header']}`}>We're Hiring!</span>
-                </div>
-                <div className="row d-flex justify-content-center align-items-center mt-3">
-                  <div className="col-md-3 d-flex justify-content-center">
-                    <img className={`${styles['story-img']}`} src={calendar} />
+                  <div className="col-md-3 d-flex justify-content-center flex-column">
+                    <img className={`${styles["story-img"]}`} src={sotryImg} />
                   </div>
                   <div className="col-md-6">
                     <p className={`${styles.text}`}>
-                      Discover a world of innovation at WildPark. We're hiring bright
-                      minds to be part of our dynamic team. Explore opportunities now!
+                      Inspiration struck as we saw the hurdles in parking
+                      system—inefficiencies and unfriendly costs. Determined to
+                      bring about change, we envisioned a solution not just for
+                      us but for organizations everywhere. Thus, our journey to
+                      redefine parking management began, born from a desire to
+                      make a difference. Welcome to the genesis of innovation at{" "}
+                      <span
+                        style={{ fontFamily: "Poppins-Bold", color: "#7c0902" }}
+                      >
+                        WildPark
+                      </span>
+                      .
+                    </p>
+                  </div>
+                </div>
+                <div className="row d-flex justify-content-center">
+                  <hr className={`${styles.divider} my-5`} />
+                </div>
+                <div className="row">
+                  <span className={`${styles["content-header"]}`}>
+                    Our Team
+                  </span>
+                </div>
+                <div className="row d-flex justify-content-center align-items-center mt-3">
+                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
+                    <img
+                      src={dogs1}
+                      alt="dogs1"
+                      className={`${styles["icon-style"]}`}
+                    />
+                    <p className={`${styles["icon-text"]}`}>Brent Empasis</p>
+                  </div>
+                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
+                    <img
+                      src={dogs2}
+                      alt="dogs1"
+                      className={`${styles["icon-style"]}`}
+                    />
+                    <p className={`${styles["icon-text"]}`}>Dawn Raine Dy</p>
+                  </div>
+                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
+                    <img
+                      src={dogs3}
+                      alt="dogs1"
+                      className={`${styles["icon-style"]}`}
+                    />
+                    <p className={`${styles["icon-text"]}`}>
+                      Cedrick Paglinawan
+                    </p>
+                  </div>
+                  <div className="col-md-3 d-flex justify-content-center align-items-center flex-column">
+                    <img
+                      src={dogs4}
+                      alt="dogs1"
+                      className={`${styles["icon-style"]}`}
+                    />
+                    <p className={`${styles["icon-text"]}`}>Harold Jamiro II</p>
+                  </div>
+                </div>
+                <div className="row d-flex justify-content-center">
+                  <hr className={`${styles.divider} my-5`} />
+                </div>
+                <div className="row">
+                  <span className={`${styles["content-header"]}`}>
+                    We're Hiring!
+                  </span>
+                </div>
+                <div className="row d-flex justify-content-center align-items-center mt-3">
+                  <div className="col-md-3 d-flex justify-content-center">
+                    <img className={`${styles["story-img"]}`} src={calendar} />
+                  </div>
+                  <div className="col-md-6">
+                    <p className={`${styles.text}`}>
+                      Discover a world of innovation at WildPark. We're hiring
+                      bright minds to be part of our dynamic team. Explore
+                      opportunities now!
                       <br />
                       <br />
-                      <span style={{ fontFamily: "Poppins-Bold", color: "#7c0902" }}>
+                      <span
+                        style={{ fontFamily: "Poppins-Bold", color: "#7c0902" }}
+                      >
                         Contact Us:
                       </span>
                       <div style={{ color: "#7c0902" }}>
-                        <i class="fa-solid fa-phone"></i> <span> (032) 234 8200</span>
+                        <i class="fa-solid fa-phone"></i>{" "}
+                        <span> (032) 234 8200</span>
                         <br />
                         <i class="fa-solid fa-envelope"></i>{" "}
                         <span> wildpark@gmail.com</span>
@@ -88,7 +139,7 @@ const AboutUs = () => {
   //   <div>
   //     <div className={styles.backdrop}>
   //       <div className={styles.aboutHeader}>
-  //         
+  //
   //       </div>
   //     </div>
 

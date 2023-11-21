@@ -7,11 +7,11 @@
 } */
 
 .backdrop {
-    background-image: url("../../images/homepage.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    overflow-y: hidden;
+  background-image: url("../../images/homepage.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100vh;
 }
 
 /* .backdropFilter::before {
@@ -26,51 +26,51 @@
 } */
 
 .about-content {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .page-header {
-    font-size: 65px;
-    font-family: "Degradasi";
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    color: #f7b538;
-    margin-top: 2em;
+  font-size: 65px;
+  font-family: "Degradasi";
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #f7b538;
+  margin-top: 2em;
+  padding-top: 2em;
 }
 
 .content-header {
-    font-size: 40px;
-    font-family: "Poppins-SemiBold";
-    text-align: left;
-    color: #7c0902;
+  font-size: 40px;
+  font-family: "Poppins-SemiBold";
+  color: #7c0902;
 }
 
 .story-img {
-    height: 200px;
-    width: auto;
+  height: 200px;
+  width: auto;
 }
 
 .divider {
-    width: 67%;
-    height: 3px;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 67%;
+  height: 3px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .icon-style {
-    width: 155px;
-    height: 155px;
-    border-radius: 50%;
-    margin: 30px;
+  width: 155px;
+  height: 155px;
+  border-radius: 50%;
+  margin: 30px;
 }
 
 .text {
-    font-family: "Poppins-Medium";
-    text-align: justify;
+  font-family: "Poppins-Medium";
+  text-align: justify;
 }
 
 .icon-text {
-    font-family: "Poppins-Medium";
-    text-align: center;
+  font-family: "Poppins-Medium";
+  text-align: center;
 }
 
 /* 
