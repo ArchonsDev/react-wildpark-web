@@ -4,18 +4,22 @@ import SearchIcon from "@mui/icons-material/Search";
 
 const Support = () => {
   return (
-    <div className="container-fluid px-0">
-      <div className={styles.backdrop}>
-        <div className={styles.supportHeader}>
-          <span>WildPark Support</span>
+    <div className={styles.Support}>
+      <div className={`${styles.content} container-fluid`}>
+        {/* Header */}
+        <div className="row mt-5 py-5">
+          <div className={`${styles.supportHeader} mt-5 py-5`}>
+            <span>WildPark Support</span>
+          </div>
         </div>
       </div>
 
-      <div className={styles.whiteContainer}>
-        <div className="container d-flex flex-column justify-content-center align-items-center">
-          <div className={styles.searchContainer}>
+      {/* Search Box */}
+      <div className={`${styles.supportContent} bg-white`}>
+        <div className="container">
+          <div className="row mb-5">
             <span className={styles.question}>How can we help you?</span>
-            <div className={styles.searchBox}>
+            <div className={`col ${styles.searchBox}`}>
               <SearchIcon className={styles.searchIcon} />
               <input
                 type="text"
@@ -25,80 +29,88 @@ const Support = () => {
             </div>
           </div>
 
-          <div className={styles.categoryHeader}>
-            <span>Categories</span>
-          </div>
-
-          {/* {Changed button classes} */}
-          <div className={`container ${styles.categoryContainer}`}>
-            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-4 gx-0 gy-3">
-              <div className="col">
+          {/* Categories */}
+          <div className="row mb-5">
+            <span className={styles.contentHeader}>Categories</span>
+            <div className={`row ${styles.customSpacing} gy-3`}>
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i className={`fa-solid fa-question fa-5x`}></i> <br /> <br />
-                  <span className={styles.Label}>General Question</span>
+                  <i className={`fa-solid fa-question fa-5x`}></i>
+                  <span className={styles.categoryLabel}>General Question</span>
                 </button>
               </div>
-              <div className="col">
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-user fa-5x"></i> <br /> <br />
-                  <span className={styles.Label}>Account</span>
+                  <i class="fa-solid fa-user fa-5x"></i>
+                  <span className={styles.categoryLabel}>Account</span>
                 </button>
               </div>
-              <div className="col">
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-car fa-5x"></i> <br /> <br />
-                  <span className={styles.Label}>Vehicle</span>
+                  <i class="fa-solid fa-car fa-5x"></i>
+                  <span className={styles.categoryLabel}>Vehicle</span>
                 </button>
               </div>
-              <div className="col">
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-building fa-5x"></i> <br /> <br />
-                  <span className={styles.Label}>Organization</span>
+                  <i class="fa-solid fa-building fa-5x"></i>
+                  <span className={styles.categoryLabel}>Organization</span>
                 </button>
               </div>
-              <div className="col">
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-bug fa-5x"></i> <br /> <br />
-                  <span className={styles.Label}>Bug Report</span>
+                  <i class="fa-solid fa-bug fa-5x"></i>
+                  <span className={styles.categoryLabel}>Bug Report</span>
                 </button>
               </div>
-              <div className="col">
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-star fa-5x"></i> <br /> <br />
-                  <span className={styles.Label}>Feature Request</span>
+                  <i class="fa-solid fa-star fa-5x"></i>
+                  <span className={styles.categoryLabel}>Feature Request</span>
                 </button>
               </div>
-              <div className="col">
+              <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-ellipsis fa-5x"></i> <br /> <br />
-                  <span className={styles.Label}>Other</span>
+                  <i class="fa-solid fa-ellipsis fa-5x"></i>
+                  <span className={styles.categoryLabel}>Other</span>
                 </button>
               </div>
             </div>
           </div>
 
-          <div className={styles.ticketSubmit}>
-            <span className={styles.assistHeader}>
+          {/* Support Ticket */}
+          <div className="row">
+            <span className={styles.contentHeader}>
               Need further assistance?
             </span>
-            <div className={styles.fnameContainer}>
-              <span className={styles.fname}>First name:</span> <br />
-              <input type="text" className={styles.inputFname} />
+
+            <div className="row">
+              <div className="col-12 col-md-6">
+                <span className={styles.inputLabel}>First name:</span> <br />
+                <input type="text" className={styles.inputBox} />
+              </div>
+              <div className="col-12 col-md-6">
+                <span className={styles.inputLabel}>Last name:</span> <br />
+                <input type="text" className={styles.inputBox} />
+              </div>
             </div>
-            <div className={styles.lnameContainer}>
-              <span className={styles.lname}>Last name:</span> <br />
-              <input type="text" className={styles.inputLname} />
+            <div className="row">
+              <div class="col">
+                <span className={styles.inputLabel}>Email:</span> <br />
+                <input type="text" className={styles.inputBox} />
+              </div>
             </div>
-            <div className={styles.emailContainer}>
-              <span className={styles.email}>Email:</span> <br />
-              <input type="text" className={styles.inputEmail} />
+            <div className="row mb-3">
+              <div class="col">
+                <span className={styles.inputLabel}>Message:</span> <br />
+                <textarea
+                  type="text"
+                  className={styles.inputBox}
+                  style={{ height: "15vh" }}></textarea>
+              </div>
             </div>
-            <div className={styles.msgContainer}>
-              <span className={styles.msg}>Message:</span> <br />
-              <input type="text" className={styles.inputMsg} />
-            </div>
-            <button className={styles.submitButton}>Submit Ticket</button>
           </div>
+          <button className={styles.submitButton}>Submit Ticket</button>
         </div>
       </div>
     </div>

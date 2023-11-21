@@ -1,257 +1,110 @@
-@import url("../../styles/fonts.css"); 
+@import url("../../styles/fonts.css");
 
-body {
-    margin: 0;
-    padding: 0;
-    overflow-y: auto;
+.content {
+  overflow-y: hidden;
 }
-
-.backdrop {
-    background-image: url("../../images/homepage.jpg");
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
-    overflow: hidden;
-}
-
-.whiteContainer {
-    position: absolute;
-    top: 300px;
-    left: 0;
-    width: 100%;
-    height: 200%;
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;  
-    z-index: 2; 
-    padding-left: 200px;
-    padding-right:  200px;
-}
-
 
 .supportHeader {
-    font-size: 4em;
-    font-family: "Degradasi";
-    text-align: center;
-    color: #f7b538;
-    padding-top: 80px; 
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 4em;
+  font-family: "Degradasi";
+  text-align: center;
+  color: #f7b538;
+  padding-top: 2em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* search */
-.searchContainer {
-    position: relative;
+.contentHeader {
+  font-size: 30px;
+  font-family: "Poppins-SemiBold";
+  color: #18314f;
 }
 
 .question {
-    position: flex;
-    font-size: 2em;
-    font-family: "Poppins-SemiBold";
-    color: #7c0902;
-    /* margin-top: 1vh;  */
-    margin-bottom: 10vh;
+  font-size: 2em;
+  font-family: "Poppins-SemiBold";
+  color: #7c0902;
+  margin-top: 1.5em;
 }
 
 .searchBox {
-    position: relative;
-    display: flex;
-    align-items: center;
-    margin-top: 2vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 2vh;
 }
 
 .searchBar {
-    width: calc(70vw - 4em);
-    padding-left: 4em;
-    height: 4em;
-    border: #7c0902 3px solid;
-    border-radius: 1em;
-    margin-bottom: 30px;
-  }
-  
+  width: 100%;
+  padding-left: 4em;
+  height: 4em;
+  border: #7c0902 3px solid;
+  border-radius: 1em;
+}
+
 .searchIcon {
-    position: absolute;
-    top: 35%; 
-    transform: translateY(-50%);
-    margin-left: 1em;
-    color: #7c0902;
-}
-
-/* Categories */
-
-.categoryContainer {
-    /* display:flexbox; */
-    /* justify-content: center;
-    align-items: center; */
-    position: static;
-    margin-bottom: 50px;
-}
-.categoryHeader {
-    font-size: 30px;
-    font-family: "Poppins-SemiBold";
-    color: #18314F;
-    /* margin-left: 10em;
-    margin-top: 40px; */
-    /* margin-left: auto;
-    margin-right: auto; */
-    margin-bottom: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 1em;
+  color: #7c0902;
 }
 
 .categoryButton {
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Poppins-Medium";
-    width: 13em;
-    height: 12em;
-    border-radius: 1em;
-    /* margin-top: 1em; */
-    border: none;
-    
+  background-color: #7c0902;
+  color: #f7b538;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins-Medium";
+  width: 12em;
+  height: 12em;
+  border-radius: 20px;
+  padding: 1em;
+  border: none;
 }
 
-.Label {
-    font-family: "Poppins-Medium";
-    font-size: 22px;
+.categoryLabel {
+  font-family: "Poppins-Medium";
+  font-size: 1.3em;
+  color: #f7b538;
 }
 
-/*assistance */
-
-.assistHeader {
-    /* position: absolute; */
-    font-size: 30px;
-    font-family: "Poppins-SemiBold";
-    color: #18314F;
-    margin-bottom: 10em;
-    margin-top: 17em;
+.inputLabel {
+  font-family: "Poppins-Medium";
+  color: #18314f;
+  font-size: 1.5em;
 }
 
-/*firstname */
-
-.fnameContainer {
-    /* position: absolute; */
-    /* margin-left: 19em;
-    margin-top: 37em; */
-}
-
-.fname {
-    font-family: "Poppins-Medium";
-    color: #18314F;
-    font-size: 23px;
-}
-
-.inputFname {
-    width: 25em;
-    padding-left: 1em; 
-    height: 3em;
-    border: #7c0902 3px solid;
-    border-radius: 1em;
-}
-
-/* Last */
-
-.lnameContainer {
-    /* position: absolute; */
-    margin-left: 50em;
-    /* margin-top: 37em; */
-}
-
-.lname {
-    font-family: "Poppins-Medium";
-    color: #18314F;
-    font-size: 23px;
-}
-
-.inputLname {
-    width: 25em;
-    padding-left: 1em; 
-    height: 3em;
-    border: #7c0902 3px solid;
-    border-radius: 1em;
-}
-
-/* Email */
-
-.emailContainer {
-    /* position: absolute; */
-    margin-left: 19em;
-    /* margin-top: 44em; */
-}
-
-.email {
-    font-family: "Poppins-Medium";
-    color: #18314F;
-    font-size: 23px;
-}
-
-.inputEmail {
-    width: 56em;
-    padding-left: 1em; 
-    height: 3em;
-    border: #7c0902 3px solid;
-    border-radius: 1em;
-}
-
-/* Message */
-
-.msgContainer {
-    /* position: absolute; */
-    margin-left: 19em;
-    /* margin-top: 52em; */
-}
-
-.msg {
-    font-family: "Poppins-Medium";
-    color: #18314F;
-    font-size: 23px;
-}
-
-.inputMsg {
-    width: 56em;
-    padding-left: 1em;
-    padding-bottom: 6em; 
-    height: 10em;
-    border: #7c0902 3px solid;
-    border-radius: 1em;
-    
+.inputBox {
+  height: 3em;
+  border: #7c0902 2px solid;
+  border-radius: 0.7em;
+  padding-left: 10px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  width: 100%;
 }
 
 .submitButton {
-    /* position: absolute; */
-    margin-left: 42em;
-    /* margin-top: 67em; */
-    width: 10em;
-    height: 2em;
-    background-color: #7c0902;
-    color: #f7b538;
-    font-family: "Degradasi";
-    border: none;
-    border-radius: 20px;
+  width: 9em;
+  height: 2em;
+  background-color: #7c0902;
+  color: #f7b538;
+  font-family: "Degradasi";
+  font-size: 1.3em;
+  border: none;
+  border-radius: 30px;
+  margin-bottom: 5vh;
 }
 
 .submitButton:hover {
-    background-color: #f7b538;
-    color: #7c0902;
+  background-color: #f7b538;
+  color: #7c0902;
 }
 
-
-@media (max-width: 576px) {
-    .whiteContainer {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
+@media (min-width: 300px) and (max-width: 1399px) {
+  .customSpacing > div {
+    margin-right: 4em;
   }
-  
-  @media (min-width: 577px) and (max-width: 767px) {
-    .whiteContainer {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  }
-  
-  @media (min-width: 768px) and (max-width: 991px) {
-    .whiteContainer {
-      padding-left: 30px;
-      padding-right: 30px;
-    }
-  }
+}
