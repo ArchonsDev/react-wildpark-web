@@ -16,10 +16,10 @@ const Support = () => {
 
       {/* Search Box */}
       <div className={`${styles.supportContent} bg-white`}>
-        <div className="container">
+        <div className="container pt-5">
           <div className="row mb-5">
             <span className={styles.question}>How can we help you?</span>
-            <div className={`col ${styles.searchBox}`}>
+            <div className={`col mt-3 ${styles.searchBox}`}>
               <SearchIcon className={styles.searchIcon} />
               <input
                 type="text"
