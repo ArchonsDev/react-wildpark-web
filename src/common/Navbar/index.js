@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import LoginModal from "../LoginModal";
 import LogoutModal from "../LogoutModal";
-import UserLoggedInContext from "../../contexts/UserLoginContext";
+import SessionUserContext from "../../contexts/SessionUserContext";
 import Cookie from "js-cookie";
 
 const Navbar = () => {
   const location = useLocation();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const { isUserLoggedIn, setIsUserLoggedIn } = useContext(UserLoggedInContext);
+  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
   const openLoginModal = () => {
     setShowLoginModal(true);
@@ -28,7 +28,7 @@ const Navbar = () => {
 
   const handleConfirmLogout = () => {
     Cookie.remove("userToken");
-    setIsUserLoggedIn(false);
+    setSessionUser(null);
 
     setShowLogoutModal(false);
   };
@@ -38,7 +38,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <div className="container">
         <Link to="/">
           <img
@@ -64,12 +64,14 @@ const Navbar = () => {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation">
+          aria-label="Toggle navigation"
+        >
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul
-            className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}>
+            className={`navbar-nav me-auto mb-2 mb-lg-0 ${styles.navbarItems}`}
+          >
             <li className="nav-item">
               <Link to="/" className={`nav-link ${getNavLink("/")}`}>
                 Home
@@ -83,7 +85,8 @@ const Navbar = () => {
             <li className="nav-item">
               <Link
                 to="/support"
-                className={`nav-link ${getNavLink("/support")}`}>
+                className={`nav-link ${getNavLink("/support")}`}
+              >
                 Support
               </Link>
             </li>
@@ -94,7 +97,8 @@ const Navbar = () => {
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"
-                aria-expanded="false">
+                aria-expanded="false"
+              >
                 Downloads
               </Link>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -108,24 +112,26 @@ const Navbar = () => {
             </li>
           </ul>
 
-          {!isUserLoggedIn && (
+          {!sessionUser && (
             <>
               <button
                 type="button"
                 className={`${styles.loginButton}`}
-                onClick={openLoginModal}>
+                onClick={openLoginModal}
+              >
                 Login
               </button>
               <button
                 type="button"
                 className={`${styles.signupButton}`}
-                onClick={openRegister}>
+                onClick={openRegister}
+              >
                 Register
               </button>
             </>
           )}
 
-          {isUserLoggedIn && (
+          {sessionUser && (
             <>
               <div className={`navbar-nav mb-2 mb-lg-0 ${styles.navbarItems}`}>
                 <div className="nav-item dropdown">
@@ -134,12 +140,14 @@ const Navbar = () => {
                     id="accountDropdown"
                     role="button"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false">
-                    Account
+                    aria-expanded="false"
+                  >
+                    {sessionUser.email}
                   </Link>
                   <ul
                     className="dropdown-menu dropdown-menu-right"
-                    aria-labelledby="accountDropdown">
+                    aria-labelledby="accountDropdown"
+                  >
                     <li>
                       <button className="dropdown-item" type="button">
                         Profile
@@ -159,7 +167,8 @@ const Navbar = () => {
                         type="button"
                         onClick={(e) => {
                           setShowLogoutModal(true);
-                        }}>
+                        }}
+                      >
                         Logout
                       </button>
                     </li>

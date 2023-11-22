@@ -4,7 +4,7 @@ import logo from "../../images/logo.png";
 import { Modal } from 'react-bootstrap';
 import axios from "axios";
 import Cookie from 'js-cookie';
-import UserLoggedInContext from '../../contexts/UserLoginContext';
+import SessionUserContext from '../../contexts/SessionUserContext';
 import CircularProgress from '@mui/material/CircularProgress';
 
 const LoginModal = ({ show, closeCallback }) => {
@@ -12,7 +12,7 @@ const LoginModal = ({ show, closeCallback }) => {
   const [inputPasswordValue, setInputPasswordValue] = useState("");
   const [invalidCredentials, setInvalidCredentials] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { isUserLoggedIn, setIsUserLoggedIn } = useContext(UserLoggedInContext);
+  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
   const handleSubmitClick = (e) => {
     e.preventDefault();
@@ -26,8 +26,12 @@ const LoginModal = ({ show, closeCallback }) => {
       .then(response => {
         if (response.status === 200) {
           Cookie.set('userToken', response?.data?.token);
-          setIsUserLoggedIn(true);
+
+          setSessionUser(response?.data?.account);
           setTimeout(() => { closeCallback() }, 2000);
+
+          setInputEmailValue('');
+          setInputPasswordValue('');
         }
       })
       .catch(error => {
@@ -59,7 +63,7 @@ const LoginModal = ({ show, closeCallback }) => {
             <h3 className={`${styles.registerTitle}`}>Login</h3>
           </div>
           {/* Login successful */}
-          {isUserLoggedIn && !isLoading && <div className="alert alert-success mx-3 mt-3" role="alert">
+          {sessionUser && !isLoading && <div className="alert alert-success mx-3 mt-3" role="alert">
             Log-in <b>successful</b>!
           </div>}
           {/* Invalid credentials alert */}
@@ -80,7 +84,7 @@ const LoginModal = ({ show, closeCallback }) => {
                     placeholder="E-mail address"
                     value={inputEmailValue}
                     onChange={(e) => { setInputEmailValue(e.target.value) }}
-                    disabled={isUserLoggedIn}
+                    disabled={sessionUser}
                   />
                 </div>
               </div>
@@ -96,7 +100,7 @@ const LoginModal = ({ show, closeCallback }) => {
                     placeholder="Password"
                     value={inputPasswordValue}
                     onChange={(e) => { setInputPasswordValue(e.target.value) }}
-                    disabled={isUserLoggedIn}
+                    disabled={sessionUser}
                   />
                 </div>
               </div>
@@ -106,7 +110,7 @@ const LoginModal = ({ show, closeCallback }) => {
                     type="button"
                     className={`${styles.submitButton}`}
                     onClick={handleSubmitClick}
-                    disabled={isUserLoggedIn}
+                    disabled={sessionUser}
                   >
                     Login
                   </button>

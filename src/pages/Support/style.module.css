@@ -1,0 +1,110 @@
+@import url("../../styles/fonts.css");
+
+.content {
+  overflow-y: hidden;
+}
+
+.supportHeader {
+  font-size: 4em;
+  font-family: "Degradasi";
+  text-align: center;
+  color: #f7b538;
+  padding-top: 2em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.contentHeader {
+  font-size: 30px;
+  font-family: "Poppins-SemiBold";
+  color: #18314f;
+}
+
+.question {
+  font-size: 2em;
+  font-family: "Poppins-SemiBold";
+  color: #7c0902;
+  margin-top: 1.5em;
+}
+
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 2vh;
+}
+
+.searchBar {
+  width: 100%;
+  padding-left: 4em;
+  height: 4em;
+  border: #7c0902 3px solid;
+  border-radius: 1em;
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 1em;
+  color: #7c0902;
+}
+
+.categoryButton {
+  background-color: #7c0902;
+  color: #f7b538;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Poppins-Medium";
+  width: 12em;
+  height: 12em;
+  border-radius: 20px;
+  padding: 1em;
+  border: none;
+}
+
+.categoryLabel {
+  font-family: "Poppins-Medium";
+  font-size: 1.3em;
+  color: #f7b538;
+}
+
+.inputLabel {
+  font-family: "Poppins-Medium";
+  color: #18314f;
+  font-size: 1.5em;
+}
+
+.inputBox {
+  height: 3em;
+  border: #7c0902 2px solid;
+  border-radius: 0.7em;
+  padding-left: 10px;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+.submitButton {
+  width: 9em;
+  height: 2em;
+  background-color: #7c0902;
+  color: #f7b538;
+  font-family: "Degradasi";
+  font-size: 1.3em;
+  border: none;
+  border-radius: 30px;
+  margin-bottom: 5vh;
+}
+
+.submitButton:hover {
+  background-color: #f7b538;
+  color: #7c0902;
+}
+
+@media (min-width: 300px) and (max-width: 1399px) {
+  .customSpacing > div {
+    margin-right: 4em;
+  }
+}
