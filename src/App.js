@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import AboutUs from "./pages/AboutUs";
 import Support from "./pages/Support";
+import Dashboard from "./pages/Dashboard";
 
 import SessionUserContext from "./contexts/SessionUserContext";
 
