@@ -15,18 +15,23 @@ import styles from "./styles/App.module.css";
 const App = () => {
   const location = useLocation();
 
-  const [sessionUser, setSessionUser] = useState(Cookie.get('userAccount'));
+  const [sessionUser, setSessionUser] = useState(Cookie.get("userAccount"));
   const sessionUserContextValue = { sessionUser, setSessionUser };
+  const displayDrawer = () => {
+    return location.pathname === "/dashboard";
+  };
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
       <div className={`${styles.App}`}>
-        {location.pathname !== "/register" && <Navbar />}
+        {location.pathname !== "/register" &&
+          location.pathname !== "/dashboard" && <Navbar />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/register" element={<Register />} />
           <Route path="/support" element={<Support />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
       </div>
     </SessionUserContext.Provider>
