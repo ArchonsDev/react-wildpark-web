@@ -1,6 +1,8 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
-import Button from '@mui/material/Button'
+
+import BtnPrimary from '../Buttons/BtnPrimary';
+import BtnSecondary from '../Buttons/BtnSecondary';
 
 const LogoutModal = ({ show, onConfirm, onHide }) => {
   return (
@@ -20,13 +22,10 @@ const LogoutModal = ({ show, onConfirm, onHide }) => {
         <p>Do you really want to logout?</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          variant="contained"
-          color="error"
-          onClick={onConfirm}
-        >
-          Confirm
-        </Button>
+        <div className="container-fluid d-flex justify-content-between">
+          <BtnSecondary onClick={onHide}>Cancel</BtnSecondary>
+          <BtnPrimary onClick={onConfirm}>Yes</BtnPrimary>
+        </div>
       </Modal.Footer>
     </Modal>
   );

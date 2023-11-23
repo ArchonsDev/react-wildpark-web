@@ -52,18 +52,6 @@
     align-items: center;
 }
 
-.submitButton {
-    background-color: #7c0902;
-    margin-right: 10px;
-    color: #f7b538;
-    border: none;
-    border-radius: 500px;
-    width: 100px;
-    height: 35px;
-    font-family: "Degradasi";
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
 .inputMargin {
     margin-bottom: 20px;
     border: none !important;

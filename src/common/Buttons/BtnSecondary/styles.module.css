@@ -1,0 +1,14 @@
+.button-style {
+    background-color: #f7b538;
+    margin: 0 10px 0 10px;
+    color: #7c0902;
+    border: none;
+    border-radius: 500px;
+    font-family: "Degradasi";
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.button-style:hover {
+    background-color: #7c0902;
+    color: #f7b538;
+}

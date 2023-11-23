@@ -22,19 +22,9 @@
 }
 
 .formBox {
-  position: absolute;
   background-color: white;
-  padding: 30px;
-  margin: 0 auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80vw;
-  max-width: 400px;
-  min-height: 300px;
   border-radius: 10px;
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-  flex-wrap: wrap;
 }
 
 .logoStyle {

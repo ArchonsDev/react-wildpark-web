@@ -1,12 +1,16 @@
-import React, { useEffect, useState, useContext } from "react";
-import styles from "./style.module.css";
-import logo from "../../images/logo.png";
-import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useLocation } from "react-router-dom";
+import Cookie from "js-cookie";
+
+import BtnPrimary from '../Buttons/BtnPrimary';
+import BtnSecondary from '../Buttons/BtnSecondary';
 import LoginModal from "../LoginModal";
 import LogoutModal from "../LogoutModal";
 import SessionUserContext from "../../contexts/SessionUserContext";
-import Cookie from "js-cookie";
+
+import logo from "../../images/logo.png";
+
+import styles from "./style.module.css";
 
 const Navbar = () => {
   const location = useLocation();
@@ -113,22 +117,10 @@ const Navbar = () => {
           </ul>
 
           {!sessionUser && (
-            <>
-              <button
-                type="button"
-                className={`${styles.loginButton}`}
-                onClick={openLoginModal}
-              >
-                Login
-              </button>
-              <button
-                type="button"
-                className={`${styles.signupButton}`}
-                onClick={openRegister}
-              >
-                Register
-              </button>
-            </>
+            <div className="d-flex justify-content-center py-2 px-5">
+              <BtnPrimary onClick={openLoginModal}>Login</BtnPrimary>
+              <BtnSecondary onClick={openRegister}>Register</BtnSecondary>
+            </div>
           )}
 
           {sessionUser && (
