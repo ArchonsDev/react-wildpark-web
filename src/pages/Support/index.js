@@ -16,10 +16,10 @@ const Support = () => {
 
       {/* Search Box */}
       <div className={`${styles.supportContent} bg-white`}>
-        <div className="container">
+        <div className="container pt-5">
           <div className="row mb-5">
             <span className={styles.question}>How can we help you?</span>
-            <div className={`col ${styles.searchBox}`}>
+            <div className={`col mt-3 ${styles.searchBox}`}>
               <SearchIcon className={styles.searchIcon} />
               <input
                 type="text"
@@ -41,37 +41,37 @@ const Support = () => {
               </div>
               <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-user fa-5x"></i>
+                  <i className="fa-solid fa-user fa-5x"></i>
                   <span className={styles.categoryLabel}>Account</span>
                 </button>
               </div>
               <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-car fa-5x"></i>
+                  <i className="fa-solid fa-car fa-5x"></i>
                   <span className={styles.categoryLabel}>Vehicle</span>
                 </button>
               </div>
               <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-building fa-5x"></i>
+                  <i className="fa-solid fa-building fa-5x"></i>
                   <span className={styles.categoryLabel}>Organization</span>
                 </button>
               </div>
               <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-bug fa-5x"></i>
+                  <i className="fa-solid fa-bug fa-5x"></i>
                   <span className={styles.categoryLabel}>Bug Report</span>
                 </button>
               </div>
               <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-star fa-5x"></i>
+                  <i className="fa-solid fa-star fa-5x"></i>
                   <span className={styles.categoryLabel}>Feature Request</span>
                 </button>
               </div>
               <div className="col-6 col-md-3 col-lg-2">
                 <button className={styles.categoryButton}>
-                  <i class="fa-solid fa-ellipsis fa-5x"></i>
+                  <i className="fa-solid fa-ellipsis fa-5x"></i>
                   <span className={styles.categoryLabel}>Other</span>
                 </button>
               </div>
@@ -95,13 +95,13 @@ const Support = () => {
               </div>
             </div>
             <div className="row">
-              <div class="col">
+              <div className="col">
                 <span className={styles.inputLabel}>Email:</span> <br />
                 <input type="text" className={styles.inputBox} />
               </div>
             </div>
             <div className="row mb-3">
-              <div class="col">
+              <div className="col">
                 <span className={styles.inputLabel}>Message:</span> <br />
                 <textarea
                   type="text"

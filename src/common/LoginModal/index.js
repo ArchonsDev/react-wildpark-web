@@ -6,51 +6,62 @@ import axios from "axios";
 import Cookie from 'js-cookie';
 import SessionUserContext from '../../contexts/SessionUserContext';
 import CircularProgress from '@mui/material/CircularProgress';
+import BtnPrimary from "../Buttons/BtnPrimary";
 
 const LoginModal = ({ show, closeCallback }) => {
   const [inputEmailValue, setInputEmailValue] = useState("");
   const [inputPasswordValue, setInputPasswordValue] = useState("");
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
-  const handleSubmitClick = (e) => {
+  const handleSubmitClick = async (e) => {
     e.preventDefault();
 
     setIsLoading(true);
 
-    axios.post("http://localhost:8080/api/v1/auth/authenticate", {
-      "email": inputEmailValue,
-      "password": inputPasswordValue
-    })
-      .then(response => {
-        if (response.status === 200) {
-          Cookie.set('userToken', response?.data?.token);
+    try {
+      const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate", {
+        "email": inputEmailValue,
+        "password": inputPasswordValue
+      });
 
-          setSessionUser(response?.data?.account);
-          setTimeout(() => { closeCallback() }, 2000);
+      if (response.status === 200) {
+        Cookie.set('userToken', response?.data?.token);
+        setSessionUser(response?.data?.account);
+        setTimeout(() => { handleClose() }, 2000);
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        setErrorMessage(<>Incorrect <b>username</b> or <b>password</b>.</>);
+        setShowErrorMessage(true);
+      } else {
+        setErrorMessage(<>Server did not respond.</>);
+        setShowErrorMessage(true);
+      }
+    } finally {
+      setTimeout(() => { setIsLoading(false) }, 1500);
+    }
+  }
 
-          setInputEmailValue('');
-          setInputPasswordValue('');
-        }
-      })
-      .catch(error => {
-        if (error.response.status === 403) {
-          setInvalidCredentials(true);
-        }
-      })
+  const handleClose = () => {
+    setInputEmailValue('');
+    setInputPasswordValue('');
+    setShowErrorMessage(false);
 
-    setTimeout(() => { setIsLoading(false) }, 1500);
+    closeCallback();
   }
 
   useEffect(() => {
-    setInvalidCredentials(false);
+    setErrorMessage('');
+    setShowErrorMessage(false);
   }, [inputEmailValue, inputPasswordValue]);
 
   return (
     <Modal
       show={show}
-      onHide={closeCallback}
+      onHide={handleClose}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -67,8 +78,8 @@ const LoginModal = ({ show, closeCallback }) => {
             Log-in <b>successful</b>!
           </div>}
           {/* Invalid credentials alert */}
-          {invalidCredentials && !isLoading && <div className="alert alert-danger mx-3 mt-3" role="alert">
-            Invalid <b>username</b> or <b>password</b>.
+          {showErrorMessage && !isLoading && <div className="alert alert-danger mx-3 mt-3" role="alert">
+            {errorMessage}
           </div>}
           {/* Login section: Email */}
           {isLoading ? <div className="container-fluid d-flex justify-content-center align-items-center p-5"><CircularProgress color="error" /></div>
@@ -79,7 +90,7 @@ const LoginModal = ({ show, closeCallback }) => {
                   <i className={`fa-solid fa-envelope ${styles.iconStyle}`}></i>
                   <input
                     type="email"
-                    className={`form-control ${styles.inputMargin} ${invalidCredentials ? 'is-invalid' : ''}`}
+                    className={`form-control ${styles.inputMargin} ${showErrorMessage ? 'is-invalid' : ''}`}
                     id="inputEmail"
                     placeholder="E-mail address"
                     value={inputEmailValue}
@@ -95,7 +106,7 @@ const LoginModal = ({ show, closeCallback }) => {
                   <i className={`fa-solid fa-lock ${styles.iconStyle}`}></i>
                   <input
                     type="password"
-                    className={`form-control ${styles.inputMargin} ${invalidCredentials ? 'is-invalid' : ''}`}
+                    className={`form-control ${styles.inputMargin} ${showErrorMessage ? 'is-invalid' : ''}`}
                     id="inputPassword"
                     placeholder="Password"
                     value={inputPasswordValue}
@@ -106,14 +117,7 @@ const LoginModal = ({ show, closeCallback }) => {
               </div>
               <div className="row justify-content-end pb-3 mx-1">
                 <div className="col-auto">
-                  <button
-                    type="button"
-                    className={`${styles.submitButton}`}
-                    onClick={handleSubmitClick}
-                    disabled={sessionUser}
-                  >
-                    Login
-                  </button>
+                  <BtnPrimary onClick={handleSubmitClick} disabled={sessionUser}>Login</BtnPrimary>
                 </div>
               </div>
             </>}

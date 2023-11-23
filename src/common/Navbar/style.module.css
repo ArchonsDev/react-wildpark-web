@@ -21,39 +21,6 @@
   color: #0d0630 !important;
 }
 
-.loginButton {
-  background-color: #7c0902;
-  margin-right: 10px;
-  color: #f7b538;
-  border: none;
-  border-radius: 500px;
-  width: 100px;
-  height: 35px;
-  font-family: "Degradasi";
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.loginButton:hover {
-  background-color: #f7b538;
-  color: #7c0902;
-}
-
-.signupButton {
-  background-color: #f7b538;
-  color: #7c0902;
-  border: none;
-  border-radius: 500px;
-  width: 120px;
-  height: 35px;
-  font-family: "Degradasi";
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-.signupButton:hover {
-  background-color: #7c0902;
-  color: #f7b538;
-}
-
 .activePage {
   font-family: "Poppins-Bold" !important;
   color: #0d0630;
