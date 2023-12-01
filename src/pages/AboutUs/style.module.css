@@ -1,24 +1,24 @@
 .content {
-    overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 .page-header {
-    font-size: 65px;
-    font-family: "Degradasi";
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    color: #f7b538;
+  font-size: 65px;
+  font-family: "Degradasi";
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  color: #f7b538;
 }
 
 .content-header {
-    font-size: 40px;
-    font-family: "Poppins-SemiBold";
-    color: #7c0902;
+  font-size: 40px;
+  font-family: "Poppins-SemiBold";
+  color: #7c0902;
 }
 
 .story-img {
-    height: 280px;
-    width: auto;
+  height: 280px;
+  width: auto;
 }
 
 .divider {
@@ -32,13 +32,14 @@
   height: 155px;
   border-radius: 50%;
   margin: 30px;
+  border: 2px solid #7c0902;
 }
 
 .text {
-    font-family: "Poppins-Medium";
+  font-family: "Poppins-Medium";
 }
 
 .icon-text {
-    font-family: "Poppins-Medium";
-    text-align: center;
+  font-family: "Poppins-Medium";
+  text-align: center;
 }
