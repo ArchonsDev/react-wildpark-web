@@ -1,0 +1,36 @@
+.backgroundContent {
+  min-height: 100vh;
+  background-color: #f4f3ef;
+}
+
+.notificationCard {
+  width: 100%;
+  height: 59vh;
+}
+
+.card,
+.notificationCard {
+  border: none;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7b538;
+  color: #7c0902;
+  font-family: "Poppins-Bold";
+  font-size: 1.2em;
+  padding: 10px;
+  border-bottom: 1px solid #7c0902;
+}
+
+.redBox {
+  position: fixed;
+  background-color: #7c0902;
+  padding: 30px;
+  margin-top: 20px;
+  min-height: 100vh;
+  border-radius: 10px;
+  width: 60vw;
+}
