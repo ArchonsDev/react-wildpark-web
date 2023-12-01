@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Cookie from "js-cookie";
 
@@ -27,6 +27,37 @@ const App = () => {
     // Status: Has temporary line to check the look of the drawer; bound to change :D
     return location.pathname === "/dashboard";
   };
+
+  useEffect(() => {
+    let tabName = "";
+    switch (location.pathname) {
+      case "/":
+        tabName = "Home";
+        break;
+      case "/about":
+        tabName = "About Us";
+        break;
+      case "/register":
+        tabName = "Register";
+        break;
+      case "/support":
+        tabName = "Support";
+        break;
+      case "/dashboard":
+        tabName = "Dashboard";
+        break;
+      case "/bookings":
+        tabName = "Bookings";
+        break;
+      case "/settings":
+        tabName = "Settings";
+        break;
+      default:
+        tabName = "WildPark";
+        break;
+    }
+    document.title = tabName;
+  }, [location.pathname]);
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>

@@ -1,20 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-import BtnPrimary from '../../common/Buttons/BtnPrimary';
+import BtnPrimary from "../../common/Buttons/BtnPrimary";
 
 import logo from "../../images/logo.png";
 
 import styles from "./style.module.css";
 
 const Register = () => {
-  const [inputFirstname, setInputFirstname] = useState('');
-  const [inputLastname, setInputLastname] = useState('');
-  const [inputEmail, setInputEmail] = useState('');
-  const [inputPassword, setInputPassword] = useState('');
-  const [inputConfirmPassword, setInputConfirmPassword] = useState('');
+  const [inputFirstname, setInputFirstname] = useState("");
+  const [inputLastname, setInputLastname] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
+  const [inputConfirmPassword, setInputConfirmPassword] = useState("");
 
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
   const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const [isRegistrationComplete, setIsRegistrationComplete] = useState(false);
@@ -29,37 +29,74 @@ const Register = () => {
     let errorMessages = [];
 
     if (!(inputFirstname.length > 2)) {
-      errorMessages.push(<><b>Firstname</b> is too short.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Firstname</b> is too short.
+          <br />
+        </>
+      );
       hasError = true;
     }
 
     if (!(inputLastname.length > 2)) {
-      errorMessages.push(<><b>Lastname</b> is too short.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Lastname</b> is too short.
+          <br />
+        </>
+      );
       hasError = true;
     }
 
     if (!(inputEmail.length > 2 && isValidEmail(inputEmail))) {
-      errorMessages.push(<><b>Email</b> must be valid.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Email</b> must be valid.
+          <br />
+        </>
+      );
       hasError = true;
     }
 
     if (!hasSpecialCharacter(inputPassword)) {
-      errorMessages.push(<><b>Passwords</b> must contain <b>at least one special character</b>.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Passwords</b> must contain{" "}
+          <b>
+            at least one of the following characters: {`[!@#$%^&*(),.?":{}|<>]`}
+          </b>
+          .
+          <br />
+        </>
+      );
       hasError = true;
     }
 
     if (!hasNumber(inputPassword)) {
-      errorMessages.push(<><b>Passwords</b> must contain <b>at least one number</b>.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Passwords</b> must contain <b>at least one number</b>.<br />
+        </>
+      );
       hasError = true;
     }
 
     if (!hasMinimumLength(inputPassword, 8)) {
-      errorMessages.push(<><b>Passwords</b> be <b>at least 8 characters long</b>.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Passwords</b> be <b>at least 8 characters long</b>.<br />
+        </>
+      );
       hasError = true;
     }
 
     if (inputPassword !== inputConfirmPassword) {
-      errorMessages.push(<><b>Passwords</b> do not match.<br /></>);
+      errorMessages.push(
+        <>
+          <b>Passwords</b> do not match.
+          <br />
+        </>
+      );
       hasError = true;
     }
 
@@ -70,12 +107,15 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post("http://localhost:8080/api/v1/auth/register", {
-        "firstname": inputFirstname,
-        "lastname": inputLastname,
-        "email": inputEmail,
-        "password": inputPassword
-      });
+      const response = await axios.post(
+        "http://localhost:8080/api/v1/auth/register",
+        {
+          firstname: inputFirstname,
+          lastname: inputLastname,
+          email: inputEmail,
+          password: inputPassword,
+        }
+      );
 
       if (response.status === 200) {
         setIsRegistrationComplete(true);
@@ -109,10 +149,11 @@ const Register = () => {
     e.preventDefault();
 
     window.close();
-  }
+  };
 
   return (
-    <div className={`container-fluid ${styles.customContainer} d-flex justify-content-center align-items-center`}>
+    <div
+      className={`container-fluid ${styles.customContainer} d-flex justify-content-center align-items-center`}>
       <div className={`${styles.formBox} p-5`}>
         {/* Register section: Title */}
         <div className={`${styles.titleForm}`}>
@@ -124,11 +165,13 @@ const Register = () => {
           <h3 className={`${styles.registerTitle}`}>Register</h3>
         </div>
 
-        {!isRegistrationComplete ?
+        {!isRegistrationComplete ? (
           <form>
-            {showErrorMessage && <div className="alert alert-danger mt-3" role="alert">
-              {errorMessage}
-            </div>}
+            {showErrorMessage && (
+              <div className="alert alert-danger mt-3" role="alert">
+                {errorMessage}
+              </div>
+            )}
 
             {/* Register section: Name */}
             <div className="row pt-3">
@@ -140,7 +183,7 @@ const Register = () => {
                     className={`form-control ${styles.inputMargin}`}
                     placeholder="First name"
                     value={inputFirstname}
-                    onChange={e => setInputFirstname(e.target.value)}
+                    onChange={(e) => setInputFirstname(e.target.value)}
                   />
                 </div>
               </div>
@@ -152,7 +195,7 @@ const Register = () => {
                     className={`form-control ${styles.inputMargin}`}
                     placeholder="Last name"
                     value={inputLastname}
-                    onChange={e => setInputLastname(e.target.value)}
+                    onChange={(e) => setInputLastname(e.target.value)}
                   />
                 </div>
               </div>
@@ -168,7 +211,7 @@ const Register = () => {
                   id="exampleInputEmail1"
                   placeholder="E-mail address"
                   value={inputEmail}
-                  onChange={e => setInputEmail(e.target.value)}
+                  onChange={(e) => setInputEmail(e.target.value)}
                 />
               </div>
             </div>
@@ -183,7 +226,7 @@ const Register = () => {
                   id="inputPassword"
                   placeholder="Password"
                   value={inputPassword}
-                  onChange={e => setInputPassword(e.target.value)}
+                  onChange={(e) => setInputPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -196,7 +239,7 @@ const Register = () => {
                   id="inputConfirmPassword"
                   placeholder="Confirm Password"
                   value={inputConfirmPassword}
-                  onChange={e => setInputConfirmPassword(e.target.value)}
+                  onChange={(e) => setInputConfirmPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -206,12 +249,12 @@ const Register = () => {
               </div>
             </div>
           </form>
-          :
+        ) : (
           <div className="container-fluid d-flex flex-column justify-content-center align-items-center">
             <span className="mt-4 mb-5">Registration successful!</span>
             <BtnPrimary onClick={handleContinue}>Click to Continue</BtnPrimary>
           </div>
-        }
+        )}
       </div>
     </div>
   );
