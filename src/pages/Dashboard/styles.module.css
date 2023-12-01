@@ -4,25 +4,34 @@
 }
 
 .notificationCard {
-  width: 100%;
-  height: 59vh;
+  min-height: 59vh !important;
+}
+
+.card {
+  min-height: 28vh !important;
 }
 
 .card,
 .notificationCard {
-  border: none;
+  border: none !important;
 }
 
 .cardHeader {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f7b538;
-  color: #7c0902;
+  background-color: #f7b538 !important;
+  color: #7c0902 !important;
   font-family: "Poppins-Bold";
   font-size: 1.2em;
   padding: 10px;
-  border-bottom: 1px solid #7c0902;
+  border-bottom: 1px solid #7c0902 !important;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .redBox {

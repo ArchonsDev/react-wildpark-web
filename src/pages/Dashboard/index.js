@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Card } from "react-bootstrap";
 
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
@@ -16,7 +15,9 @@ const Dashboard = () => {
               <div className="col">
                 <Card>
                   <Card.Body>
-                    <Card.Title>User</Card.Title>
+                    <Card.Title>
+                      <i className="fa-solid fa-circle-user fa-2xl"></i> User
+                    </Card.Title>
                     <Card.Text>
                       With supporting text below as a natural lead-in to
                       additional content.
@@ -32,11 +33,9 @@ const Dashboard = () => {
                   <Card.Header className={styles.cardHeader}>
                     Notification Center
                   </Card.Header>
-                  <Card.Body>
-                    <Card.Title>Special title treatment</Card.Title>
-                    <Card.Text>
-                      With supporting text below as a natural lead-in to
-                      additional content.
+                  <Card.Body className={styles.cardContent}>
+                    <Card.Text className="text-muted">
+                      No new notifications.
                     </Card.Text>
                   </Card.Body>
                 </Card>
@@ -47,13 +46,10 @@ const Dashboard = () => {
                   <Card.Header className={styles.cardHeader}>
                     Organizations
                   </Card.Header>
-                  <Card.Body>
-                    <Card.Title>Special title treatment</Card.Title>
-                    <Card.Text>
-                      With supporting text below as a natural lead-in to
-                      additional content.
+                  <Card.Body className={styles.cardContent}>
+                    <Card.Text className="text-muted">
+                      Click to create or join an organization.
                     </Card.Text>
-                    <BtnSecondary>Details</BtnSecondary>
                   </Card.Body>
                 </Card>
 
@@ -61,13 +57,8 @@ const Dashboard = () => {
                   <Card.Header className={styles.cardHeader}>
                     Booking Information
                   </Card.Header>
-                  <Card.Body>
-                    <Card.Title>Special title treatment</Card.Title>
-                    <Card.Text>
-                      With supporting text below as a natural lead-in to
-                      additional content.
-                    </Card.Text>
-                    <BtnSecondary>Manage</BtnSecondary>
+                  <Card.Body className={styles.cardContent}>
+                    <Card.Text className="text-muted">No bookings.</Card.Text>
                   </Card.Body>
                 </Card>
               </div>
