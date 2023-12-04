@@ -1,5 +1,6 @@
 import React from "react";
 import { Card } from "react-bootstrap";
+import { Search as SearchIcon, Add as PlusIcon } from "@mui/icons-material";
 
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import styles from "./styles.module.css";
@@ -9,7 +10,8 @@ const Dashboard = () => {
     <div className={styles.Dashboard}>
       <div className={`${styles.backgroundContent} container-fluid`}>
         <div
-          className={`${styles.content} container d-flex align-items-center flex-column p-5`}>
+          className={`${styles.content} container d-flex align-items-center flex-column p-5`}
+        >
           <div className={styles.redBox}>
             <div className="row">
               <div className="col">
@@ -48,6 +50,15 @@ const Dashboard = () => {
                   </Card.Header>
                   <Card.Body className={styles.cardContent}>
                     <Card.Text className="text-muted">
+                      <i
+                        class="fa-regular fa-square-plus fa-5x"
+                        style={{
+                          marginLeft: "105px",
+                          textAlign: "center",
+                        }}
+                      ></i>
+                      <br />
+                      <br />
                       Click to create or join an organization.
                     </Card.Text>
                   </Card.Body>

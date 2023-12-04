@@ -38,8 +38,15 @@
   position: fixed;
   background-color: #7c0902;
   padding: 30px;
-  margin-top: 20px;
+  margin-top: 10em;
   min-height: 100vh;
   border-radius: 10px;
   width: 60vw;
+}
+
+
+.plusIcon {
+  height: 3em;
+  width: 2em;
+  align-self: center;
 }

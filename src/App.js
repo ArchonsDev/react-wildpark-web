@@ -9,6 +9,8 @@ import Register from "./pages/Register";
 import AboutUs from "./pages/AboutUs";
 import Support from "./pages/Support";
 import Dashboard from "./pages/Dashboard";
+import Settings from "./pages/Settings";
+import Bookings from "./pages/Bookings";
 
 import SessionUserContext from "./contexts/SessionUserContext";
 
@@ -26,6 +28,7 @@ const App = () => {
     // Appears in certain pages such as dashboard, bookings, settings, etc
     // Status: Has temporary line to check the look of the drawer; bound to change :D
     return location.pathname === "/dashboard";
+    return location.pathname === "/settings";
   };
 
   useEffect(() => {
@@ -63,7 +66,9 @@ const App = () => {
     <SessionUserContext.Provider value={sessionUserContextValue}>
       <div className={`${styles.App}`}>
         {location.pathname !== "/register" &&
-          location.pathname !== "/dashboard" && <Navbar />}
+          location.pathname !== "/dashboard" &&
+          location.pathname !== "/settings" && <Navbar />}
+
         {displayDrawer() && <Drawer />}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -71,6 +76,8 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/support" element={<Support />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/bookings" element={<Bookings />} />
         </Routes>
       </div>
     </SessionUserContext.Provider>
