@@ -1,32 +1,41 @@
+.navbar {
+  position: fixed !important;
+}
+
+.toggle {
+  margin-right: 20px !important;
+}
+
+.pageName {
+  font-family: "Poppins-SemiBold";
+  color: #7c0902 !important ;
+}
+
 .sidebar {
-  display: flex !important;
-  flex-direction: column;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  height: 100vh !important;
-  width: 300px;
-  z-index: 100;
-  padding: 48px 0 0;
-  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
   background-color: #f7b538 !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .sidebar {
+    width: 20% !important;
+  }
 }
 
 .brand {
   display: flex !important;
   align-items: center !important;
-  margin-bottom: 1.5em;
+  margin-top: 1em;
+  cursor: pointer;
 }
 
 .logo {
-  width: 25%;
-  height: 25%;
+  width: 20%;
+  height: 20%;
 }
 
 .brandName {
   font-family: "Degradasi";
-  font-size: 2em;
+  font-size: 1.2em;
   color: #7c0902;
   margin-top: 5px;
   margin-left: 5px;
