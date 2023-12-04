@@ -57,7 +57,7 @@ const Drawer = () => {
               className={styles.toggle}
             />
 
-            {/* Label */}
+            {/* Page Name */}
             <Navbar.Brand className={styles.pageName}>{brand}</Navbar.Brand>
 
             {/* Drawer pop-up */}
@@ -94,9 +94,9 @@ const Drawer = () => {
                     </Nav.Link>
 
                     {location.pathname === "/dashboard" && (
-                      <Nav.Link className={styles.navItem}>
+                      <Nav.Link href="/" className={styles.navItem}>
                         <i
-                          class={`fa-solid fa-file-arrow-down fa-lg ${styles.drawerIcon}`}></i>{" "}
+                          className={`fa-solid fa-file-arrow-down fa-lg ${styles.drawerIcon}`}></i>{" "}
                         Export
                       </Nav.Link>
                     )}
