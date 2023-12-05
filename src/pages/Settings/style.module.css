@@ -9,6 +9,7 @@
 .cardsContainer {
   font-size: 20px;
   margin-top: 2em;
+  flex-direction: row;
 }
 
 .cardsContainer Button {
@@ -21,21 +22,24 @@
   color: #7c0902;
   background-color: #f4f3ef;
   border: #7c0902 2px solid;
+  margin-bottom: 1em;
+  padding: 0.9em;
 }
 
-.cardsContainer span {
-  font-size: 10px;
-  font-weight: normal;
-  color: black;
+.cardsContainer p {
+  font-family: "Poppins-Medium";
+  font-size: 0.7em;
+  line-height: 0.9;
+  color: #0d0630;
 }
 
 .cardsContainer Button:hover {
   color: #f7b538;
   background-color: #7c0902;
-  border: #f7b538 2px solid;
+  border: none;
 }
 
-.cardsContainer Button:hover span {
+.cardsContainer Button:hover p {
   color: #f4f3ef;
 }
 
