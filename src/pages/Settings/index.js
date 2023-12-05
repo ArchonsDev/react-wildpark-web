@@ -2,9 +2,9 @@ import React from "react";
 import { Button, Card } from "react-bootstrap";
 import styles from "./style.module.css";
 
-const Dashboard = () => {
+const Settings = () => {
   return (
-    <div className={styles.Dashboard}>
+    <div className={styles.Settings}>
       <div className={`${styles.backgroundContent} container-fluid`}>
         <div className={`${styles.content} container flex-column p-5`}>
           <div className={styles.cardsContainer}>
@@ -36,4 +36,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Settings;
