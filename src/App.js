@@ -22,13 +22,21 @@ const App = () => {
   const [sessionUser, setSessionUser] = useState(Cookie.get("userAccount"));
   const sessionUserContextValue = { sessionUser, setSessionUser };
 
+  const hideNavbar = () => {
+    return (
+      location.pathname !== "/register" &&
+      location.pathname !== "/dashboard" &&
+      location.pathname !== "/bookings" &&
+      location.pathname !== "/settings"
+    );
+  };
   const displayDrawer = () => {
-    // Only displays drawer for certain conditions such as:
-    // User must be logged in
-    // Appears in certain pages such as dashboard, bookings, settings, etc
-    // Status: Has temporary line to check the look of the drawer; bound to change :D
-    return location.pathname === "/dashboard";
-    return location.pathname === "/settings";
+    // WIP: Must include condition that the user is logged in
+    return (
+      location.pathname === "/dashboard" ||
+      location.pathname === "/bookings" ||
+      location.pathname === "/settings"
+    );
   };
 
   useEffect(() => {
@@ -65,10 +73,7 @@ const App = () => {
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
       <div className={`${styles.App}`}>
-        {location.pathname !== "/register" &&
-          location.pathname !== "/dashboard" &&
-          location.pathname !== "/settings" && <Navbar />}
-
+        {hideNavbar() && <Navbar />}
         {displayDrawer() && <Drawer />}
         <Routes>
           <Route path="/" element={<Home />} />
