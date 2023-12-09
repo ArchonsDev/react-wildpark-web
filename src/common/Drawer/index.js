@@ -1,31 +1,24 @@
-import React, { useEffect, useState } from "react";
-import styles from "./styles.module.css";
-
-import logo from "../../images/logo_circle.png";
-
+import React, { useEffect, useState, useContext } from "react";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router";
+import Cookie from "js-cookie";
+
+import logo from "../../images/logo_circle.png";
+import LogoutModal from "../LogoutModal";
+import SessionUserContext from "../../contexts/SessionUserContext";
+
+import styles from "./styles.module.css";
 
 const Drawer = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [brand, setBrand] = useState("");
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
   useEffect(() => {
     let brandName = "";
     switch (location.pathname) {
-      case "/":
-        brandName = "Home";
-        break;
-      case "/about":
-        brandName = "About Us";
-        break;
-      case "/register":
-        brandName = "Register";
-        break;
-      case "/support":
-        brandName = "Support";
-        break;
       case "/dashboard":
         brandName = "Dashboard";
         break;
@@ -43,7 +36,15 @@ const Drawer = () => {
   }, [location.pathname]);
 
   const navigateToLanding = () => {
-    navigate("/home");
+    navigate("/");
+  };
+
+  const handleConfirmLogout = () => {
+    Cookie.remove("userToken");
+    Cookie.remove("userAccount");
+    setSessionUser(null);
+    setShowLogoutModal(false);
+    navigateToLanding();
   };
 
   return (
@@ -104,7 +105,11 @@ const Drawer = () => {
                 </div>
 
                 <Nav.Item className={styles.logout}>
-                  <Nav.Link href="/" className={styles.navItem}>
+                  <Nav.Link
+                    className={styles.navItem}
+                    onClick={(e) => {
+                      setShowLogoutModal(true);
+                    }}>
                     <i
                       className={`fa-solid fa-arrow-right-from-bracket fa-lg ${styles.drawerIcon}`}></i>{" "}
                     Log out
@@ -113,6 +118,14 @@ const Drawer = () => {
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
+
+          <LogoutModal
+            show={showLogoutModal}
+            onHide={(e) => {
+              setShowLogoutModal(false);
+            }}
+            onConfirm={handleConfirmLogout}
+          />
         </Navbar>
       ))}
     </div>
