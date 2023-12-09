@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Cookie from "js-cookie";
 
@@ -20,62 +20,40 @@ const App = () => {
   const location = useLocation();
 
   const userCookie = Cookie.get("userAccount");
-  const [sessionUser, setSessionUser] = useState(userCookie ? JSON.parse(userCookie) : null);
+  const [sessionUser, setSessionUser] = useState(
+    userCookie ? JSON.parse(userCookie) : null
+  );
   const sessionUserContextValue = { sessionUser, setSessionUser };
 
-  const hideNavbar = () => {
-    return (
-      location.pathname !== "/register" &&
-      location.pathname !== "/dashboard" &&
-      location.pathname !== "/bookings" &&
-      location.pathname !== "/settings"
-    );
-  };
-  const displayDrawer = () => {
-    // WIP: Must include condition that the user is logged in
-    return (
-      location.pathname === "/dashboard" ||
-      location.pathname === "/bookings" ||
-      location.pathname === "/settings"
-    );
+  const hideNavbar = ![
+    "/register",
+    "/dashboard",
+    "/bookings",
+    "/settings",
+  ].includes(location.pathname);
+
+  const displayDrawer = ["/dashboard", "/bookings", "/settings"].includes(
+    location.pathname
+  );
+
+  const tabNames = {
+    "/": "Home",
+    "/about": "About Us",
+    "/register": "Register",
+    "/support": "Support",
+    "/dashboard": "Dashboard",
+    "/settings": "Settings",
   };
 
-  useEffect(() => {
-    let tabName = "";
-    switch (location.pathname) {
-      case "/":
-        tabName = "Home";
-        break;
-      case "/about":
-        tabName = "About Us";
-        break;
-      case "/register":
-        tabName = "Register";
-        break;
-      case "/support":
-        tabName = "Support";
-        break;
-      case "/dashboard":
-        tabName = "Dashboard";
-        break;
-      case "/bookings":
-        tabName = "Bookings";
-        break;
-      case "/settings":
-        tabName = "Settings";
-        break;
-      default:
-        tabName = "WildPark";
-        break;
-    }
-    document.title = tabName;
-  }, [location.pathname]);
+  document.title = tabNames[location.pathname]
+    ? tabNames[location.pathname]
+    : "WildPark";
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
       <div className={`${styles.App}`}>
-        {hideNavbar() && <Navbar />}
-        {displayDrawer() && <Drawer />}
+        {hideNavbar && <Navbar />}
+        {displayDrawer && <Drawer />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
