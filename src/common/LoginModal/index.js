@@ -32,6 +32,7 @@ const LoginModal = ({ show, closeCallback }) => {
 
       if (response.status === 200) {
         Cookie.set('userToken', response?.data?.token);
+        Cookie.set('userAccount', JSON.stringify(response?.data?.account));
         setSessionUser(response?.data?.account);
         setTimeout(() => { handleClose() }, 2000);
       }
