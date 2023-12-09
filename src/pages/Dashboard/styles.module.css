@@ -1,0 +1,51 @@
+.backgroundContent {
+  min-height: 100vh;
+  background-color: #f4f3ef;
+}
+
+.notificationCard {
+  min-height: 59vh !important;
+}
+
+.card {
+  min-height: 28vh !important;
+}
+
+.card,
+.notificationCard {
+  border: none !important;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7b538 !important;
+  color: #7c0902 !important;
+  font-family: "Poppins-Bold";
+  font-size: 1.2em;
+  padding: 10px;
+  border-bottom: 1px solid #7c0902 !important;
+}
+
+.cardContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.redBox {
+  position: fixed;
+  background-color: #7c0902;
+  padding: 30px;
+  margin-top: 5em;
+  min-height: 100vh;
+  border-radius: 10px;
+  width: 60vw;
+}
+
+.plusIcon {
+  height: 3em;
+  width: 2em;
+  align-self: center;
+}
