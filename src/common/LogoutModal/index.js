@@ -23,7 +23,7 @@ const LogoutModal = ({ show, onConfirm, onHide }) => {
       </Modal.Body>
       <Modal.Footer>
         <div className="container-fluid d-flex justify-content-between">
-          <BtnSecondary onClick={onHide}>Cancel</BtnSecondary>
+          <BtnSecondary onClick={onHide}>No</BtnSecondary>
           <BtnPrimary onClick={onConfirm}>Yes</BtnPrimary>
         </div>
       </Modal.Footer>
