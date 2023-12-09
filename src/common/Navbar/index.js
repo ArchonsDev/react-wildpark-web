@@ -32,6 +32,7 @@ const Navbar = () => {
 
   const handleConfirmLogout = () => {
     Cookie.remove("userToken");
+    Cookie.remove("userAccount");
     setSessionUser(null);
 
     setShowLogoutModal(false);

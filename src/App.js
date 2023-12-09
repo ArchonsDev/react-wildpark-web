@@ -15,7 +15,8 @@ import styles from "./styles/App.module.css";
 const App = () => {
   const location = useLocation();
 
-  const [sessionUser, setSessionUser] = useState(Cookie.get("userAccount"));
+  const userCookie = Cookie.get("userAccount");
+  const [sessionUser, setSessionUser] = useState(userCookie ? JSON.parse(userCookie) : null);
   const sessionUserContextValue = { sessionUser, setSessionUser };
 
   useEffect(() => {
