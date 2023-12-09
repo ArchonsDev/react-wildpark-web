@@ -1,0 +1,56 @@
+.backgroundContent {
+    height: 100vh;
+    background-color: #f4f3ef;
+    /*background-image: url('../../images/wavebg.png')
+    background-size: cover;
+    background-position: center; */
+}
+
+.cardsContainer {
+    font-size: 20px;
+}
+
+.cardsContainer Button {
+    height: 90px;
+    width: 300px;
+    font-size: 20px;
+    font-family: "Poppins-Bold";
+    text-align: left;
+    border-radius: 13px;
+    color: #7c0902;
+    background-color: #f4f3ef;
+    border: #7c0902 2px solid;
+}
+
+.cardsContainer span {
+    font-size: 10px;
+    font-weight: normal;
+    color: black;
+    
+}
+
+.cardsContainer Button:hover {
+    color: #f7b538;
+    background-color: #7c0902;
+    border: #f7b538 2px solid;
+}
+
+.cardsContainer Button:hover span{
+    color: #f4f3ef;
+}
+
+.cardsContainer Button:active {
+    color: #f7b538 !important;
+    background-color: #7c0902 !important;
+    border: #f7b538 2px solid !important;
+}
+
+.cardsContainer Button:active span{
+    color: #f4f3ef !important;
+}
+
+
+
+
+  
+ 

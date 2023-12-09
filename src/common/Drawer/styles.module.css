@@ -1,0 +1,58 @@
+.navbar {
+  position: fixed !important;
+}
+
+.toggle {
+  margin-right: 20px !important;
+}
+
+.pageName {
+  font-family: "Poppins-SemiBold";
+  color: #7c0902 !important ;
+}
+
+.sidebar {
+  background-color: #f7b538 !important;
+}
+
+@media screen and (min-width: 1200px) {
+  .sidebar {
+    width: 20% !important;
+  }
+}
+
+.brand {
+  display: flex !important;
+  align-items: center !important;
+  margin-top: 1em;
+  cursor: pointer;
+}
+
+.logo {
+  width: 20%;
+  height: 20%;
+}
+
+.brandName {
+  font-family: "Degradasi";
+  font-size: 1.2em;
+  color: #7c0902;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.navItem {
+  color: #7c0902 !important;
+  font-family: "Poppins-SemiBold";
+  font-size: 1.3em !important;
+  margin-left: 0.8em;
+  margin-bottom: 1em;
+}
+
+.drawerIcon {
+  margin-right: 10px;
+}
+
+.logout {
+  margin-top: auto !important;
+}
