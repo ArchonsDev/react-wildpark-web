@@ -4,31 +4,40 @@ import axios from "axios";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 
 import logo from "../../images/logo.png";
+import { isValidEmail, isValidPassword } from "./utils";
 
 import styles from "./style.module.css";
 
 const Register = () => {
-  const [inputFirstname, setInputFirstname] = useState("");
-  const [inputLastname, setInputLastname] = useState("");
-  const [inputEmail, setInputEmail] = useState("");
-  const [inputPassword, setInputPassword] = useState("");
-  const [inputConfirmPassword, setInputConfirmPassword] = useState("");
+  const [form, setForm] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const [errorMessage, setErrorMessage] = useState("");
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const handleChange = e => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
+  }
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const showErrorMessage = errorMessage !== null;
 
   const [isRegistrationComplete, setIsRegistrationComplete] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setErrorMessage(<></>);
-    setShowErrorMessage(false);
+    setErrorMessage(null);
 
     let hasError = false;
     let errorMessages = [];
 
-    if (!(inputFirstname.length > 2)) {
+    if (!(form.firstname.length > 2)) {
       errorMessages.push(
         <>
           <b>Firstname</b> is too short.
@@ -38,7 +47,7 @@ const Register = () => {
       hasError = true;
     }
 
-    if (!(inputLastname.length > 2)) {
+    if (!(form.lastname.length > 2)) {
       errorMessages.push(
         <>
           <b>Lastname</b> is too short.
@@ -48,7 +57,7 @@ const Register = () => {
       hasError = true;
     }
 
-    if (!(inputEmail.length > 2 && isValidEmail(inputEmail))) {
+    if (!(form.email.length > 2 && isValidEmail(form.email))) {
       errorMessages.push(
         <>
           <b>Email</b> must be valid.
@@ -58,39 +67,18 @@ const Register = () => {
       hasError = true;
     }
 
-    if (!hasSpecialCharacter(inputPassword)) {
+    if (!isValidPassword(form.password)) {
       errorMessages.push(
         <>
-          <b>Passwords</b> must contain{" "}
-          <b>
-            at least one of the following characters: {`[!@#$%^&*(),.?":{}|<>]`}
-          </b>
-          .
-          <br />
+          <b>Password</b> must contain <b>at least one special character</b>.<br />
+          <b>Password</b> be <b>at least 8 characters long</b>.<br />
+          <b>Password</b> must contain <b>at least one number</b>.<br />
         </>
       );
       hasError = true;
     }
 
-    if (!hasNumber(inputPassword)) {
-      errorMessages.push(
-        <>
-          <b>Passwords</b> must contain <b>at least one number</b>.<br />
-        </>
-      );
-      hasError = true;
-    }
-
-    if (!hasMinimumLength(inputPassword, 8)) {
-      errorMessages.push(
-        <>
-          <b>Passwords</b> be <b>at least 8 characters long</b>.<br />
-        </>
-      );
-      hasError = true;
-    }
-
-    if (inputPassword !== inputConfirmPassword) {
+    if (form.password !== form.confirmPassword) {
       errorMessages.push(
         <>
           <b>Passwords</b> do not match.
@@ -102,7 +90,6 @@ const Register = () => {
 
     if (hasError) {
       setErrorMessage(errorMessages);
-      setShowErrorMessage(true);
       return;
     }
 
@@ -110,45 +97,22 @@ const Register = () => {
       const response = await axios.post(
         "http://localhost:8080/api/v1/auth/register",
         {
-          firstname: inputFirstname,
-          lastname: inputLastname,
-          email: inputEmail,
-          password: inputPassword,
+          firstname: form.firstname,
+          lastname: form.lastname,
+          email: form.email,
+          password: form.password,
         }
       );
 
       if (response.status === 200) {
         setIsRegistrationComplete(true);
+      } else if (response.status === 409) {
+
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
       }
     }
-  };
-
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-  };
-
-  const hasSpecialCharacter = (password) => {
-    const specialCharacterRegex = /[!@#$%^&*(),.?":{}|<>]/;
-    return specialCharacterRegex.test(password);
-  };
-
-  const hasNumber = (password) => {
-    const numberRegex = /\d/;
-    return numberRegex.test(password);
-  };
-
-  const hasMinimumLength = (password, minLength) => {
-    return password.length >= minLength;
-  };
-
-  const handleContinue = (e) => {
-    e.preventDefault();
-
-    window.close();
   };
 
   return (
@@ -181,9 +145,11 @@ const Register = () => {
                   <input
                     type="text"
                     className={`form-control ${styles.inputMargin}`}
-                    placeholder="First name"
-                    value={inputFirstname}
-                    onChange={(e) => setInputFirstname(e.target.value)}
+                    placeholder="Firstname"
+                    id="inputFirstname"
+                    name="firstname"
+                    value={form.firstname}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -193,9 +159,11 @@ const Register = () => {
                   <input
                     type="text"
                     className={`form-control ${styles.inputMargin}`}
-                    placeholder="Last name"
-                    value={inputLastname}
-                    onChange={(e) => setInputLastname(e.target.value)}
+                    placeholder="Lastname"
+                    id="inputLastname"
+                    name="lastname"
+                    value={form.lastname}
+                    onChange={handleChange}
                   />
                 </div>
               </div>
@@ -208,10 +176,11 @@ const Register = () => {
                 <input
                   type="email"
                   className={`form-control ${styles.inputMargin}`}
-                  id="exampleInputEmail1"
+                  id="inputEmail"
                   placeholder="E-mail address"
-                  value={inputEmail}
-                  onChange={(e) => setInputEmail(e.target.value)}
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -225,8 +194,9 @@ const Register = () => {
                   className={`form-control ${styles.inputMargin}`}
                   id="inputPassword"
                   placeholder="Password"
-                  value={inputPassword}
-                  onChange={(e) => setInputPassword(e.target.value)}
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -238,8 +208,9 @@ const Register = () => {
                   className={`form-control ${styles.inputMargin}`}
                   id="inputConfirmPassword"
                   placeholder="Confirm Password"
-                  value={inputConfirmPassword}
-                  onChange={(e) => setInputConfirmPassword(e.target.value)}
+                  name="confirmPassword"
+                  value={form.confirmPassword}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -252,7 +223,7 @@ const Register = () => {
         ) : (
           <div className="container-fluid d-flex flex-column justify-content-center align-items-center">
             <span className="mt-4 mb-5">Registration successful!</span>
-            <BtnPrimary onClick={handleContinue}>Click to Continue</BtnPrimary>
+            <BtnPrimary onClick={e => window.close()}>Click to Continue</BtnPrimary>
           </div>
         )}
       </div>
