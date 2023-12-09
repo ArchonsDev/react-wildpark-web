@@ -3,7 +3,7 @@ import styles from "./style.module.css";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import image from "../../images/google-placeholder.png";
 
-import { Card } from "react-bootstrap";
+import { Card, ListGroup } from "react-bootstrap";
 //TO-DO:
 //Add tabs of user's bookings
 //Add details of the booking details
@@ -28,14 +28,14 @@ const Bookings = () => {
               <div
                 className={`col ${styles.columnStyle}`}
                 style={{ flex: "2" }}>
-                <Card>
+                <Card style={{ width: "100%" }}>
                   <Card.Img variant="top" src={image} />
-                  <Card.Body>
-                    <Card.Text className={styles.bookingDetails}>
-                      Some quick example text to build on the card title and
-                      make up the bulk of the card's content.
-                    </Card.Text>
-                  </Card.Body>
+                  <ListGroup className={styles.bookingDetails}>
+                    <ListGroup.Item>Date & Time</ListGroup.Item>
+                    <ListGroup.Item>Location</ListGroup.Item>
+                    <ListGroup.Item>Parking</ListGroup.Item>
+                    <ListGroup.Item>Vehicle</ListGroup.Item>
+                  </ListGroup>
                 </Card>
               </div>
             </div>
