@@ -9,10 +9,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import BtnPrimary from "../Buttons/BtnPrimary";
 
 const LoginModal = ({ show, closeCallback }) => {
-  const [inputEmailValue, setInputEmailValue] = useState("");
-  const [inputPasswordValue, setInputPasswordValue] = useState("");
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const showErrorMessage = errorMessage !== null;
   const [isLoading, setIsLoading] = useState(false);
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
@@ -23,8 +26,8 @@ const LoginModal = ({ show, closeCallback }) => {
 
     try {
       const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate", {
-        "email": inputEmailValue,
-        "password": inputPasswordValue
+        "email": form.email,
+        "password": form.password
       });
 
       if (response.status === 200) {
@@ -35,10 +38,8 @@ const LoginModal = ({ show, closeCallback }) => {
     } catch (error) {
       if (error.response && error.response.status === 403) {
         setErrorMessage(<>Incorrect <b>username</b> or <b>password</b>.</>);
-        setShowErrorMessage(true);
       } else {
         setErrorMessage(<>Server did not respond.</>);
-        setShowErrorMessage(true);
       }
     } finally {
       setTimeout(() => { setIsLoading(false) }, 1500);
@@ -46,17 +47,25 @@ const LoginModal = ({ show, closeCallback }) => {
   }
 
   const handleClose = () => {
-    setInputEmailValue('');
-    setInputPasswordValue('');
-    setShowErrorMessage(false);
+    setForm({
+      email: "",
+      password: "",
+    });
 
+    setErrorMessage(null);
     closeCallback();
   }
 
+  const handleChange = e => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    })
+  }
+
   useEffect(() => {
-    setErrorMessage('');
-    setShowErrorMessage(false);
-  }, [inputEmailValue, inputPasswordValue]);
+    setErrorMessage(null);
+  }, [form.email, form.password]);
 
   return (
     <Modal
@@ -93,8 +102,9 @@ const LoginModal = ({ show, closeCallback }) => {
                     className={`form-control ${styles.inputMargin} ${showErrorMessage ? 'is-invalid' : ''}`}
                     id="inputEmail"
                     placeholder="E-mail address"
-                    value={inputEmailValue}
-                    onChange={(e) => { setInputEmailValue(e.target.value) }}
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
                     disabled={sessionUser}
                   />
                 </div>
@@ -109,8 +119,9 @@ const LoginModal = ({ show, closeCallback }) => {
                     className={`form-control ${styles.inputMargin} ${showErrorMessage ? 'is-invalid' : ''}`}
                     id="inputPassword"
                     placeholder="Password"
-                    value={inputPasswordValue}
-                    onChange={(e) => { setInputPasswordValue(e.target.value) }}
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
                     disabled={sessionUser}
                   />
                 </div>
