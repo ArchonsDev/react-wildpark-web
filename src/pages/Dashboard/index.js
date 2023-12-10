@@ -4,6 +4,7 @@ import { Card } from "react-bootstrap";
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./styles.module.css";
+import { useNavigate } from "react-router-dom";
 
 // TO-DO:
 // User profile picture (to be discussed ig)
@@ -15,6 +16,7 @@ import styles from "./styles.module.css";
 // How will notifications work?
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { sessionUser } = useContext(SessionUserContext);
   const [currentDate, setCurrentDate] = useState(new Date());
 
@@ -38,17 +40,19 @@ const Dashboard = () => {
           <div className="col-sm-12 container-fluid d-flex flex-column mx-0 px-0">
             <div className="row">
               <div className="col-sm-12">
-                <Card className={styles.card}>
-                  <Card.Body className={styles.userContent}>
-                    <i className="fa-solid fa-circle-user fa-2xl"></i>
-                    <div className={styles.userInfo}>
-                      <Card.Title className="mb-0">
-                        {sessionUser.firstname} {sessionUser.lastname}
-                      </Card.Title>
-                      <Card.Text>{sessionUser.email}</Card.Text>
-                    </div>
-                  </Card.Body>
-                </Card>
+                <a style={{ textDecoration: "none" }} href="#" onClick={e => navigate("/settings")}>
+                  <Card className={styles.card}>
+                    <Card.Body className={styles.userContent}>
+                      <i className="fa-solid fa-circle-user fa-2xl"></i>
+                      <div className={styles.userInfo}>
+                        <Card.Title className="mb-0">
+                          {sessionUser.firstname} {sessionUser.lastname}
+                        </Card.Title>
+                        <Card.Text>{sessionUser.email}</Card.Text>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                </a>
               </div>
             </div>
             <div className="row flex-grow-1 mt-4">
