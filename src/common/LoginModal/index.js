@@ -7,6 +7,7 @@ import Cookie from 'js-cookie';
 import SessionUserContext from '../../contexts/SessionUserContext';
 import CircularProgress from '@mui/material/CircularProgress';
 import BtnPrimary from "../Buttons/BtnPrimary";
+import { useNavigate } from "react-router-dom";
 
 const LoginModal = ({ show, closeCallback }) => {
   const [form, setForm] = useState({
@@ -15,9 +16,13 @@ const LoginModal = ({ show, closeCallback }) => {
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const showErrorMessage = errorMessage !== null;
   const [isLoading, setIsLoading] = useState(false);
+
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+
+  const navigate = useNavigate();
+
+  const showErrorMessage = errorMessage !== null;
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
@@ -34,7 +39,7 @@ const LoginModal = ({ show, closeCallback }) => {
         Cookie.set('userToken', response?.data?.token);
         Cookie.set('userAccount', JSON.stringify(response?.data?.account));
         setSessionUser(response?.data?.account);
-        setTimeout(() => { handleClose() }, 2000);
+        setTimeout(() => { handleClose(); navigate("/dashboard") }, 2000);
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {

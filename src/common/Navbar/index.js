@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
 
 import BtnPrimary from '../Buttons/BtnPrimary';
@@ -14,6 +14,7 @@ import styles from "./style.module.css";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
@@ -142,12 +143,17 @@ const Navbar = () => {
                     aria-labelledby="accountDropdown"
                   >
                     <li>
-                      <button className="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button" onClick={e => navigate("/dashboard")}>
+                        Dashboard
+                      </button>
+                    </li>
+                    <li>
+                      <button className="dropdown-item" type="button" onClick={e => navigate("profile")}>
                         Profile
                       </button>
                     </li>
                     <li>
-                      <button className="dropdown-item" type="button">
+                      <button className="dropdown-item" type="button" onClick={e => navigate("/settings")}>
                         Settings
                       </button>
                     </li>
