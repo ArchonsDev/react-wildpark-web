@@ -52,3 +52,39 @@
 .cardsContainer Button:active span {
   color: #f4f3ef !important;
 }
+
+.accountBox {
+    border: #7c0902 2px solid;
+    width: 0em;
+    height: 25em;
+    padding: 1em;
+    color: #7c0902;
+    font-size: 15px;
+    font-family: "Poppins-Bold";
+}
+
+.userPfp {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.editProfile {
+    width: 9em;
+    height: 2em;
+    background-color: #f7b538;
+    color: #7c0902;
+    font-family: "Degradasi";
+    font-size: 1.3em;
+    border: none;
+    border-radius: 30px;
+    margin-bottom: 2vh;
+    
+  }
+
+  .editProfile:hover {
+    background-color: #7c0902;
+    color: #f7b538;
+  }
+
