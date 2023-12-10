@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
+
 import styles from "./style.module.css";
+import BtnSecondary from "../../common/Buttons/BtnSecondary";
 
 const Settings = () => {
   const [showAccountBox, setShowAccountBox] = useState(false);
@@ -40,8 +42,8 @@ const Settings = () => {
     <div className={styles.Settings}>
       <div className={`${styles.backgroundContent} container-fluid`}>
         <div className={`${styles.content} container flex-column p-5`}>
-          <div className="row">
-            <div className="col">
+          <div className="d-flex flex-row mt-5">
+            <div className="col" style={{ flex: "1" }}>
               {/* cardsContainer */}
               <div className={styles.cardsContainer}>
                 <div className="row">
@@ -70,65 +72,67 @@ const Settings = () => {
                 </div>
               </div>
             </div>
-            {showAccountBox && (
-              <div className={`col ${styles.accountBox}`}>
-                <div>
-                  <i
-                    className={styles.userPfp}
-                    class="fa-solid fa-circle-user fa-5x"
-                  ></i>
-                  <br /> <br />
-                  <button className={styles.editProfile}>Edit Profile</button>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <span>Name:</span>
-                    <span>John Doe</span>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <br />
-                    <span>Email Address:</span>
-                    <span>john@gmail.com</span>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <br />
-                    <span>Phone Number:</span>
-                    <span>092720746580</span>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col">
-                    <br />
-                    <span>Birthday:</span>
-                    <span>February 29, 2002</span>
-                  </div>
-                </div>
-              </div>
-            )}
 
-            {showSecurityBox && (
-              <div className={`col ${styles.securityBox}`}>
-                <span className={styles.changepassHeader}>Change Password</span>
-              </div>
-            )}
+            <div class="col" style={{ flex: "2" }}>
+              {showAccountBox && (
+                <div className={`col ${styles.accountBox}`}>
+                  <div className={styles.accountHeader}>
+                    <i
+                      className={`fa-solid fa-circle-user fa-7x mb-3 ${styles.userPfp}`}></i>
+                    <BtnSecondary>Edit Profile</BtnSecondary>
+                  </div>
+                  <div className="row mt-4">
+                    <div className="col">
+                      <span>Name: </span>
+                      <span>John Doe</span>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <br />
+                      <span>Email Address: </span>
+                      <span>john@gmail.com</span>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <br />
+                      <span>Phone Number: </span>
+                      <span>092720746580</span>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col">
+                      <br />
+                      <span>Birthday: </span>
+                      <span>February 29, 2002</span>
+                    </div>
+                  </div>
+                </div>
+              )}
 
-            {showVehicleBox && (
-              <div className={`col ${styles.vehicleBox}`}>
-                <span className={styles.vehiclesHeader}>
-                  Registered Vehicles
-                </span>
-              </div>
-            )}
+              {showSecurityBox && (
+                <div className={`col ${styles.securityBox}`}>
+                  <span className={styles.changepassHeader}>
+                    Change Password
+                  </span>
+                </div>
+              )}
 
-            {showTicketsBox && (
-              <div className={`col ${styles.ticketsBox}`}>
-                <span className={styles.ticketHeader}>Tickets</span>
-              </div>
-            )}
+              {showVehicleBox && (
+                <div className={`col ${styles.vehicleBox}`}>
+                  <span className={styles.vehiclesHeader}>
+                    Registered Vehicles
+                  </span>
+                </div>
+              )}
+
+              {showTicketsBox && (
+                <div className={`col ${styles.ticketsBox}`}>
+                  <span className={styles.ticketHeader}>Tickets</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
