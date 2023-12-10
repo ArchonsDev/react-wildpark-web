@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./style.module.css";
+
+import SessionUserContext from "../../contexts/SessionUserContext";
+
 import { useNavigate } from "react-router";
 
 const Home = () => {
   const navigate = useNavigate();
+  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
   return (
     <div className={`${styles.Home}`}>
-      <div className={`${styles.content} container d-flex flex-column justify-content-center align-items-center`}>
-
+      <div
+        className={`${styles.content} container d-flex flex-column justify-content-center align-items-center`}>
         <div className="row d-flex justify-content-center">
           <div className={`${styles.tagline} col-md-10`}>
             Finding a{" "}
@@ -20,12 +24,17 @@ const Home = () => {
         </div>
 
         <div className="row">
-          <a
-            type="button"
+          <button
             className={`${styles["cta-button"]} col-md-12 px-5 py-3 mt-3`}
-            onClick={e => window.open("/register", "_blank")}>
+            onClick={(e) => {
+              if (sessionUser === null) {
+                window.open("/register", "_blank");
+              } else {
+                navigate("/dashboard");
+              }
+            }}>
             Get Started
-          </a>
+          </button>
         </div>
       </div>
 

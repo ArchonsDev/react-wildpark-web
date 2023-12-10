@@ -1,14 +1,21 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Modal } from "react-bootstrap";
 
 import BtnPrimary from '../Buttons/BtnPrimary';
 import BtnSecondary from '../Buttons/BtnSecondary';
 
-const LogoutModal = ({ show, onConfirm, onHide }) => {
+import { useLogout } from "../../hooks/useLogout";
+
+import SessionUserContext from "../../contexts/SessionUserContext";
+
+const LogoutModal = () => {
+  const { showLogoutModal, toggleLogoutModal } = useContext(SessionUserContext);
+  const logout = useLogout();
+
   return (
     <Modal
-      show={show}
-      onHide={onHide}
+      show={showLogoutModal}
+      onHide={toggleLogoutModal}
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -23,8 +30,8 @@ const LogoutModal = ({ show, onConfirm, onHide }) => {
       </Modal.Body>
       <Modal.Footer>
         <div className="container-fluid d-flex justify-content-between">
-          <BtnSecondary onClick={onHide}>Cancel</BtnSecondary>
-          <BtnPrimary onClick={onConfirm}>Yes</BtnPrimary>
+          <BtnSecondary onClick={toggleLogoutModal}>No</BtnSecondary>
+          <BtnPrimary onClick={logout}>Yes</BtnPrimary>
         </div>
       </Modal.Footer>
     </Modal>

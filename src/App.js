@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import Cookie from "js-cookie";
 
 import Navbar from "./common/Navbar";
 import Drawer from "./common/Drawer";
+import LogoutModal from "./common/LogoutModal";
+import LoginModal from "./common/LoginModal";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import AboutUs from "./pages/AboutUs";
@@ -12,6 +14,8 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Bookings from "./pages/Bookings";
 
+import { useToggle } from "./hooks/useToggle";
+
 import SessionUserContext from "./contexts/SessionUserContext";
 
 import styles from "./styles/App.module.css";
@@ -19,62 +23,51 @@ import styles from "./styles/App.module.css";
 const App = () => {
   const location = useLocation();
 
-  const [sessionUser, setSessionUser] = useState(Cookie.get("userAccount"));
-  const sessionUserContextValue = { sessionUser, setSessionUser };
-
-  const hideNavbar = () => {
-    return (
-      location.pathname !== "/register" &&
-      location.pathname !== "/dashboard" &&
-      location.pathname !== "/bookings" &&
-      location.pathname !== "/settings"
-    );
-  };
-  const displayDrawer = () => {
-    // WIP: Must include condition that the user is logged in
-    return (
-      location.pathname === "/dashboard" ||
-      location.pathname === "/bookings" ||
-      location.pathname === "/settings"
-    );
+  const userCookie = Cookie.get("userAccount");
+  const [sessionUser, setSessionUser] = useState(
+    userCookie ? JSON.parse(userCookie) : null
+  );
+  const [showLogoutModal, toggleLogoutModal] = useToggle(false);
+  const [showLoginModal, toggleLoginModal] = useToggle(false);
+  const sessionUserContextValue = {
+    sessionUser,
+    setSessionUser,
+    showLogoutModal,
+    toggleLogoutModal,
+    showLoginModal,
+    toggleLoginModal,
   };
 
-  useEffect(() => {
-    let tabName = "";
-    switch (location.pathname) {
-      case "/":
-        tabName = "Home";
-        break;
-      case "/about":
-        tabName = "About Us";
-        break;
-      case "/register":
-        tabName = "Register";
-        break;
-      case "/support":
-        tabName = "Support";
-        break;
-      case "/dashboard":
-        tabName = "Dashboard";
-        break;
-      case "/bookings":
-        tabName = "Bookings";
-        break;
-      case "/settings":
-        tabName = "Settings";
-        break;
-      default:
-        tabName = "WildPark";
-        break;
-    }
-    document.title = tabName;
-  }, [location.pathname]);
+  const hideNavbar = ![
+    "/register",
+    "/dashboard",
+    "/bookings",
+    "/settings",
+  ].includes(location.pathname);
+
+  const displayDrawer = ["/dashboard", "/bookings", "/settings"].includes(
+    location.pathname
+  );
+
+  const tabNames = {
+    "/": "Home",
+    "/about": "About Us",
+    "/register": "Register",
+    "/support": "Support",
+    "/dashboard": "Dashboard",
+    "/settings": "Settings",
+    "/bookings": "Bookings",
+  };
+
+  document.title = tabNames[location.pathname]
+    ? tabNames[location.pathname]
+    : "WildPark";
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
       <div className={`${styles.App}`}>
-        {hideNavbar() && <Navbar />}
-        {displayDrawer() && <Drawer />}
+        {hideNavbar && <Navbar />}
+        {displayDrawer && <Drawer />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
@@ -84,6 +77,8 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/bookings" element={<Bookings />} />
         </Routes>
+        <LogoutModal />
+        <LoginModal />
       </div>
     </SessionUserContext.Provider>
   );

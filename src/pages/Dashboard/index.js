@@ -1,29 +1,54 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
-import { Search as SearchIcon, Add as PlusIcon } from "@mui/icons-material";
 
+import SessionUserContext from "../../contexts/SessionUserContext";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
+
 import styles from "./styles.module.css";
 
+// TO-DO:
+// User profile picture (to be discussed ig)
+// Conditional rendering for organization
+// Conditional rendering for bookings
+
+// CONCERNS:
+// User icon not displaying its true size? (Might be the card size idk)
+// How will notifications work?
+
 const Dashboard = () => {
+  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <div className={styles.Dashboard}>
       <div className={`${styles.backgroundContent} container-fluid`}>
         <div
-          className={`${styles.content} container d-flex align-items-center flex-column p-5`}
-        >
+          className={`${styles.content} container d-flex align-items-center flex-column`}>
+          <div className={styles.dateTab}>
+            <div className={styles.date}>{currentDate.toLocaleString()}</div>
+          </div>
           <div className={styles.redBox}>
             <div className="row">
               <div className="col">
                 <Card>
-                  <Card.Body>
-                    <Card.Title>
-                      <i className="fa-solid fa-circle-user fa-2xl"></i> User
-                    </Card.Title>
-                    <Card.Text>
-                      With supporting text below as a natural lead-in to
-                      additional content.
-                    </Card.Text>
+                  <Card.Body className={styles.userContent}>
+                    <i className="fa-solid fa-circle-user fa-2xl"></i>
+                    <div className={styles.userInfo}>
+                      <Card.Title style={{ marginBottom: "0" }}>
+                        {sessionUser.firstname} {sessionUser.lastname}
+                      </Card.Title>
+                      <Card.Text>{sessionUser.email}</Card.Text>
+                    </div>
                   </Card.Body>
                 </Card>
               </div>
@@ -49,16 +74,10 @@ const Dashboard = () => {
                     Organizations
                   </Card.Header>
                   <Card.Body className={styles.cardContent}>
+                    <div>
+                      <i class="fa-regular fa-square-plus fa-5x"></i>
+                    </div>
                     <Card.Text className="text-muted">
-                      <i
-                        class="fa-regular fa-square-plus fa-5x"
-                        style={{
-                          marginLeft: "105px",
-                          textAlign: "center",
-                        }}
-                      ></i>
-                      <br />
-                      <br />
                       Click to create or join an organization.
                     </Card.Text>
                   </Card.Body>

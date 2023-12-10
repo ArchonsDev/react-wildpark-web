@@ -1,20 +1,32 @@
 import React, { useEffect, useState, useContext } from "react";
-import styles from "./style.module.css";
-import logo from "../../images/logo.png";
-import { Modal } from 'react-bootstrap';
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Cookie from 'js-cookie';
-import SessionUserContext from '../../contexts/SessionUserContext';
+import axios from "axios";
+
+import { Modal } from 'react-bootstrap';
 import CircularProgress from '@mui/material/CircularProgress';
 import BtnPrimary from "../Buttons/BtnPrimary";
 
-const LoginModal = ({ show, closeCallback }) => {
-  const [inputEmailValue, setInputEmailValue] = useState("");
-  const [inputPasswordValue, setInputPasswordValue] = useState("");
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+import SessionUserContext from '../../contexts/SessionUserContext';
+
+import logo from "../../images/logo.png";
+
+import styles from "./style.module.css";
+
+const LoginModal = () => {
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMessage, setErrorMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+
+  const { sessionUser, setSessionUser, showLoginModal, toggleLoginModal } = useContext(SessionUserContext);
+
+  const navigate = useNavigate();
+
+  const showErrorMessage = errorMessage !== null;
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
@@ -23,22 +35,21 @@ const LoginModal = ({ show, closeCallback }) => {
 
     try {
       const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate", {
-        "email": inputEmailValue,
-        "password": inputPasswordValue
+        "email": form.email,
+        "password": form.password
       });
 
       if (response.status === 200) {
         Cookie.set('userToken', response?.data?.token);
+        Cookie.set('userAccount', JSON.stringify(response?.data?.account));
         setSessionUser(response?.data?.account);
-        setTimeout(() => { handleClose() }, 2000);
+        setTimeout(() => { toggleLoginModal(); navigate("/dashboard"); setForm({ email: "", password: "" }) }, 2000);
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
         setErrorMessage(<>Incorrect <b>username</b> or <b>password</b>.</>);
-        setShowErrorMessage(true);
       } else {
         setErrorMessage(<>Server did not respond.</>);
-        setShowErrorMessage(true);
       }
     } finally {
       setTimeout(() => { setIsLoading(false) }, 1500);
@@ -46,21 +57,29 @@ const LoginModal = ({ show, closeCallback }) => {
   }
 
   const handleClose = () => {
-    setInputEmailValue('');
-    setInputPasswordValue('');
-    setShowErrorMessage(false);
+    setForm({
+      email: "",
+      password: "",
+    });
 
-    closeCallback();
+    setErrorMessage(null);
+    toggleLoginModal();
+  }
+
+  const handleChange = e => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    })
   }
 
   useEffect(() => {
-    setErrorMessage('');
-    setShowErrorMessage(false);
-  }, [inputEmailValue, inputPasswordValue]);
+    setErrorMessage(null);
+  }, [form.email, form.password]);
 
   return (
     <Modal
-      show={show}
+      show={showLoginModal}
       onHide={handleClose}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
@@ -93,8 +112,9 @@ const LoginModal = ({ show, closeCallback }) => {
                     className={`form-control ${styles.inputMargin} ${showErrorMessage ? 'is-invalid' : ''}`}
                     id="inputEmail"
                     placeholder="E-mail address"
-                    value={inputEmailValue}
-                    onChange={(e) => { setInputEmailValue(e.target.value) }}
+                    name="email"
+                    value={form.email}
+                    onChange={handleChange}
                     disabled={sessionUser}
                   />
                 </div>
@@ -109,8 +129,9 @@ const LoginModal = ({ show, closeCallback }) => {
                     className={`form-control ${styles.inputMargin} ${showErrorMessage ? 'is-invalid' : ''}`}
                     id="inputPassword"
                     placeholder="Password"
-                    value={inputPasswordValue}
-                    onChange={(e) => { setInputPasswordValue(e.target.value) }}
+                    name="password"
+                    value={form.password}
+                    onChange={handleChange}
                     disabled={sessionUser}
                   />
                 </div>
