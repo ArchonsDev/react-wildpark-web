@@ -1,23 +1,32 @@
 import React, { useEffect, useState, useContext } from "react";
-import styles from "./style.module.css";
-import logo from "../../images/logo.png";
-import { Modal } from 'react-bootstrap';
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Cookie from 'js-cookie';
-import SessionUserContext from '../../contexts/SessionUserContext';
+import axios from "axios";
+
+import { Modal } from 'react-bootstrap';
 import CircularProgress from '@mui/material/CircularProgress';
 import BtnPrimary from "../Buttons/BtnPrimary";
 
-const LoginModal = ({ show, closeCallback }) => {
+import SessionUserContext from '../../contexts/SessionUserContext';
+
+import logo from "../../images/logo.png";
+
+import styles from "./style.module.css";
+
+const LoginModal = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
-  const showErrorMessage = errorMessage !== null;
   const [isLoading, setIsLoading] = useState(false);
-  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+
+  const { sessionUser, setSessionUser, showLoginModal, toggleLoginModal } = useContext(SessionUserContext);
+
+  const navigate = useNavigate();
+
+  const showErrorMessage = errorMessage !== null;
 
   const handleSubmitClick = async (e) => {
     e.preventDefault();
@@ -34,7 +43,7 @@ const LoginModal = ({ show, closeCallback }) => {
         Cookie.set('userToken', response?.data?.token);
         Cookie.set('userAccount', JSON.stringify(response?.data?.account));
         setSessionUser(response?.data?.account);
-        setTimeout(() => { handleClose() }, 2000);
+        setTimeout(() => { toggleLoginModal(); navigate("/dashboard"); setForm({ email: "", password: "" }) }, 2000);
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
@@ -54,7 +63,7 @@ const LoginModal = ({ show, closeCallback }) => {
     });
 
     setErrorMessage(null);
-    closeCallback();
+    toggleLoginModal();
   }
 
   const handleChange = e => {
@@ -70,7 +79,7 @@ const LoginModal = ({ show, closeCallback }) => {
 
   return (
     <Modal
-      show={show}
+      show={showLoginModal}
       onHide={handleClose}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
