@@ -40,7 +40,7 @@ const Dashboard = () => {
           <div className="col-sm-12 container-fluid d-flex flex-column mx-0 px-0">
             <div className="row">
               <div className="col-sm-12">
-                <a style={{ textDecoration: "none" }} href="#" onClick={e => navigate("/settings")}>
+                <a style={{ textDecoration: "none" }} onClick={e => navigate("/settings")}>
                   <Card className={styles.card}>
                     <Card.Body className={styles.userContent}>
                       <i className="fa-solid fa-circle-user fa-2xl"></i>
@@ -77,7 +77,7 @@ const Dashboard = () => {
                       </Card.Header>
                       <Card.Body className={`${styles.cardContent} d-flex flex-column justify-content-center align-items-center`}>
                         <div>
-                          <i class="fa-regular fa-square-plus fa-5x"></i>
+                          <i className="fa-regular fa-square-plus fa-5x"></i>
                         </div>
                         <Card.Text className="text-muted">
                           Click to create or join an organization.
