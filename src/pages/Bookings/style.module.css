@@ -1,0 +1,42 @@
+.backgroundContent {
+  min-height: 100vh;
+  background-color: #f4f3ef;
+}
+
+.redBox {
+  position: relative;
+  background-color: #7c0902;
+  padding: 2em;
+  min-height: calc(100vh - 30px);
+  margin-top: 7em;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 60vw;
+}
+
+.whiteBox {
+  background-color: white;
+  min-height: 100vh;
+  border-radius: 10px;
+}
+
+.columnStyle {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  flex: 1;
+}
+
+.header {
+  font-family: "Poppins-Bold";
+  font-size: 1.5em;
+  color: #7c0902;
+}
+
+.bookingDetails {
+  font-family: "Poppins-Medium";
+  color: #7c0902 !important;
+}
