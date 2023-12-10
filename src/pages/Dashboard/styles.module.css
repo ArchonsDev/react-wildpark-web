@@ -4,11 +4,11 @@
 }
 
 .notificationCard {
-  min-height: 59vh !important;
+  min-height: 65vh !important;
 }
 
 .card {
-  min-height: 28vh !important;
+  min-height: 31vh !important;
 }
 
 .card,
@@ -30,22 +30,48 @@
 
 .cardContent {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  font-family: "Poppins-Medium";
+}
+
+.userContent {
+  display: flex;
   align-items: center;
 }
 
-.redBox {
-  position: fixed;
-  background-color: #7c0902;
-  padding: 30px;
-  margin-top: 5em;
-  min-height: 100vh;
-  border-radius: 10px;
-  width: 60vw;
+.userInfo {
+  margin-left: 1em;
 }
 
-.plusIcon {
-  height: 3em;
-  width: 2em;
-  align-self: center;
+.dateTab {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 60vw;
+  margin-top: 4em;
+  font-family: "Poppins-SemiBold";
+  font-size: 0.9em;
+  color: #7c0902;
+}
+
+.date {
+  background-color: #f4f3ef;
+  padding: 10px;
+  border: 2px solid #7c0902;
+  border-radius: 30px;
+}
+
+.redBox {
+  /* or make it relative idk haha pending pa na */
+  position: relative;
+  background-color: #7c0902;
+  padding: 2em;
+  min-height: calc(100vh - 30px);
+  margin-top: 1em;
+  border-radius: 10px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 60vw;
 }

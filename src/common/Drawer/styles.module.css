@@ -8,7 +8,7 @@
 
 .pageName {
   font-family: "Poppins-SemiBold";
-  color: #7c0902 !important ;
+  color: #7c0902 !important;
 }
 
 .sidebar {
@@ -45,12 +45,24 @@
   color: #7c0902 !important;
   font-family: "Poppins-SemiBold";
   font-size: 1.3em !important;
-  margin-left: 0.8em;
-  margin-bottom: 1em;
+  border-radius: 10px;
 }
 
-.drawerIcon {
-  margin-right: 10px;
+.navItem:hover {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+}
+
+.active {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+  font-family: "Poppins-SemiBold";
+  font-size: 1.3em !important;
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
 }
 
 .logout {
