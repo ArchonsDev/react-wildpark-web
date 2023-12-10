@@ -31,11 +31,6 @@
   font-family: "Poppins-Medium";
 }
 
-.userContent {
-  align-items: center;
-  display: flex;
-}
-
 .userInfo {
   margin-left: 1em;
 }

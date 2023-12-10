@@ -42,8 +42,8 @@ const Dashboard = () => {
               <div className="col-sm-12">
                 <a style={{ textDecoration: "none" }} onClick={e => navigate("/settings")}>
                   <Card className={styles.card}>
-                    <Card.Body className={styles.userContent}>
-                      <i className="fa-solid fa-circle-user fa-2xl"></i>
+                    <Card.Body className="d-flex align-items-center">
+                      <i className="fa-solid fa-circle-user fa-4x"></i>
                       <div className={styles.userInfo}>
                         <Card.Title className="mb-0">
                           {sessionUser.firstname} {sessionUser.lastname}
@@ -56,7 +56,7 @@ const Dashboard = () => {
               </div>
             </div>
             <div className="row flex-grow-1 mt-4">
-              <div className="col-sm-6">
+              <div className="col-sm-6 mb-4">
                 <Card className={styles.notificationCard}>
                   <Card.Header className={`${styles.cardHeader} d-flex justify-content-center`}>
                     Notification Center
@@ -68,7 +68,7 @@ const Dashboard = () => {
                   </Card.Body>
                 </Card>
               </div>
-              <div className="col-sm-6 container-fluid d-flex flex-column">
+              <div className="col-sm-6 mb-4 container-fluid d-flex flex-column">
                 <div className="row mb-4 flex-grow-1">
                   <div className="col-sm-12">
                     <Card className={styles.card}>
