@@ -1,11 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import Cookie from "js-cookie";
 
 import BtnPrimary from '../Buttons/BtnPrimary';
 import BtnSecondary from '../Buttons/BtnSecondary';
-import LoginModal from "../LoginModal";
-import LogoutModal from "../LogoutModal";
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import logo from "../../images/logo.png";
@@ -15,28 +12,10 @@ import styles from "./style.module.css";
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
-
-  const openLoginModal = () => {
-    setShowLoginModal(true);
-  };
-
-  const closeLoginModal = () => {
-    setShowLoginModal(false);
-  };
+  const { sessionUser, toggleLogoutModal, toggleLoginModal } = useContext(SessionUserContext);
 
   const openRegister = () => {
     window.open("/register", "_blank");
-  };
-
-  const handleConfirmLogout = () => {
-    Cookie.remove("userToken");
-    Cookie.remove("userAccount");
-    setSessionUser(null);
-
-    setShowLogoutModal(false);
   };
 
   const getNavLink = (path) => {
@@ -120,7 +99,7 @@ const Navbar = () => {
 
           {!sessionUser && (
             <div className="d-flex justify-content-center py-2 px-5">
-              <BtnPrimary onClick={openLoginModal}>Login</BtnPrimary>
+              <BtnPrimary onClick={toggleLoginModal}>Login</BtnPrimary>
               <BtnSecondary onClick={openRegister}>Register</BtnSecondary>
             </div>
           )}
@@ -164,9 +143,7 @@ const Navbar = () => {
                       <button
                         className="dropdown-item"
                         type="button"
-                        onClick={(e) => {
-                          setShowLogoutModal(true);
-                        }}
+                        onClick={toggleLogoutModal}
                       >
                         Logout
                       </button>
@@ -176,15 +153,6 @@ const Navbar = () => {
               </div>
             </>
           )}
-
-          <LogoutModal
-            show={showLogoutModal}
-            onHide={(e) => {
-              setShowLogoutModal(false);
-            }}
-            onConfirm={handleConfirmLogout}
-          />
-          <LoginModal show={showLoginModal} closeCallback={closeLoginModal} />
         </div>
       </div>
     </nav>

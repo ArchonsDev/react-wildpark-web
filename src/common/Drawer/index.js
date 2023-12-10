@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router";
-import Cookie from "js-cookie";
+
+import LogoutModal from "../LogoutModal";
 
 import logo from "../../images/logo_circle.png";
-import LogoutModal from "../LogoutModal";
+
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./styles.module.css";
@@ -12,40 +13,15 @@ import styles from "./styles.module.css";
 const Drawer = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [brand, setBrand] = useState("");
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+  const { toggleLogoutModal } = useContext(SessionUserContext);
 
-  useEffect(() => {
-    let brandName = "";
-    switch (location.pathname) {
-      case "/dashboard":
-        brandName = "Dashboard";
-        break;
-      case "/bookings":
-        brandName = "Bookings";
-        break;
-      case "/settings":
-        brandName = "Settings";
-        break;
-      default:
-        brandName = "WildPark";
-        break;
-    }
-    setBrand(brandName);
-  }, [location.pathname]);
+  const brandNames = {
+    "/dashboard": "Dashboard",
+    "/bookings": "Bookings",
+    "/settings": "Settings",
+  }
 
-  const navigateToLanding = () => {
-    navigate("/");
-  };
-
-  const handleConfirmLogout = () => {
-    Cookie.remove("userToken");
-    Cookie.remove("userAccount");
-    setSessionUser(null);
-    setShowLogoutModal(false);
-    navigateToLanding();
-  };
+  const brand = brandNames[location.pathname] ? brandNames[location.pathname] : "WildPark";
 
   return (
     <div className="Drawer">
@@ -67,7 +43,7 @@ const Drawer = () => {
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
               className={styles.sidebar}
               placement="start">
-              <Offcanvas.Header onClick={navigateToLanding}>
+              <Offcanvas.Header onClick={e => navigate("/")}>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                   <div className={styles.brand}>
                     <img src={logo} className={styles.logo} alt="logo" />
@@ -75,27 +51,27 @@ const Drawer = () => {
                   </div>
                 </Offcanvas.Title>
               </Offcanvas.Header>
-              <Offcanvas.Body className="d-flex flex-column">
+              <Offcanvas.Body className="d-flex flex-column p-0">
                 <div className="flex-grow-1">
-                  <Nav className="justify-content-end flex-grow-1 pe-3">
-                    <Nav.Link href="/dashboard" className={styles.navItem}>
+                  <Nav>
+                    <Nav.Link href="#" onClick={e => navigate("/dashboard")} className={`mx-3 my-1 p-3 ${location.pathname === "/dashboard" ? styles.active : styles.navItem}`}>
                       <i
                         className={`fa-solid fa-house fa-lg ${styles.drawerIcon}`}></i>{" "}
-                      Home
+                      Dashboard
                     </Nav.Link>
-                    <Nav.Link href="/bookings" className={styles.navItem}>
+                    <Nav.Link href="#" onClick={e => navigate("/bookings")} className={`mx-3 my-1 p-3 ${location.pathname === "/bookings" ? styles.active : styles.navItem}`}>
                       <i
                         className={`fa-solid fa-scroll fa-lg ${styles.drawerIcon}`}></i>{" "}
                       My Bookings
                     </Nav.Link>
-                    <Nav.Link href="/settings" className={styles.navItem}>
+                    <Nav.Link href="#" onClick={e => navigate("/settings")} className={`mx-3 my-1 p-3 ${location.pathname === "/settings" ? styles.active : styles.navItem}`}>
                       <i
                         className={`fa-solid fa-gear fa-lg ${styles.drawerIcon}`}></i>{" "}
                       Settings
                     </Nav.Link>
 
                     {location.pathname === "/dashboard" && (
-                      <Nav.Link href="/" className={styles.navItem}>
+                      <Nav.Link href="#" onClick={e => window.print()} className={`mx-3 my-1 p-3 ${location.pathname === "/dashboard" ? styles.navItem : styles.hidden}`}>
                         <i
                           className={`fa-solid fa-file-arrow-down fa-lg ${styles.drawerIcon}`}></i>{" "}
                         Export
@@ -106,10 +82,8 @@ const Drawer = () => {
 
                 <Nav.Item className={styles.logout}>
                   <Nav.Link
-                    className={styles.navItem}
-                    onClick={(e) => {
-                      setShowLogoutModal(true);
-                    }}>
+                    className={`mx-3 mb-3 p-3 ${styles.navItem}`}
+                    onClick={toggleLogoutModal}>
                     <i
                       className={`fa-solid fa-arrow-right-from-bracket fa-lg ${styles.drawerIcon}`}></i>{" "}
                     Log out
@@ -118,14 +92,6 @@ const Drawer = () => {
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </Container>
-
-          <LogoutModal
-            show={showLogoutModal}
-            onHide={(e) => {
-              setShowLogoutModal(false);
-            }}
-            onConfirm={handleConfirmLogout}
-          />
         </Navbar>
       ))}
     </div>
