@@ -1,8 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Nav, Navbar, Container, Offcanvas } from "react-bootstrap";
 import { useNavigate, useLocation } from "react-router";
-
-import LogoutModal from "../LogoutModal";
 
 import logo from "../../images/logo_circle.png";
 
