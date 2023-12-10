@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { Card } from "react-bootstrap";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
-import BtnSecondary from "../../common/Buttons/BtnSecondary";
 
 import styles from "./styles.module.css";
 
@@ -16,7 +15,7 @@ import styles from "./styles.module.css";
 // How will notifications work?
 
 const Dashboard = () => {
-  const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+  const { sessionUser } = useContext(SessionUserContext);
   const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
@@ -31,20 +30,19 @@ const Dashboard = () => {
 
   return (
     <div className={styles.Dashboard}>
-      <div className={`${styles.backgroundContent} container-fluid`}>
-        <div
-          className={`${styles.content} container d-flex align-items-center flex-column`}>
-          <div className={styles.dateTab}>
-            <div className={styles.date}>{currentDate.toLocaleString()}</div>
-          </div>
-          <div className={styles.redBox}>
+      <div className={`${styles.content} container d-flex flex-column justify-content-end align-items-center`}>
+        <div className={`${styles.dateTab} row d-flex justify-content-end`}>
+          <div className={`${styles.date} col-sm-3 py-2 d-flex justify-content-center align-items-center`}>{currentDate.toLocaleString()}</div>
+        </div>
+        <div className={`${styles.redBox} row mt-3 p-5`}>
+          <div className="col-sm-12 container-fluid d-flex flex-column mx-0 px-0">
             <div className="row">
-              <div className="col">
-                <Card>
+              <div className="col-sm-12">
+                <Card className={styles.card}>
                   <Card.Body className={styles.userContent}>
                     <i className="fa-solid fa-circle-user fa-2xl"></i>
                     <div className={styles.userInfo}>
-                      <Card.Title style={{ marginBottom: "0" }}>
+                      <Card.Title className="mb-0">
                         {sessionUser.firstname} {sessionUser.lastname}
                       </Card.Title>
                       <Card.Text>{sessionUser.email}</Card.Text>
@@ -53,50 +51,55 @@ const Dashboard = () => {
                 </Card>
               </div>
             </div>
-
-            <div className="row">
-              <div className="col-md-7 col-12 mt-4">
+            <div className="row flex-grow-1 mt-4">
+              <div className="col-sm-6">
                 <Card className={styles.notificationCard}>
-                  <Card.Header className={styles.cardHeader}>
+                  <Card.Header className={`${styles.cardHeader} d-flex justify-content-center`}>
                     Notification Center
                   </Card.Header>
-                  <Card.Body className={styles.cardContent}>
+                  <Card.Body className={`${styles.cardContent} d-flex flex-column justify-content-center align-items-center`}>
                     <Card.Text className="text-muted">
                       No new notifications.
                     </Card.Text>
                   </Card.Body>
                 </Card>
               </div>
-
-              <div className="col md-4 mt-4">
-                <Card className={styles.card}>
-                  <Card.Header className={styles.cardHeader}>
-                    Organizations
-                  </Card.Header>
-                  <Card.Body className={styles.cardContent}>
-                    <div>
-                      <i class="fa-regular fa-square-plus fa-5x"></i>
-                    </div>
-                    <Card.Text className="text-muted">
-                      Click to create or join an organization.
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
-
-                <Card className={`${styles.card} mt-4`}>
-                  <Card.Header className={styles.cardHeader}>
-                    Booking Information
-                  </Card.Header>
-                  <Card.Body className={styles.cardContent}>
-                    <Card.Text className="text-muted">No bookings.</Card.Text>
-                  </Card.Body>
-                </Card>
+              <div className="col-sm-6 container-fluid d-flex flex-column">
+                <div className="row mb-4 flex-grow-1">
+                  <div className="col-sm-12">
+                    <Card className={styles.card}>
+                      <Card.Header className={`${styles.cardHeader} d-flex justify-content-center`}>
+                        Organizations
+                      </Card.Header>
+                      <Card.Body className={`${styles.cardContent} d-flex flex-column justify-content-center align-items-center`}>
+                        <div>
+                          <i class="fa-regular fa-square-plus fa-5x"></i>
+                        </div>
+                        <Card.Text className="text-muted">
+                          Click to create or join an organization.
+                        </Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                </div>
+                <div className="row flex-grow-1">
+                  <div className="col-sm-12">
+                    <Card className={styles.card}>
+                      <Card.Header className={`${styles.cardHeader} d-flex justify-content-center`}>
+                        Booking Information
+                      </Card.Header>
+                      <Card.Body className={`${styles.cardContent} d-flex flex-column justify-content-center align-items-center`}>
+                        <Card.Text className="text-muted">No bookings.</Card.Text>
+                      </Card.Body>
+                    </Card>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
