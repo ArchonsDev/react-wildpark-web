@@ -1,33 +1,34 @@
-.backgroundContent {
-  min-height: 100vh;
+.Bookings {
+  height: 100vh;
   background-color: #f4f3ef;
 }
 
+.content {
+  height: 100%;
+}
+
+.dateTab {
+  color: #7c0902;
+  font-family: "Poppins-SemiBold";
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.date {
+  background-color: #f4f3ef;
+  border: 2px solid #7c0902;
+  border-radius: 30px;
+}
+
 .redBox {
-  position: relative;
   background-color: #7c0902;
-  padding: 2em;
-  min-height: calc(100vh - 30px);
-  margin-top: 7em;
-  border-radius: 10px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  width: 60vw;
+  border-radius: 10px 10px 0 0;
+  width: 100%;
+  height: 80%;
 }
 
 .whiteBox {
-  background-color: white;
-  min-height: 100vh;
-  border-radius: 10px;
-}
-
-.columnStyle {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  flex-direction: column;
-  padding: 2em;
-  flex: 1;
+  border-radius: 10px 10px 0 0;
 }
 
 .header {
