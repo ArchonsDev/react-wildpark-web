@@ -1,7 +1,14 @@
 .App {
+  height: 100vh;
+}
+
+.bg {
   background-image: url("../images/homepage.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  height: 100vh;
+}
+
+.no-bg {
+  background-color: #f4f3ef;
 }

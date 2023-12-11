@@ -65,7 +65,7 @@ const App = () => {
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
-      <div className={`${styles.App}`}>
+      <div className={`${styles.App} ${!hideNavbar ? styles['no-bg'] : styles.bg}`}>
         {hideNavbar && <Navbar />}
         {displayDrawer && <Drawer />}
         <Routes>
