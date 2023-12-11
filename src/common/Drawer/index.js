@@ -17,6 +17,7 @@ const Drawer = () => {
     "/dashboard": "Dashboard",
     "/bookings": "Bookings",
     "/settings": "Settings",
+    "/organizations": "Organizations",
   }
 
   const brand = brandNames[location.pathname] ? brandNames[location.pathname] : "WildPark";

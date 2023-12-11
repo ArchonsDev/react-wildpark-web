@@ -1,0 +1,71 @@
+.Organizations {
+  height: 100vh;
+}
+
+.content {
+  border-radius: 10px 10px 0 0;
+  color: #18314F;
+  height: 80%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.border {
+  border: 2px solid #7c0902 !important;
+}
+
+.banner {
+  border-radius: 10px;
+}
+
+.org-name {
+  font-family: "Poppins-Bold";
+  font-size: 1.4em;
+}
+
+.tab {
+  background-color: #f4f3ef !important;
+  color: #18314F !important;
+  font-family: "Poppins-Bold" !important;
+  height: 48px;
+  border-radius: 10px 0 0 10px !important;
+  border-right: none !important;
+}
+
+.tab:hover {
+  color: #f7b538;
+  background-color: #7c0902;
+  border: 2px solid #f7b538;
+}
+
+.tab:active {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+  border: 2px solid #7c0902 !important;
+  border-right: none !important;
+}
+
+.active {
+  color: #7c0902 !important;
+  background-color: #f7b538 !important;
+  border: 2px solid #7c0902 !important;
+  border-right: none !important;
+}
+
+.tab-content {
+  border-radius: 0 10px 10px 10px;
+}
+
+.edit-btn {
+  font-family: "Poppins-Medium";
+  font-size: 1.1em;
+}
+
+.field {
+  font-family: "Poppins-Medium";
+  color: #18314F;
+}
+
+.field-title {
+  font-family: "Poppins-Bold";
+}

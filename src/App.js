@@ -13,6 +13,7 @@ import Support from "./pages/Support";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Bookings from "./pages/Bookings";
+import Organizations from "./pages/Organizations";
 
 import { useToggle } from "./hooks/useToggle";
 
@@ -43,9 +44,10 @@ const App = () => {
     "/dashboard",
     "/bookings",
     "/settings",
+    "/organizations",
   ].includes(location.pathname);
 
-  const displayDrawer = ["/dashboard", "/bookings", "/settings"].includes(
+  const displayDrawer = ["/dashboard", "/bookings", "/settings", "/organizations"].includes(
     location.pathname
   );
 
@@ -57,6 +59,7 @@ const App = () => {
     "/dashboard": "Dashboard",
     "/settings": "Settings",
     "/bookings": "Bookings",
+    "/organizations": "Organizations",
   };
 
   document.title = tabNames[location.pathname]
@@ -76,6 +79,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/bookings" element={<Bookings />} />
+          <Route path="/organizations" element={<Organizations />} />
         </Routes>
         <LogoutModal />
         <LoginModal />
