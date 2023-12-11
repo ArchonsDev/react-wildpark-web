@@ -1,5 +1,4 @@
 .backgroundContent {
-  height: 100vh;
   background-color: #f4f3ef;
 }
 
@@ -154,5 +153,3 @@
   color: #f7b538;
   background-color: #7c0902;
 }
-
-.settings-panel {}

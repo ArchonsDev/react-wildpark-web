@@ -81,7 +81,7 @@ const Settings = () => {
               </div>
             </div>
 
-            <div className={`${styles['settings-panel']} col-md-9 d-flex flex-column`}>
+            <div className="col-md-9 d-flex flex-column">
               {showAccountBox && <AccountSettings />}
               {showSecurityBox && <SecuritySettings />}
               {showVehicleBox && <VehicleSettings />}
