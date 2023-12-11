@@ -3,11 +3,7 @@
   background-color: #f4f3ef;
 }
 
-.cardsContainer {
-  font-size: 20px;
-}
-
-.cardsContainer Button {
+.selector-button Button {
   height: 90px;
   width: 300px;
   font-size: 20px;
@@ -19,30 +15,69 @@
   border: #7c0902 2px solid;
 }
 
-.cardsContainer p {
+.selector-button p {
   font-family: "Poppins-Medium";
   font-size: 0.7em;
   line-height: 0.9;
   color: #0d0630;
 }
 
-.cardsContainer Button:hover {
+.selector-button Button:hover {
   color: #f7b538;
   background-color: #7c0902;
   border: none;
 }
 
-.cardsContainer Button:hover p {
+.selector-button Button:hover p {
   color: #f4f3ef;
 }
 
-.cardsContainer Button:active {
+.selector-button Button:active {
   color: #f7b538 !important;
   background-color: #7c0902 !important;
   border: #f7b538 2px solid !important;
 }
 
-.cardsContainer Button:active span {
+.selector-button Button:active span {
+  color: #f4f3ef !important;
+}
+
+.active-button button {
+  height: 90px;
+  width: 300px;
+  font-size: 20px;
+  font-family: "Poppins-Bold";
+  text-align: left;
+  border-radius: 13px;
+  color: #f7b538;
+  background-color: #7c0902;
+  border: #7c0902 2px solid;
+}
+
+.active-button p {
+  font-family: "Poppins-Medium";
+  font-size: 0.7em;
+  line-height: 0.9;
+  color: #f4f3ef;
+}
+
+.active-button Button:hover {
+  color: #f7b538;
+  background-color: #7c0902;
+  border: none;
+}
+
+.active-button Button:hover p {
+  color: #f4f3ef;
+}
+
+.active-button Button:active {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+  border: #f7b538 2px solid !important;
+}
+
+.active-button Button:active span {
   color: #f4f3ef !important;
 }
 
@@ -62,3 +97,62 @@
 .userPfp {
   color: #f7b538;
 }
+
+.settingsHeader {
+  font-size: 2em;
+  color: #7c0902;
+  font-weight: bolder;
+}
+
+.password-box {
+  border-radius: 10px;
+  background-color: #f7b538;
+}
+
+.form-label {
+  font-family: "Poppins-Bold";
+  color: #7c0902;
+}
+
+.field {
+  font-family: "Poppins-Medium";
+  border-bottom: 2px solid #7c0902;
+  color: #7c0902;
+}
+
+.field-no-border {
+  font-family: "Poppins-Medium";
+  color: #7c0902;
+}
+
+.vehicle-card {
+  border: 2px solid #7c0902;
+  border-radius: 10px;
+}
+
+.vehicle-card-header {
+  background-color: #7c0902;
+  color: #f4f3ef;
+}
+
+.add-vehicle-btn {
+  background-color: #f7b538;
+  border: none;
+  border-radius: 10px;
+  color: #7c0902;
+  height: 48px;
+  font-family: "Degradasi";
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.add-vehicle-btn:hover {
+  color: #f7b538;
+  background-color: #7c0902;
+}
+
+.add-vehicle-btn:active {
+  color: #f7b538;
+  background-color: #7c0902;
+}
+
+.settings-panel {}
