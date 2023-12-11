@@ -1,34 +1,50 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./style.module.css";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import image from "../../images/google-placeholder.png";
 
 import { Card, ListGroup } from "react-bootstrap";
+
 //TO-DO:
-//Add tabs of user's bookings
-//Add details of the booking details
-//Necessary buttons (Reserved and cancel)
-//Actual rendering of booked space (not placeholder)
+// Add tabs of user's bookings
+// Add details of the booking details
+// Necessary buttons (Reserved and cancel)
+// Actual rendering of booked space (not placeholder)
+
 const Bookings = () => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <div className={styles.Bookings}>
-      <div className={`${styles.backgroundContent} container-fluid`}>
-        <div
-          className={`${styles.content} container d-flex align-items-center flex-column`}>
-          <div className={styles.redBox}>
-            <div className={`${styles.whiteBox} d-flex flex-row`}>
-              <div
-                className={`col ${styles.columnStyle}`}
-                style={{ justifyContent: "space-between" }}>
+      <div
+        className={`${styles.content} container d-flex flex-column justify-content-end align-items-center`}>
+        <div className={`${styles.dateTab} row d-flex justify-content-end`}>
+          <div
+            className={`${styles.date} col-sm-3 py-2 d-flex justify-content-center align-items-center`}>
+            {currentDate.toLocaleString()}
+          </div>
+        </div>
+        <div className={`${styles.redBox} row pt-5 px-5 pb-0 mt-3`}>
+          <div
+            className={`${styles.whiteBox} container bg-white d-flex justify-content-center flex-column p-3`}>
+            <div className="row flex-grow-1">
+              <div className="col-sm-4 mb-2 d-flex align-items-center flex-column">
                 <span className={styles.header}>Bookings</span>
-                <div className={styles.activeBookings}></div>
-                <BtnSecondary>New Booking</BtnSecondary>
+                <div className={`${styles.activeBookings} flex-grow-1`}></div>
+                <BtnSecondary className="mt-auto">New Booking</BtnSecondary>
               </div>
-
-              <div
-                className={`col ${styles.columnStyle}`}
-                style={{ flex: "2" }}>
-                <Card style={{ width: "100%" }}>
+              <div className="col-sm-8 mb-2 d-flex align-items-center flex-column">
+                <Card style={{ minWidth: "100%" }}>
                   <Card.Img variant="top" src={image} />
                   <ListGroup className={styles.bookingDetails}>
                     <ListGroup.Item>Date & Time</ListGroup.Item>
