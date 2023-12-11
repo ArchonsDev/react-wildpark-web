@@ -153,3 +153,12 @@
   color: #f7b538;
   background-color: #7c0902;
 }
+
+.field-edit {
+  border: none !important;
+  border-bottom: 1px solid #7c0902 !important;
+}
+
+.field-edit:focus {
+  border: none;
+}
