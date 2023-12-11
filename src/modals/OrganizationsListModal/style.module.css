@@ -1,0 +1,28 @@
+.title {
+  font-family: "Poppins-Bold";
+  color: #7c0902 !important;
+}
+
+.organizationItem {
+  font-family: "Poppins-Regular";
+  color: #0d0630 !important;
+  border-radius: 5px;
+  border-bottom: 1px solid #7c0902;
+  font-size: 1.2em;
+}
+
+.organizationName {
+  font-family: "Poppins-SemiBold";
+  font-size: 1.2em;
+}
+
+.selectedOrganization {
+  background-color: #7c0902;
+  border-radius: 5px;
+  color: #f7b538 !important;
+}
+
+.successMessage {
+  font-family: "Poppins-SemiBold";
+  color: #0d0630 !important;
+}
