@@ -1,20 +1,16 @@
 .Dashboard {
-  background-color: #f4f3ef;
   height: 100vh;
-}
-
-.backgroundContent {
-  height: 100%;
+  background-color: #f4f3ef;
 }
 
 .content {
   height: 100%;
+  overflow-y: hidden;
 }
 
 .card,
 .notificationCard {
   border: none !important;
-  height: 100% !important;
 }
 
 .cardHeader {
@@ -51,6 +47,24 @@
 .redBox {
   background-color: #7c0902;
   border-radius: 10px 10px 0 0;
-  width: 100%;
-  height: 80%;
+  height: 85%;
+  overflow-y: auto;
+}
+
+.nameRole {
+  color: #384e77;
+}
+
+.organizationName {
+  font-family: "Poppins-Bold";
+}
+
+.organizationRole {
+  font-family: "Poppins-Medium";
+}
+
+.org-item:hover * {
+  background-color: #7c0902;
+  border-radius: 5px;
+  color: #f7b538 !important;
 }
