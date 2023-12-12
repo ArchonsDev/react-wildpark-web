@@ -76,25 +76,25 @@ const OrganizationListModal = ({ show, closeCallback }) => {
       aria-labelledby="contained-modal-title-vcenter"
       centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter" className={`${styles.title}`}>
+        <Modal.Title
+          id="contained-modal-title-vcenter"
+          className={`${styles.title}`}>
           Organizations
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body className="container-fluid d-flex justify-content-center">
+      <Modal.Body className="container-fluid d-flex align-items-center flex-column">
         {organizations.map((organization) => (
-          <div className="row w-100">
+          <div key={organization.id} className="row w-100">
             <div className="col-md-12">
               <OrgThumbnail
-                className={`${styles['org-item']}`}
-                key={organization.id}
+                className={`${styles["org-item"]}`}
                 name={organization.name}
                 owner={organization.owner}
-                onClick={e => navigate(`/organizations/${organization.id}`)}
+                onClick={(e) => navigate(`/organizations/${organization.id}`)}
               />
             </div>
           </div>
-        ))
-        }
+        ))}
       </Modal.Body>
       <Modal.Footer className="d-flex justify-content-end">
         <BtnSecondary>Create</BtnSecondary>

@@ -71,13 +71,13 @@ const OrganizationCard = () => {
         <>
           <Card.Body className={`${styles.cardContent} d-flex flex-column align-items-center"`}>
             {orgs.ownedOrganizations.map(org => (
-              <OrgThumbnail onClick={e => navigate(`/organizations/${org.id}`)} className={`${styles['org-item']} w-100 my-1`} name={org.name} owner={"Owner"} />
+              <OrgThumbnail key={org.id} onClick={e => navigate(`/organizations/${org.id}`)} className={`${styles['org-item']} w-100 my-1`} name={org.name} owner={"Owner"} />
             ))}
             {orgs.adminOrganizations.map(org => (
-              <OrgThumbnail onClick={e => navigate(`/organizations/${org.id}`)} className={`${styles['org-item']} w-100 my-1`} name={org.name} owner={"Admin"} />
+              <OrgThumbnail key={org.id} onClick={e => navigate(`/organizations/${org.id}`)} className={`${styles['org-item']} w-100 my-1`} name={org.name} owner={"Admin"} />
             ))}
             {orgs.memberOrganizations.map(org => (
-              <OrgThumbnail onClick={e => navigate(`/organizations/${org.id}`)} className={`${styles['org-item']} w-100 my-1`} name={org.name} owner={"Member"} />
+              <OrgThumbnail key={org.id} onClick={e => navigate(`/organizations/${org.id}`)} className={`${styles['org-item']} w-100 my-1`} name={org.name} owner={"Member"} />
             ))}
           </Card.Body>
           <Card.Footer className="container-fluid m-0 px-0">

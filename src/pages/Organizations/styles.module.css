@@ -5,7 +5,7 @@
 .content {
   background-color: #7c0902;
   border-radius: 10px 10px 0 0;
-  color: #18314F;
+  color: #18314f;
   height: 85%;
   overflow-x: hidden;
   overflow-y: auto;
@@ -27,7 +27,7 @@
 
 .tab {
   background-color: #f4f3ef !important;
-  color: #18314F !important;
+  color: #18314f !important;
   font-family: "Poppins-Bold" !important;
   height: 48px;
   border-radius: 10px 0 0 10px !important;
@@ -56,7 +56,7 @@
 
 .tab-content {
   border-radius: 0 10px 10px 10px;
-  background-color: #f4f3ef
+  background-color: #f4f3ef;
 }
 
 .edit-btn {
@@ -66,7 +66,7 @@
 
 .field {
   font-family: "Poppins-Medium";
-  color: #18314F;
+  color: #18314f;
 }
 
 .field-title {
@@ -80,4 +80,23 @@
 
 .field-edit:focus {
   border: none;
+}
+
+.parkingHeader {
+  background-color: #f7b538 !important;
+  color: #0d0630 !important;
+  font-family: "Poppins-SemiBold";
+}
+
+.parkingContent {
+  font-family: "Poppins-Medium";
+  color: #18314f !important;
+}
+
+.icon {
+  color: #7c0902;
+}
+
+.promote {
+  color: #568203;
 }

@@ -17,10 +17,12 @@ const Drawer = () => {
     "/dashboard": "Dashboard",
     "/bookings": "Bookings",
     "/settings": "Settings",
-    "/organizations": "Organizations",
-  }
+    "/organizations/:id": "Organizations",
+  };
 
-  const brand = brandNames[location.pathname] ? brandNames[location.pathname] : "WildPark";
+  const brand = location.pathname.startsWith("/organizations/")
+    ? "Organizations"
+    : brandNames[location.pathname] || "WildPark";
 
   return (
     <div className="Drawer">
@@ -42,7 +44,7 @@ const Drawer = () => {
               aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
               className={styles.sidebar}
               placement="start">
-              <Offcanvas.Header onClick={e => navigate("/")}>
+              <Offcanvas.Header onClick={(e) => navigate("/")}>
                 <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                   <div className={styles.brand}>
                     <img src={logo} className={styles.logo} alt="logo" />
@@ -53,24 +55,48 @@ const Drawer = () => {
               <Offcanvas.Body className="d-flex flex-column p-0">
                 <div className="flex-grow-1">
                   <Nav>
-                    <Nav.Link onClick={e => navigate("/dashboard")} className={`mx-3 my-1 p-3 ${location.pathname === "/dashboard" ? styles.active : styles.navItem}`}>
+                    <Nav.Link
+                      onClick={(e) => navigate("/dashboard")}
+                      className={`mx-3 my-1 p-3 ${
+                        location.pathname === "/dashboard"
+                          ? styles.active
+                          : styles.navItem
+                      }`}>
                       <i
                         className={`fa-solid fa-house fa-lg ${styles.drawerIcon}`}></i>{" "}
                       Dashboard
                     </Nav.Link>
-                    <Nav.Link onClick={e => navigate("/bookings")} className={`mx-3 my-1 p-3 ${location.pathname === "/bookings" ? styles.active : styles.navItem}`}>
+                    <Nav.Link
+                      onClick={(e) => navigate("/bookings")}
+                      className={`mx-3 my-1 p-3 ${
+                        location.pathname === "/bookings"
+                          ? styles.active
+                          : styles.navItem
+                      }`}>
                       <i
                         className={`fa-solid fa-scroll fa-lg ${styles.drawerIcon}`}></i>{" "}
                       My Bookings
                     </Nav.Link>
-                    <Nav.Link onClick={e => navigate("/settings")} className={`mx-3 my-1 p-3 ${location.pathname === "/settings" ? styles.active : styles.navItem}`}>
+                    <Nav.Link
+                      onClick={(e) => navigate("/settings")}
+                      className={`mx-3 my-1 p-3 ${
+                        location.pathname === "/settings"
+                          ? styles.active
+                          : styles.navItem
+                      }`}>
                       <i
                         className={`fa-solid fa-gear fa-lg ${styles.drawerIcon}`}></i>{" "}
                       Settings
                     </Nav.Link>
 
                     {location.pathname === "/dashboard" && (
-                      <Nav.Link onClick={e => window.print()} className={`mx-3 my-1 p-3 ${location.pathname === "/dashboard" ? styles.navItem : styles.hidden}`}>
+                      <Nav.Link
+                        onClick={(e) => window.print()}
+                        className={`mx-3 my-1 p-3 ${
+                          location.pathname === "/dashboard"
+                            ? styles.navItem
+                            : styles.hidden
+                        }`}>
                         <i
                           className={`fa-solid fa-file-arrow-down fa-lg ${styles.drawerIcon}`}></i>{" "}
                         Export
