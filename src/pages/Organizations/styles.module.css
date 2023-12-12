@@ -3,9 +3,10 @@
 }
 
 .content {
+  background-color: #7c0902;
   border-radius: 10px 10px 0 0;
   color: #18314F;
-  height: 80%;
+  height: 85%;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -16,6 +17,7 @@
 
 .banner {
   border-radius: 10px;
+  background-color: #f4f3ef;
 }
 
 .org-name {
@@ -54,6 +56,7 @@
 
 .tab-content {
   border-radius: 0 10px 10px 10px;
+  background-color: #f4f3ef
 }
 
 .edit-btn {
@@ -68,4 +71,13 @@
 
 .field-title {
   font-family: "Poppins-Bold";
+}
+
+.field-edit {
+  border: none !important;
+  border-bottom: 1px solid #7c0902 !important;
+}
+
+.field-edit:focus {
+  border: none;
 }

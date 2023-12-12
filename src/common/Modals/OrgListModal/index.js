@@ -69,27 +69,30 @@ const OrganizationListModal = ({ show, closeCallback }) => {
 
   return (
     <Modal
-      size="lg"
+      size="xxl"
       show={show}
       onHide={closeCallback}
       scrollable={true}
       aria-labelledby="contained-modal-title-vcenter"
-      className="d-flex justify-content-center align-items-center"
       centered>
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter" className={`${styles.title}`}>
           Organizations
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
+      <Modal.Body className="container-fluid d-flex justify-content-center">
         {organizations.map((organization) => (
-          <OrgThumbnail
-            className={`${styles['org-item']} my-1`}
-            key={organization.id}
-            name={organization.name}
-            owner={organization.owner}
-            onClick={e => navigate(`/organizations/${organization.id}`)}
-          />
+          <div className="row w-100">
+            <div className="col-md-12">
+              <OrgThumbnail
+                className={`${styles['org-item']}`}
+                key={organization.id}
+                name={organization.name}
+                owner={organization.owner}
+                onClick={e => navigate(`/organizations/${organization.id}`)}
+              />
+            </div>
+          </div>
         ))
         }
       </Modal.Body>
