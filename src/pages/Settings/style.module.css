@@ -162,3 +162,16 @@
 .field-edit:focus {
   border: none;
 }
+
+
+.ticketHeader {
+  background-color: #f7b538;
+  color: #7c0902;
+  font-family: "Poppins-Bold";
+}
+
+.ticketContents {
+  color: #7c0902 !important;
+  font-family: "Poppins-SemiBold";
+  
+}
