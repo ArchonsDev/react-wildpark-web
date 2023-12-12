@@ -22,6 +22,12 @@
   color: #f7b538 !important;
 }
 
+.org-item:hover * {
+  background-color: #7c0902;
+  border-radius: 5px;
+  color: #f7b538 !important;
+}
+
 .successMessage {
   font-family: "Poppins-SemiBold";
   color: #0d0630 !important;
