@@ -52,18 +52,16 @@ const Settings = () => {
             <div className="col-md-3">
               <div className="row mb-4">
                 <div
-                  className={`${
-                    showAccountBox
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  } col-md-12 d-flex justify-content-center`}
+                  className={`${showAccountBox
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    } col-md-12 d-flex justify-content-center`}
                 >
                   <Button
-                    className={`${
-                      showAccountBox
-                        ? styles["active-button"]
-                        : styles["selector-button"]
-                    }`}
+                    className={`${showAccountBox
+                      ? styles["active-button"]
+                      : styles["selector-button"]
+                      }`}
                     onClick={handleAccountSettingsClick}
                   >
                     Account Settings <br />
@@ -73,11 +71,10 @@ const Settings = () => {
               </div>
               <div className="row mb-4">
                 <div
-                  className={`${
-                    showSecurityBox
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  } col-md-12 d-flex justify-content-center`}
+                  className={`${showSecurityBox
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    } col-md-12 d-flex justify-content-center`}
                 >
                   <Button onClick={handlePasswordSecurityClick}>
                     Password & Security <br />
@@ -87,11 +84,10 @@ const Settings = () => {
               </div>
               <div className="row mb-4">
                 <div
-                  className={`${
-                    showVehicleBox
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  } col-md-12 d-flex justify-content-center`}
+                  className={`${showVehicleBox
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    } col-md-12 d-flex justify-content-center`}
                 >
                   <Button onClick={handleRegisteredVehiclesClick}>
                     Registered Vehicles <br />
@@ -101,11 +97,10 @@ const Settings = () => {
               </div>
               <div className="row mb-4">
                 <div
-                  className={`${
-                    showTicketsBox
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  } col-md-12 d-flex justify-content-center`}
+                  className={`${showTicketsBox
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    } col-md-12 d-flex justify-content-center`}
                 >
                   <Button onClick={handleTicketsCitationsClick}>
                     Tickets & Citations <br />
@@ -119,7 +114,6 @@ const Settings = () => {
               {showAccountBox && <AccountSettings />}
               {showSecurityBox && <SecuritySettings />}
               {showVehicleBox && <VehicleSettings />}
-
               {showTicketsBox && <TicketSettings />}
             </div>
           </div>

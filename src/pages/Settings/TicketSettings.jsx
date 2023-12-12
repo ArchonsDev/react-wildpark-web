@@ -1,13 +1,12 @@
 import React from "react";
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+
+import { Container, Row, Col, ListGroup, Card } from "react-bootstrap";
+
 import styles from "./style.module.css";
 
 function TicketSettings() {
   return (
-    <Card style={{ width: '50rem', marginLeft: '7em', borderRadius: '20px' }}>
+    <Card style={{ width: '100%' }}>
       <Card.Body className={styles.ticketHeader}>
         <Card.Title>Tickets</Card.Title>
       </Card.Body>
@@ -36,7 +35,7 @@ function TicketSettings() {
 
 function CitationSettings() {
   return (
-    <Card style={{ width: '50rem', marginTop: '20px', marginLeft: '7em' }}>
+    <Card style={{ width: '100%' }}>
       <Card.Body className={styles.ticketHeader}>
         <Card.Title>Citations</Card.Title>
       </Card.Body>
@@ -67,18 +66,18 @@ function CitationSettings() {
 
 function SettingsPage() {
   return (
-    <div>
+    <Container fluid className="m-0 p-0 flex-grow-1">
       <Row>
-        <Col>
+        <Col md={12}>
           <TicketSettings />
         </Col>
       </Row>
-      <Row>
-        <Col>
+      <Row className="mt-3">
+        <Col md={12}>
           <CitationSettings />
         </Col>
       </Row>
-    </div>
+    </Container>
   );
 }
 
