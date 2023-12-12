@@ -1,3 +1,7 @@
+.Settings {
+  height: 100vh;
+}
+
 .backgroundContent {
   background-color: #f4f3ef;
 }
@@ -173,5 +177,5 @@
 .ticketContents {
   color: #7c0902 !important;
   font-family: "Poppins-SemiBold";
-  
+
 }
