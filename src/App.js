@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 import Navbar from "./common/Navbar";
 import Drawer from "./common/Drawer";
@@ -13,6 +14,7 @@ import Support from "./pages/Support";
 import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Bookings from "./pages/Bookings";
+import Organizations from "./pages/Organizations";
 
 import { useToggle } from "./hooks/useToggle";
 
@@ -23,19 +25,36 @@ import styles from "./styles/App.module.css";
 const App = () => {
   const location = useLocation();
 
-  const userCookie = Cookie.get("userAccount");
+  const userCookie = Cookies.get("userAccount");
+
+  const [showLogoutModal, toggleLogoutModal] = useToggle(false);
+  const [showLoginModal, toggleLoginModal] = useToggle(false);
   const [sessionUser, setSessionUser] = useState(
     userCookie ? JSON.parse(userCookie) : null
   );
-  const [showLogoutModal, toggleLogoutModal] = useToggle(false);
-  const [showLoginModal, toggleLoginModal] = useToggle(false);
-  const sessionUserContextValue = {
-    sessionUser,
-    setSessionUser,
-    showLogoutModal,
-    toggleLogoutModal,
-    showLoginModal,
-    toggleLoginModal,
+
+  const reloadUser = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/v1/accounts/${sessionUser.id}`,
+        {
+          headers: {
+            "Authorization": `Bearer ${Cookies.get("userToken")}`,
+            "Content-Type": "application/json",
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        if (response.data) {
+          setSessionUser(response.data);
+        }
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        console.log(error);
+      }
+    }
   };
 
   const hideNavbar = ![
@@ -43,11 +62,10 @@ const App = () => {
     "/dashboard",
     "/bookings",
     "/settings",
-  ].includes(location.pathname);
+    "/organizations",
+  ].some((path) => location.pathname.startsWith(path));
 
-  const displayDrawer = ["/dashboard", "/bookings", "/settings"].includes(
-    location.pathname
-  );
+  const displayDrawer = ["/dashboard", "/bookings", "/settings", "/organizations"].some((path) => location.pathname.startsWith(path));
 
   const tabNames = {
     "/": "Home",
@@ -57,11 +75,22 @@ const App = () => {
     "/dashboard": "Dashboard",
     "/settings": "Settings",
     "/bookings": "Bookings",
+    "/organizations": "Organizations",
   };
 
   document.title = tabNames[location.pathname]
     ? tabNames[location.pathname]
     : "WildPark";
+
+  const sessionUserContextValue = {
+    sessionUser,
+    setSessionUser,
+    showLogoutModal,
+    toggleLogoutModal,
+    showLoginModal,
+    toggleLoginModal,
+    reloadUser
+  };
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
@@ -76,6 +105,7 @@ const App = () => {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/bookings" element={<Bookings />} />
+          <Route path="/organizations/:id" element={<Organizations />} />
         </Routes>
         <LogoutModal />
         <LoginModal />

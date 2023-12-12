@@ -4,7 +4,10 @@ import Cookies from "js-cookie";
 
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
-import { Modal } from "react-bootstrap";
+import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
+
+import { useSwitch } from "../../hooks/useSwitch";
+import { useTrigger } from "../../hooks/useTrigger";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
@@ -16,7 +19,7 @@ const VehicleSettings = () => {
   const { sessionUser } = useContext(SessionUserContext);
   const [vehicles, setVehicles] = useState([]);
   const [showAddVehicleForm, toggleShowAddVehicleForm] = useToggle(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, triggerShowSuccess] = useTrigger();
   const [form, setForm] = useState({
     plateNumber: '',
     brand: '',
@@ -83,21 +86,18 @@ const VehicleSettings = () => {
 
       if (response.status === 200) {
         fetchVehicles();
-        setShowSuccess(true);
-        setTimeout(() => {
-          setShowSuccess(prev => !prev);
-          toggleShowAddVehicleForm();
-          setForm({
-            plateNumber: '',
-            brand: '',
-            make: '',
-            model: '',
-            color: '',
-            type: '',
-            displacement: 0,
-            size: '',
-          });
-        }, 5000);
+        triggerShowSuccess(5000);
+        setForm({
+          plateNumber: '',
+          brand: '',
+          make: '',
+          model: '',
+          color: '',
+          type: '',
+          displacement: 0,
+          size: '',
+        });
+        toggleShowAddVehicleForm();
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
@@ -133,6 +133,13 @@ const VehicleSettings = () => {
               <span className="d-flex align-items-center p-0 m-0">Add Vehicle</span>
             </button>
           </div>
+          <div className="col-md-12 mt-4">
+            {showSuccess && (
+              <div className="alert alert-success mb-3" role="alert">
+                Vehicle saved!
+              </div>
+            )}
+          </div>
         </div>
         :
         <>
@@ -144,13 +151,6 @@ const VehicleSettings = () => {
             </div>
           </div>
           <div className="row">
-            <div className="col-md-12">
-              {showSuccess && (
-                <div className="alert alert-success mb-3" role="alert">
-                  Vehicle saved!
-                </div>
-              )}
-            </div>
             <div className="col-md-12">
               <div className={`${styles['password-box']} p-3`}>
                 <form>
@@ -267,7 +267,7 @@ const VehicleSettings = () => {
 const VehicleCard = ({ data, onUpdate }) => {
   const [enableEditing, toggleEnableEditing] = useToggle(false);
   const [color, setColor] = useState(data.color);
-  const [showDeleteConfirm, toggleDeleteConfirm] = useToggle(false);
+  const [showDeleteModal, openDeleteModal, closeDeleteModal] = useSwitch();
 
   const handleSave = async () => {
     try {
@@ -376,39 +376,12 @@ const VehicleCard = ({ data, onUpdate }) => {
             :
             <BtnSecondary onClick={toggleEnableEditing}>Edit</BtnSecondary>
           }
-          {!enableEditing && <BtnPrimary onClick={toggleDeleteConfirm}>Delete</BtnPrimary>}
-          <ConfirmVehicleDelete show={showDeleteConfirm} onHide={toggleDeleteConfirm} onConfirm={handleDelete} />
+          {!enableEditing && <BtnPrimary onClick={openDeleteModal}>Delete</BtnPrimary>}
+          <ConfirmDeleteModal show={showDeleteModal} onHide={closeDeleteModal} onConfirm={handleDelete} />
         </div>
       </div>
     </div >
   );
 };
-
-const ConfirmVehicleDelete = ({ show, onHide, onConfirm }) => {
-  return (
-    <Modal
-      show={show}
-      onHide={onHide}
-      size="sm"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Confirm
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <p>Do you want to delete this vehicle? (It will be gone forever!)</p>
-      </Modal.Body>
-      <Modal.Footer>
-        <div className="container-fluid d-flex justify-content-between">
-          <BtnSecondary onClick={onHide}>No</BtnSecondary>
-          <BtnPrimary onClick={onConfirm}>Yes</BtnPrimary>
-        </div>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 
 export default VehicleSettings;
