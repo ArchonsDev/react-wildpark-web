@@ -16,7 +16,17 @@ const AccountSettings = () => {
 
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
   const [form, setForm] = useState({
-    ...sessionUser,
+    email: sessionUser.email,
+    firstname: sessionUser.firstname,
+    lastname: sessionUser.lastname,
+    birthdate: sessionUser.birthdate,
+    contactNo: sessionUser.contactNo,
+    gender: sessionUser.gender,
+    street: sessionUser.street,
+    municipality: sessionUser.municipality,
+    province: sessionUser.province,
+    country: sessionUser.country,
+    zipCode: sessionUser.zipCode
   });
 
   const handleChange = e => {

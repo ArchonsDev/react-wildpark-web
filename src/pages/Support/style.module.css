@@ -1,5 +1,9 @@
 @import url("../../styles/fonts.css");
 
+.Support {
+  height: 100vh;
+}
+
 .content {
   overflow-y: hidden;
 }
@@ -113,9 +117,7 @@
 }
 
 @media (min-width: 300px) and (max-width: 1399px) {
-  .customSpacing > div {
+  .customSpacing>div {
     margin-right: 4em;
   }
 }
-
-
