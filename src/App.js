@@ -39,9 +39,9 @@ const App = () => {
         `http://localhost:8080/api/v1/accounts/${sessionUser.id}`,
         {
           headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
+            Authorization: `Bearer ${Cookies.get("userToken")}`,
             "Content-Type": "application/json",
-          }
+          },
         }
       );
 
@@ -65,7 +65,12 @@ const App = () => {
     "/organizations",
   ].some((path) => location.pathname.startsWith(path));
 
-  const displayDrawer = ["/dashboard", "/bookings", "/settings", "/organizations"].some((path) => location.pathname.startsWith(path));
+  const displayDrawer = [
+    "/dashboard",
+    "/bookings",
+    "/settings",
+    "/organizations",
+  ].some((path) => location.pathname.startsWith(path));
 
   const tabNames = {
     "/": "Home",
@@ -75,12 +80,11 @@ const App = () => {
     "/dashboard": "Dashboard",
     "/settings": "Settings",
     "/bookings": "Bookings",
-    "/organizations": "Organizations",
   };
 
-  document.title = tabNames[location.pathname]
-    ? tabNames[location.pathname]
-    : "WildPark";
+  document.title = location.pathname.startsWith("/organizations/")
+    ? "Organizations"
+    : tabNames[location.pathname] || "WildPark";
 
   const sessionUserContextValue = {
     sessionUser,
@@ -89,12 +93,15 @@ const App = () => {
     toggleLogoutModal,
     showLoginModal,
     toggleLoginModal,
-    reloadUser
+    reloadUser,
   };
 
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
-      <div className={`${styles.App} ${!hideNavbar ? styles['no-bg'] : styles.bg}`}>
+      <div
+        className={`${styles.App} ${
+          !hideNavbar ? styles["no-bg"] : styles.bg
+        }`}>
         {hideNavbar && <Navbar />}
         {displayDrawer && <Drawer />}
         <Routes>
