@@ -68,3 +68,7 @@
   border-radius: 5px;
   color: #f7b538 !important;
 }
+
+.card {
+  cursor: pointer;
+}
