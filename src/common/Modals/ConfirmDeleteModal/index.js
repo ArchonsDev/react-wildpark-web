@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import BtnPrimary from "../../Buttons/BtnPrimary";
 import BtnSecondary from "../../Buttons/BtnSecondary";
 
-const ConfirmDeleteModal = ({ show, onHide, onConfirm }) => {
+const ConfirmDeleteModal = ({ show, onHide, onConfirm, header = null, message = null }) => {
   const handleConfirm = () => {
     onConfirm();
     onHide();
@@ -20,11 +20,11 @@ const ConfirmDeleteModal = ({ show, onHide, onConfirm }) => {
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
-          Confirm Delete
+          {header ? header : "Confirm Delete"}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <p>Do you want to delete this item? (It will be gone forever!)</p>
+        <p>{message ? message : "Do you want to delete this item? (It will be gone forever!)"}</p>
       </Modal.Body>
       <Modal.Footer>
         <div className="container-fluid d-flex justify-content-between">
