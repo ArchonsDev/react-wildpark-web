@@ -4,23 +4,30 @@ import Cookies from "js-cookie";
 
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 
+import { useSwitch } from "../../hooks/useSwitch";
+
 import { isValidPassword } from "../Register/utils";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./style.module.css";
+import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 const SecuritySettings = () => {
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
+  const [showConfirmPassword, openConfirmPassword, closeConfirmPassword] =
+    useSwitch();
+
   const [errorMessage, setErrorMessage] = useState(null);
   const showErrorMessage = errorMessage !== null;
+
   const [saveSuccess, setSaveSuccess] = useState(false);
   const [form, setForm] = useState({
-    newPassword: '',
-    confirmPassword: '',
+    newPassword: "",
+    confirmPassword: "",
   });
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
@@ -38,7 +45,8 @@ const SecuritySettings = () => {
     if (!isValidPassword(form.newPassword)) {
       errorMessages.push(
         <>
-          <b>Password</b> must contain <b>at least one special character</b>.<br />
+          <b>Password</b> must contain <b>at least one special character</b>.
+          <br />
           <b>Password</b> be <b>at least 8 characters long</b>.<br />
           <b>Password</b> must contain <b>at least one number</b>.<br />
         </>
@@ -65,30 +73,28 @@ const SecuritySettings = () => {
       const response = await axios.put(
         `http://localhost:8080/api/v1/accounts/${sessionUser.id}`,
         {
-          password: form.newPassword
+          password: form.newPassword,
         },
         {
           headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
+            Authorization: `Bearer ${Cookies.get("userToken")}`,
             "Content-Type": "application/json", // Add this line for the content type
-          }
+          },
         }
       );
-
 
       if (response.status === 200) {
         setSessionUser(response.data);
         setSaveSuccess(true);
         setTimeout(() => {
-          setSaveSuccess(prev => !prev);
+          setSaveSuccess((prev) => !prev);
           setForm({
             ...form,
-            newPassword: '',
-            confirmPassword: '',
-          })
+            newPassword: "",
+            confirmPassword: "",
+          });
         }, 5000);
       } else if (response.status === 409) {
-
       }
     } catch (error) {
       if (error.response && error.response.status === 403) {
@@ -100,15 +106,13 @@ const SecuritySettings = () => {
     <div className="container-fluid flex-grow-1 p-0">
       <div className="row">
         <div className="col-md-12">
-          <span className={`${styles.settingsHeader}`}>
-            Change Password
-          </span>
+          <span className={`${styles.settingsHeader}`}>Change Password</span>
         </div>
       </div>
 
       <div className="row">
         <div className="col-md-12">
-          <div className={`${styles['password-box']} p-3`}>
+          <div className={`${styles["password-box"]} p-3`}>
             <form>
               {showErrorMessage && (
                 <div className="alert alert-danger mb-3" role="alert">
@@ -122,7 +126,11 @@ const SecuritySettings = () => {
               )}
               {/* New passowrd */}
               <div className="form-group d-flex flex-column mb-3">
-                <label className={styles['form-label']} htmlFor="inputNewPassword">New Password</label>
+                <label
+                  className={styles["form-label"]}
+                  htmlFor="inputNewPassword">
+                  New Password
+                </label>
                 <input
                   type="password"
                   className={`form-control ${styles.inputMargin}`}
@@ -133,9 +141,13 @@ const SecuritySettings = () => {
                 />
               </div>
 
-              {/* Confirm passowrd */}
+              {/* Confirm password */}
               <div className="form-group  d-flex flex-column mb-3">
-                <label className={styles['form-label']} htmlFor="inputConfirmPassword">Confirm Password</label>
+                <label
+                  className={styles["form-label"]}
+                  htmlFor="inputConfirmPassword">
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   className={`form-control ${styles.inputMargin}`}
@@ -152,7 +164,14 @@ const SecuritySettings = () => {
 
       <div className="row mt-3">
         <div className="col-md-12 d-flex justify-content-end px-0 mx-0">
-          <BtnPrimary onClick={handleSubmit}>Submit</BtnPrimary>
+          <BtnPrimary onClick={openConfirmPassword}>Submit</BtnPrimary>
+          <ConfirmDeleteModal
+            show={showConfirmPassword}
+            onHide={closeConfirmPassword}
+            onConfirm={handleSubmit}
+            header={"Update Password"}
+            message={"Do you wish to save this new password?"}
+          />
         </div>
       </div>
     </div>
