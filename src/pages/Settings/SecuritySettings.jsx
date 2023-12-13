@@ -34,9 +34,7 @@ const SecuritySettings = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
+  const handleSubmit = async () => {
     setErrorMessage(null);
 
     let hasError = false;
