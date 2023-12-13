@@ -32,6 +32,10 @@ const OrgDetails = ({ editMode, onSave }) => {
   const [leaveSuccess, triggerLeaveSuccess] = useTrigger(false);
   const [leaveFail, triggerLeaveFail] = useTrigger(false);
 
+  const [showLeaveConfirm, openLeaveConfirm, closeLeaveConfirm] = useSwitch();
+  const [showJoinConfirm, openJoinConfirm, closeJoinConfirm] = useSwitch();
+
+
   const [form, setForm] = useState({
     name: org.name,
     latitude: org.latitude,
@@ -296,12 +300,12 @@ const OrgDetails = ({ editMode, onSave }) => {
         }
         {org && accountOrgs && !isMember(accountOrgs, org.id) &&
           <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
-            <BtnPrimary onClick={handleJoin}>Join</BtnPrimary>
+            <BtnPrimary onClick={openJoinConfirm}>Join</BtnPrimary>
           </Col>
         }
         {org && accountOrgs && isMember(accountOrgs, org.id) && !hasPerms(sessionUser, accountOrgs, org.id) &&
           <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
-            <BtnPrimary onClick={handleLeave}>Leave</BtnPrimary>
+            <BtnPrimary onClick={openLeaveConfirm}>Leave</BtnPrimary>
           </Col>
         }
         <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-end align-items-center`}>
@@ -310,6 +314,18 @@ const OrgDetails = ({ editMode, onSave }) => {
           }
         </Col>
       </Row>
+      <ConfirmDeleteModal
+        show={showLeaveConfirm}
+        onHide={closeLeaveConfirm}
+        onConfirm={handleLeave}
+        header={"Leave Organization"}
+        message={<>Do you wish to leave <b>{org.name}</b>?</>} />
+      <ConfirmDeleteModal
+        show={showJoinConfirm}
+        onHide={closeJoinConfirm}
+        onConfirm={handleJoin}
+        header={"Join Organization"}
+        message={<>Do you wish to join <b>{org.name}</b>?</>} />
     </Container>
   );
 };
