@@ -17,7 +17,7 @@ import SessionUserContext from "../../contexts/SessionUserContext";
 import { useNavigate } from "react-router";
 
 const OrgDetails = ({ editMode, onSave }) => {
-  const { org, fetchOrg, hasPerms, accountOrgs, isMember, fetchAccountOrgs } = useContext(OrganizationContext);
+  const { org, fetchOrg, hasPerms, accountOrgs, isMember, isOwner } = useContext(OrganizationContext);
   const { sessionUser, reloadUser } = useContext(SessionUserContext);
 
   const [updateSuccess, triggerUpdateSuccess] = useTrigger(false);
@@ -28,6 +28,9 @@ const OrgDetails = ({ editMode, onSave }) => {
 
   const [joinSuccess, triggerJoinSuccess] = useTrigger(false);
   const [joinFail, triggerJoinFail] = useTrigger(false);
+
+  const [leaveSuccess, triggerLeaveSuccess] = useTrigger(false);
+  const [leaveFail, triggerLeaveFail] = useTrigger(false);
 
   const [form, setForm] = useState({
     name: org.name,
@@ -64,7 +67,6 @@ const OrgDetails = ({ editMode, onSave }) => {
       if (response.status === 200) {
         triggerJoinSuccess(5000);
         fetchOrg();
-        fetchAccountOrgs();
         reloadUser();
       }
     } catch (error) {
@@ -127,6 +129,32 @@ const OrgDetails = ({ editMode, onSave }) => {
     }
   };
 
+  const handleLeave = async () => {
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/api/v1/organizations/${org.id}/members/${sessionUser.id}`,
+        {
+          headers: {
+            "Authorization": `Bearer ${Cookies.get("userToken")}`,
+            "Content-Type": "application/json",
+          }
+        }
+      );
+
+      if (response.status === 200 || response.status === 409) {
+        triggerLeaveSuccess(5000);
+        fetchOrg();
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 403) {
+        triggerLeaveFail(5000);
+        console.log(error);
+      }
+    } finally {
+      onSave(false);
+    }
+  };
+
   return (
     <Container fluid className="p-3">
       <Row>
@@ -153,6 +181,16 @@ const OrgDetails = ({ editMode, onSave }) => {
         {joinFail &&
           <div className="alert alert-danger mb-3" role="alert">
             Failed to join this organization.
+          </div>
+        }
+        {leaveSuccess &&
+          <div className="alert alert-success mb-3" role="alert">
+            You have left this organization.
+          </div>
+        }
+        {leaveFail &&
+          <div className="alert alert-danger mb-3" role="alert">
+            Failed to leave this organization.
           </div>
         }
       </Row>
@@ -250,8 +288,7 @@ const OrgDetails = ({ editMode, onSave }) => {
         }
       </Row>
       <Row className="mt-5">
-        {console.log(hasPerms(sessionUser, accountOrgs, org.id))}
-        {org && accountOrgs && hasPerms(sessionUser, accountOrgs, org.id) &&
+        {org && accountOrgs && isOwner(sessionUser, accountOrgs, org.id) &&
           <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
             <BtnPrimary onClick={openConfirmOrgDelete}>Delete</BtnPrimary>
             <ConfirmDeleteModal show={showConfirmOrgDelete} onHide={closeConfirmOrgDelete} onConfirm={handleDelete} />
@@ -260,6 +297,11 @@ const OrgDetails = ({ editMode, onSave }) => {
         {org && accountOrgs && !isMember(accountOrgs, org.id) &&
           <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
             <BtnPrimary onClick={handleJoin}>Join</BtnPrimary>
+          </Col>
+        }
+        {org && accountOrgs && isMember(accountOrgs, org.id) && !hasPerms(sessionUser, accountOrgs, org.id) &&
+          <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
+            <BtnPrimary onClick={handleLeave}>Leave</BtnPrimary>
           </Col>
         }
         <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-end align-items-center`}>

@@ -16,7 +16,7 @@ import { useParams } from "react-router";
 
 const Organizations = () => {
   const { id } = useParams();
-  const { sessionUser } = useContext(SessionUserContext);
+  const { sessionUser, reloadUser } = useContext(SessionUserContext);
 
   const [views, setViews] = useState({
     information: true,
@@ -27,6 +27,11 @@ const Organizations = () => {
   const [editMode, setEditMode] = useState(false);
   const [accountOrgs, setAccountOrgs] = useState(null);
   const [isAdmin, setIsAdmin] = useState(false);
+
+  const isOwner = (user, orgs, orgId) => {
+    return orgs?.ownedOrganizations.some((org) => org.id === parseInt(orgId)) ||
+      user.role === "ADMIN";
+  }
 
   const hasPerms = (user, orgs, orgId) => {
     // console.log(orgs, orgId);
@@ -94,7 +99,6 @@ const Organizations = () => {
 
       if (response.status === 200) {
         if (response.data) {
-          console.log(response.data);
           setOrg(response.data);
         }
       }
@@ -107,8 +111,12 @@ const Organizations = () => {
 
   useEffect(() => {
     fetchOrg();
-    fetchAccountOrgs();
+    reloadUser();
   }, [id]);
+
+  useEffect(() => {
+    fetchAccountOrgs();
+  }, [org, sessionUser])
 
   useEffect(() => {
     if (org && accountOrgs) {
@@ -118,11 +126,11 @@ const Organizations = () => {
 
   const orgContextValue = {
     org,
-    fetchOrg,
-    hasPerms,
     accountOrgs,
+    fetchOrg,
+    isOwner,
+    hasPerms,
     isMember,
-    fetchAccountOrgs,
   };
 
   return (
@@ -172,9 +180,8 @@ const Organizations = () => {
                 <Row className="mb-1">
                   <Col md={12} className="d-flex align-items-center p-0">
                     <Button
-                      className={`${styles.tab} ${styles.border} ${
-                        views.information ? styles.active : ""
-                      } flex-grow-1 d-flex justify-content-start align-items-center px-5`}
+                      className={`${styles.tab} ${styles.border} ${views.information ? styles.active : ""
+                        } flex-grow-1 d-flex justify-content-start align-items-center px-5`}
                       onClick={handleSwitchView}
                       name="information">
                       Information
@@ -184,9 +191,8 @@ const Organizations = () => {
                 <Row className="mb-1">
                   <Col md={12} className="d-flex align-items-center p-0">
                     <Button
-                      className={`${styles.tab} ${styles.border} ${
-                        views.parking ? styles.active : ""
-                      } flex-grow-1 d-flex justify-content-start align-items-center px-5`}
+                      className={`${styles.tab} ${styles.border} ${views.parking ? styles.active : ""
+                        } flex-grow-1 d-flex justify-content-start align-items-center px-5`}
                       onClick={handleSwitchView}
                       name="parking">
                       Parking
@@ -200,9 +206,8 @@ const Organizations = () => {
                   <Row>
                     <Col md={12} className="d-flex align-items-center p-0">
                       <Button
-                        className={`${styles.tab} ${styles.border} ${
-                          views.members ? styles.active : ""
-                        } flex-grow-1 d-flex justify-content-start align-items-center px-5`}
+                        className={`${styles.tab} ${styles.border} ${views.members ? styles.active : ""
+                          } flex-grow-1 d-flex justify-content-start align-items-center px-5`}
                         onClick={handleSwitchView}
                         name="members">
                         Members
