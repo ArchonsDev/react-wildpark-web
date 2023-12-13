@@ -106,7 +106,7 @@ const Drawer = () => {
 
                 {location.pathname === "/dashboard" && (
                   <Nav.Link
-                    onClick={(e) => window.print()}
+                    onClick={(e) => { closeDrawer(); setTimeout(() => window.print(), 1) }}
                     className={`mx-3 my-1 p-3 ${location.pathname === "/dashboard"
                       ? styles.navItem
                       : styles.hidden
