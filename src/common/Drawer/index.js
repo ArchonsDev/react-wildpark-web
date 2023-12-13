@@ -33,17 +33,22 @@ const Drawer = () => {
     <div className="Drawer">
       <Navbar
         expand={false}
-        className={`${styles.navbar} d-flex align-items-start h-100 px-3`}
-        onMouseEnter={() => openDrawer()}
+        className={`${styles.navbar} d-flex align-items-start h-100 m-0 p-0`}
+
         onMouseLeave={() => closeDrawer()}>
         {/* Hamburger button */}
         <Navbar.Toggle
           aria-controls={`offcanvasNavbar`}
-          className={styles.toggle}
-        />
+          className={`${styles.toggle} h-100 mb-auto`}
+          onClick={() => showDrawer ? closeDrawer() : openDrawer()}
+          onMouseEnter={() => openDrawer()}
+          style={{ borderRadius: "0" }}
+        >
+          <i class="fa-solid fa-chevron-right"></i>
+        </Navbar.Toggle>
 
         {/* Page Name */}
-        <Navbar.Brand className={styles.pageName}>{brand}</Navbar.Brand>
+        <Navbar.Brand className={`${styles.pageName} py-3`}>{brand}</Navbar.Brand>
 
         {/* Drawer pop-up */}
         <Navbar.Offcanvas
