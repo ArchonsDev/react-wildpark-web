@@ -7,7 +7,7 @@ import BtnSecondary from "../Buttons/BtnSecondary";
 import { useLogout } from "../../hooks/useLogout";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
-import styles from "../ModalStyles/style.module.css";
+import styles from "../../styles/modal.module.css";
 
 const LogoutModal = () => {
   const { showLogoutModal, toggleLogoutModal } = useContext(SessionUserContext);

@@ -4,7 +4,7 @@ import { Modal } from "react-bootstrap";
 import BtnPrimary from "../../Buttons/BtnPrimary";
 import BtnSecondary from "../../Buttons/BtnSecondary";
 
-import styles from "../../ModalStyles/style.module.css";
+import styles from "../../../styles/modal.module.css";
 
 const ConfirmDeleteModal = ({
   show,
