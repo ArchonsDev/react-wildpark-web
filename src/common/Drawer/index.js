@@ -77,7 +77,7 @@ const Drawer = () => {
                   <i
                     className={`fa-solid fa-house fa-lg ${styles.drawerIcon}`}>
                   </i>
-                  <span className="px-3">Dashboard</span>
+                  <span className="px-2">Dashboard</span>
                 </Nav.Link>
                 <Nav.Link
                   onClick={(e) => navigate("/bookings")}
@@ -89,7 +89,7 @@ const Drawer = () => {
                   <i
                     className={`fa-solid fa-scroll fa-lg ${styles.drawerIcon}`}
                   ></i>
-                  <span className="px-3">My Bookings</span>
+                  <span className="px-2">My Bookings</span>
                 </Nav.Link>
                 <Nav.Link
                   onClick={(e) => navigate("/settings")}
@@ -101,7 +101,7 @@ const Drawer = () => {
                   <i
                     className={`fa-solid fa-gear fa-lg ${styles.drawerIcon}`}
                   ></i>
-                  <span className="px-3">Settings</span>
+                  <span className="px-2">Settings</span>
                 </Nav.Link>
 
                 {location.pathname === "/dashboard" && (
@@ -115,7 +115,7 @@ const Drawer = () => {
                     <i
                       className={`fa-solid fa-file-arrow-down fa-lg ${styles.drawerIcon}`}
                     ></i>
-                    <span className="px-3">Export</span>
+                    <span className="px-2">Export</span>
                   </Nav.Link>
                 )}
               </Nav>
@@ -129,7 +129,7 @@ const Drawer = () => {
                 <i
                   className={`fa-solid fa-arrow-right-from-bracket fa-lg ${styles.drawerIcon}`}
                 ></i>
-                Log out
+                <span className="px-2">Log out</span>
               </Nav.Link>
             </Nav.Item>
           </Offcanvas.Body>
