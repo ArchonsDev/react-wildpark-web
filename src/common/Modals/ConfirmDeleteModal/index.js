@@ -4,7 +4,15 @@ import { Modal } from "react-bootstrap";
 import BtnPrimary from "../../Buttons/BtnPrimary";
 import BtnSecondary from "../../Buttons/BtnSecondary";
 
-const ConfirmDeleteModal = ({ show, onHide, onConfirm, header = null, message = null }) => {
+import styles from "../../../styles/modal.module.css";
+
+const ConfirmDeleteModal = ({
+  show,
+  onHide,
+  onConfirm,
+  header = null,
+  message = null,
+}) => {
   const handleConfirm = () => {
     onConfirm();
     onHide();
@@ -16,15 +24,20 @@ const ConfirmDeleteModal = ({ show, onHide, onConfirm, header = null, message = 
       onHide={onHide}
       size="sm"
       aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
+      centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
+        <Modal.Title
+          className={styles.title}
+          id="contained-modal-title-vcenter">
           {header ? header : "Confirm Delete"}
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>
-        <p>{message ? message : "Do you want to delete this item? (It will be gone forever!)"}</p>
+      <Modal.Body className={styles.modalBody}>
+        <p>
+          {message
+            ? message
+            : "Do you want to delete this item? (It will be gone forever!)"}
+        </p>
       </Modal.Body>
       <Modal.Footer>
         <div className="container-fluid d-flex justify-content-between">
@@ -34,6 +47,6 @@ const ConfirmDeleteModal = ({ show, onHide, onConfirm, header = null, message = 
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export default ConfirmDeleteModal;
