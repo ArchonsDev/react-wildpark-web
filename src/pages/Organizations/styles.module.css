@@ -93,8 +93,28 @@
   color: #18314f !important;
 }
 
+.parkingContent:hover {
+  font-family: "Poppins-Medium";
+  color: #f4f3ef !important;
+  background-color: #7c0902;
+}
+
+.parkingContent:hover i {
+  color: #f7b538 !important;
+}
+
+.selected-parking-content {
+  font-family: "Poppins-Medium";
+  color: #f4f3ef !important;
+  background-color: rgb(124, 9, 2, 0.85) !important;
+}
+
 .icon {
   color: #7c0902;
+}
+
+.icon:hover {
+  color: #f7b538 !important;
 }
 
 .promote {

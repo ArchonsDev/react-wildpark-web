@@ -121,3 +121,24 @@ export const getAccountOrgs = async (data, onSuccess, onFail, onCleanup) => {
     onCleanup && onCleanup();
   }
 };
+
+export const getAccountBookings = async (data, onSuccess, onFail, onCleanup) => {
+  try {
+    const response = await axios.get(
+      `http://localhost:8080/api/v1/accounts/${data.id}/bookings`,
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      onSuccess && onSuccess(response);
+    }
+  } catch (error) {
+    onFail && onFail(error);
+  } finally {
+    onCleanup && onCleanup();
+  }
+};
