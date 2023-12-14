@@ -17,6 +17,7 @@ import Bookings from "./pages/Bookings";
 import Organizations from "./pages/Organizations";
 
 import { useToggle } from "./hooks/useToggle";
+import { getAccount } from "./api/accounts";
 
 import SessionUserContext from "./contexts/SessionUserContext";
 
@@ -34,27 +35,7 @@ const App = () => {
   );
 
   const reloadUser = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/accounts/${sessionUser.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        if (response.data) {
-          setSessionUser(response.data);
-        }
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    getAccount({ id: sessionUser.id }, (response) => response?.data && setSessionUser(response.data));
   };
 
   const hideNavbar = ![
@@ -99,9 +80,8 @@ const App = () => {
   return (
     <SessionUserContext.Provider value={sessionUserContextValue}>
       <div
-        className={`${styles.App} ${
-          !hideNavbar ? styles["no-bg"] : styles.bg
-        }`}>
+        className={`${styles.App} ${!hideNavbar ? styles["no-bg"] : styles.bg
+          }`}>
         {hideNavbar && <Navbar />}
         {displayDrawer && <Drawer />}
         <Routes>
