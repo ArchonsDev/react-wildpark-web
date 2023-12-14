@@ -1,59 +1,50 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookie from 'js-cookie';
-import axios from "axios";
 
 import { Modal } from 'react-bootstrap';
 import CircularProgress from '@mui/material/CircularProgress';
 import BtnPrimary from "../Buttons/BtnPrimary";
 
+import { login } from "../../api/auth";
+
 import SessionUserContext from '../../contexts/SessionUserContext';
 
 import logo from "../../images/logo.png";
-
 import styles from "./style.module.css";
 
 const LoginModal = () => {
+  const { sessionUser, setSessionUser, showLoginModal, toggleLoginModal } = useContext(SessionUserContext);
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const { sessionUser, setSessionUser, showLoginModal, toggleLoginModal } = useContext(SessionUserContext);
-
   const navigate = useNavigate();
-
   const showErrorMessage = errorMessage !== null;
 
-  const handleSubmitClick = async (e) => {
-    e.preventDefault();
-
+  const handleSubmitClick = async () => {
     setIsLoading(true);
 
-    try {
-      const response = await axios.post("http://localhost:8080/api/v1/auth/authenticate", {
-        "email": form.email,
-        "password": form.password
-      });
-
-      if (response.status === 200) {
-        Cookie.set('userToken', response?.data?.token);
-        Cookie.set('userAccount', JSON.stringify(response?.data?.account));
+    login(
+      form,
+      (response) => {
         setSessionUser(response?.data?.account);
         setTimeout(() => { toggleLoginModal(); navigate("/dashboard"); setForm({ email: "", password: "" }) }, 2000);
+      },
+      (error) => {
+        if (error.response && error.response.status === 403) {
+          setErrorMessage(<>Incorrect <b>username</b> or <b>password</b>.</>);
+        } else {
+          setErrorMessage(<>An error occurred.</>);
+        }
+      },
+      () => {
+        setTimeout(() => { setIsLoading(false) }, 1500);
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        setErrorMessage(<>Incorrect <b>username</b> or <b>password</b>.</>);
-      } else {
-        setErrorMessage(<>Server did not respond.</>);
-      }
-    } finally {
-      setTimeout(() => { setIsLoading(false) }, 1500);
-    }
+    );
   }
 
   const handleClose = () => {
