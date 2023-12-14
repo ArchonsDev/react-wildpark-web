@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Row, Col, ListGroup, Card } from "react-bootstrap";
+import { Row, Col, ListGroup, Card, Modal, Form, FormGroup, FormLabel, FormControl, Container } from "react-bootstrap";
 
 import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 import { useSwitch } from "../../hooks/useSwitch";
 import { useTrigger } from "../../hooks/useTrigger";
 import { getOrgParkingAreas } from "../../api/organizations";
-import { deleteParkingArea } from "../../api/parking";
+import { deleteParkingArea, addParkingArea } from "../../api/parking";
 import { deleteBooking } from "../../api/bookings";
 
 import OrganizationContext from "../../contexts/OrganizationContext";
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./styles.module.css";
+import BtnPrimary from "../../common/Buttons/BtnPrimary";
+import BtnSecondary from "../../common/Buttons/BtnSecondary";
 
 const OrgParking = () => {
   const { org, accountOrgs, isOrgAdmin } = useContext(OrganizationContext);
@@ -22,11 +24,18 @@ const OrgParking = () => {
   const [parkingDeleteConfirm, showParkingDeleteConfirm, hideParkingDeleteConfirm] = useSwitch();
   const [bookingDeleteConfirm, showBookingDeleteConfirm, hideBookingDeleteConfirm] = useSwitch();
 
+  const [selectedBookingId, setSelectedBookingId] = useState(0);
+  const [selectedParkingId, setSelectedParkingId] = useState(0);
+
+  const [addParkingModal, showAddParkingModal, hideAddParkingModal] = useSwitch();
+
   const [showSuccess, triggerShowSuccess] = useTrigger();
   const [successMessage, setSuccessMessage] = useState(null);
 
   const [showError, triggerShowError] = useTrigger();
   const [errorMessage, setErrorMessage] = useState(null);
+
+  const [slotsValue, setSlotsValue] = useState(0);
 
   const [selected, setSelected] = useState(null);
 
@@ -36,7 +45,7 @@ const OrgParking = () => {
 
   useEffect(() => {
     fetchParkingAreas();
-  }, [])
+  }, [selected])
 
   useEffect(() => console.log(parkingAreas), [parkingAreas]);
 
@@ -62,9 +71,88 @@ const OrgParking = () => {
               {isOrgAdmin &&
                 <Col xs={1}>
                   <i
-                    className={`${styles.icon} fa-solid fa-square-plus fa-xl`}
-                    style={{ cursor: "pointer" }}
+                    className={`${styles['add-parking-icon']} fa-solid fa-square-plus fa-xl`}
+                    onClick={showAddParkingModal}
                   ></i>
+                  <Modal
+                    show={addParkingModal}
+                    onHide={hideAddParkingModal}
+                    size="md"
+                    centered
+                  >
+                    <Modal.Header closeButton>
+                      <Modal.Title
+                        style={
+                          {
+                            fontFamily: "Poppins-Bold",
+                            color: "#7c0902"
+                          }
+                        }
+                      >
+                        Add a parking area
+                      </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Form>
+                        <FormGroup controlId="formSlots">
+                          <FormLabel
+                            style={{
+                              fontFamily: "Poppins-SemiBold",
+                              color: "#7c0902"
+                            }}
+                          >
+                            Slots
+                          </FormLabel>
+                          <FormControl
+                            type="number"
+                            value={slotsValue}
+                            onChange={e => setSlotsValue(e.target.value)}
+                            className={styles['field-edit']}
+                          />
+                        </FormGroup>
+                      </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Container
+                        fluid
+                        className="p-0">
+                        <Row
+                          className="m-0 p-0"
+                        >
+                          <Col
+                            md={12}
+                            className="d-flex justify-content-end p-0">
+                            <BtnSecondary
+                              onClick={() =>
+                                addParkingArea(
+                                  {
+                                    id: org.id,
+                                    slots: slotsValue
+                                  },
+                                  (response) => {
+                                    setSuccessMessage(<>Parking area created.</>);
+                                    triggerShowSuccess(5000, () => setSuccessMessage(null));
+                                    fetchParkingAreas();
+                                  },
+                                  (error) => {
+                                    if (error?.response && error?.response?.data) {
+                                      setErrorMessage(<>{error.response.data}</>);
+                                    } else {
+                                      setErrorMessage(<>Cannot create parking area.</>);
+                                    }
+                                    triggerShowError(5000, () => setErrorMessage(null));
+                                  },
+                                  () => hideAddParkingModal()
+                                )
+                              }
+                            >
+                              Add
+                            </BtnSecondary>
+                          </Col>
+                        </Row>
+                      </Container>
+                    </Modal.Footer>
+                  </Modal>
                 </Col>
               }
             </Row>
@@ -94,7 +182,7 @@ const OrgParking = () => {
                   >
                     <i
                       className={`${styles.icon} fa-solid fa-trash-can fa-xl`}
-                      onClick={showParkingDeleteConfirm}
+                      onClick={() => { setSelectedParkingId(parking.id); showParkingDeleteConfirm() }}
                       style={selected === parking ? { cursor: "pointer", color: "#f7b538" } : { cursor: "pointer" }}
                     ></i>
                   </Col>
@@ -106,7 +194,7 @@ const OrgParking = () => {
                 onConfirm={() =>
                   deleteParkingArea(
                     {
-                      id: parking.id,
+                      id: selectedParkingId,
                     },
                     (response) => {
                       setSuccessMessage(<>Parking area deleted.</>);
@@ -120,7 +208,8 @@ const OrgParking = () => {
                         setErrorMessage(<>Could not delete parking area.</>);
                       }
                       triggerShowError(5000, () => setErrorMessage(null));
-                    }
+                    },
+                    () => setSelectedParkingId(0)
                   )
                 }
                 header={<>Confirm Action</>}
@@ -158,7 +247,7 @@ const OrgParking = () => {
                     <Col xs={1}>
                       <i
                         className={`${styles.icon} fa-solid fa-trash-can fa-xl`}
-                        onClick={showBookingDeleteConfirm}
+                        onClick={() => { setSelectedBookingId(booking.id); showBookingDeleteConfirm() }}
                         style={{ cursor: "pointer" }}
                       ></i>
                     </Col>}
@@ -169,7 +258,7 @@ const OrgParking = () => {
                   onConfirm={() =>
                     deleteBooking(
                       {
-                        id: booking.id
+                        id: selectedBookingId
                       },
                       (response) => {
                         setSuccessMessage(<>Booking deleted.</>);
@@ -184,7 +273,8 @@ const OrgParking = () => {
                           setErrorMessage(<>Could not delete booking.</>);
                         }
                         triggerShowError(5000, () => setErrorMessage(null));
-                      }
+                      },
+                      () => setSelectedBookingId(0)
                     )
                   }
                 />

@@ -75,6 +75,7 @@
 
 .field-edit {
   border: none !important;
+  border-radius: 0;
   border-bottom: 1px solid #7c0902 !important;
 }
 
@@ -119,4 +120,13 @@
 
 .promote {
   color: #568203;
+}
+
+.add-parking-icon {
+  color: #7c0902 !important;
+  cursor: pointer;
+}
+
+.add-parking-icon:hover {
+  color: rgb(124, 9, 2, 0.65) !important;
 }
