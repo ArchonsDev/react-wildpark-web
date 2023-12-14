@@ -341,8 +341,7 @@ const UsersTable = () => {
                 <Col xs={2}>Firstname</Col>
                 <Col xs={2}>Lastname</Col>
                 <Col xs={3}>E-mail</Col>
-                <Col xs={2}>Role</Col>
-                <Col xs={1}>{""}</Col>
+                <Col xs={3}>Role</Col>
                 <Col xs={1}>{""}</Col>
               </Row>
             </ListGroup.Item>
@@ -356,7 +355,7 @@ const UsersTable = () => {
                   <Col xs={2}>{account.firstname}</Col>
                   <Col xs={2}>{account.lastname}</Col>
                   <Col xs={3}>{account.email}</Col>
-                  <Col xs={2}>{account.role}</Col>
+                  <Col xs={3}>{account.role}</Col>
                   <Col xs={1}>
                     <i
                       className={`${styles.icon} fa-solid fa-pen`}
@@ -364,9 +363,6 @@ const UsersTable = () => {
                         enableEditing();
                         setUser(account);
                       }}></i>
-                  </Col>
-                  <Col xs={1}>
-                    <i className={`${styles.icon} fa-solid fa-trash-can`}></i>
                   </Col>
                 </Row>
               </ListGroup.Item>
