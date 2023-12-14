@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
@@ -8,7 +6,6 @@ import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 import { useSwitch } from "../../hooks/useSwitch";
 import { useTrigger } from "../../hooks/useTrigger";
-import { useToggle } from "../../hooks/useToggle";
 import { getAccountVehicles } from "../../api/accounts";
 import { createVehicle, updateVehicle, deleteVehicle } from "../../api/vehicles";
 
