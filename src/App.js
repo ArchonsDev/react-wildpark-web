@@ -15,6 +15,7 @@ import Dashboard from "./pages/Dashboard";
 import Settings from "./pages/Settings";
 import Bookings from "./pages/Bookings";
 import Organizations from "./pages/Organizations";
+import Admin from "./pages/Admin";
 
 import { useToggle } from "./hooks/useToggle";
 import { getAccount } from "./api/accounts";
@@ -44,6 +45,7 @@ const App = () => {
     "/bookings",
     "/settings",
     "/organizations",
+    "/admin",
   ].some((path) => location.pathname.startsWith(path));
 
   const displayDrawer = [
@@ -51,6 +53,7 @@ const App = () => {
     "/bookings",
     "/settings",
     "/organizations",
+    "/admin",
   ].some((path) => location.pathname.startsWith(path));
 
   const tabNames = {
@@ -61,6 +64,7 @@ const App = () => {
     "/dashboard": "Dashboard",
     "/settings": "Settings",
     "/bookings": "Bookings",
+    "/admin": "Admin",
   };
 
   document.title = location.pathname.startsWith("/organizations/")
@@ -93,6 +97,7 @@ const App = () => {
           <Route path="/settings" element={<Settings />} />
           <Route path="/bookings" element={<Bookings />} />
           <Route path="/organizations/:id" element={<Organizations />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
         <LogoutModal />
         <LoginModal />
