@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
@@ -8,21 +6,26 @@ import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 import { useSwitch } from "../../hooks/useSwitch";
 import { useTrigger } from "../../hooks/useTrigger";
+import { getAccountVehicles } from "../../api/accounts";
+import { createVehicle, updateVehicle, deleteVehicle } from "../../api/vehicles";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./style.module.css";
-import { useToggle } from "../../hooks/useToggle";
 
 const VehicleSettings = () => {
-  const key = useRef(0);
   const { sessionUser } = useContext(SessionUserContext);
+
   const [vehicles, setVehicles] = useState([]);
-  const [showAddVehicleForm, toggleShowAddVehicleForm] = useToggle(false);
+  const [addVehicleForm, showAddVehicleForm, hideAddVehicleForm] = useSwitch(false);
+
   const [showSuccess, triggerShowSuccess] = useTrigger();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [showError, triggerShowError] = useTrigger();
+
   const [form, setForm] = useState({
     plateNumber: '',
-    brand: '',
     make: '',
     model: '',
     color: '',
@@ -31,84 +34,72 @@ const VehicleSettings = () => {
     size: '',
   });
 
-  const fetchVehicles = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8080/api/v1/accounts/${sessionUser.id}/vehicles`, {
-        headers: {
-          "Authorization": `Bearer ${Cookies.get("userToken")}`
-        }
-      });
+  const key = useRef(0);
 
-      if (response.status === 200) {
+  const fetchVehicles = async () => {
+    await getAccountVehicles(
+      {
+        id: sessionUser.id
+      },
+      (response) => {
         setVehicles(response.data);
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    );
+  };
+
+  const resetForm = () => {
+    setForm({
+      plateNumber: '',
+      brand: '',
+      make: '',
+      model: '',
+      color: '',
+      type: '',
+      displacement: 0,
+      size: '',
+    });
   };
 
   const postVehicle = async () => {
-    try {
-      var data = {
-        plateNumber: form.plateNumber,
-        make: form.make,
-        model: form.model,
-        color: form.color,
-        type: form.type,
-      }
+    var data = {
+      plateNumber: form.plateNumber,
+      make: form.make,
+      model: form.model,
+      color: form.color,
+      type: form.type,
+    }
 
-      if (form.type === "TWO_WHEEL") {
-        data = {
-          ...data,
-          displacement: form.displacement,
-        }
+    if (data.type === "TWO_WHEEL") {
+      data = {
+        ...data,
+        displacement: form.displacement,
       }
-
-      if (form.type === "FOUR_WHEEL") {
-        data = {
-          ...data,
-          size: form.size,
-        }
-      }
-
-      const response = await axios.post(`http://localhost:8080/api/v1/vehicles/`,
-        {
-          ...data,
-        },
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        });
-
-      if (response.status === 200) {
-        fetchVehicles();
-        triggerShowSuccess(5000);
-        setForm({
-          plateNumber: '',
-          brand: '',
-          make: '',
-          model: '',
-          color: '',
-          type: '',
-          displacement: 0,
-          size: '',
-        });
-        toggleShowAddVehicleForm();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
+    } else if (data.type === "FOUR_WHEEL") {
+      data = {
+        ...data,
+        size: form.size,
       }
     }
-  };
 
-  useEffect(() => {
-    fetchVehicles();
-  }, []);
+    createVehicle(
+      data,
+      (response) => {
+        fetchVehicles();
+        triggerShowSuccess(5000, () => {
+          resetForm();
+        });
+        hideAddVehicleForm();
+      },
+      (error) => {
+        if (error.response && error.response.data) {
+          setErrorMessage(<>{error.response.data}</>);
+        } else {
+          setErrorMessage(<>An error occurred.</>)
+        }
+        triggerShowError(5000, () => setErrorMessage(null));
+      }
+    );
+  };
 
   const handleChange = e => {
     setForm({
@@ -121,14 +112,18 @@ const VehicleSettings = () => {
     postVehicle();
   };
 
+  useEffect(() => {
+    fetchVehicles();
+  }, []);
+
   return (
     <div className="container-fluid flex-grow-1 p-0 m-0">
-      {!showAddVehicleForm ?
+      {!addVehicleForm ?
         <div className="row mb-4">
           <div className="col-md-12 d-flex justify-content-center align-items-center">
             <button
               className={`${styles['add-vehicle-btn']} d-flex align-items-center justify-content-center flex-grow-1`}
-              onClick={toggleShowAddVehicleForm}>
+              onClick={showAddVehicleForm}>
               <i className="fa-solid fa-plus" />
               <span className="d-flex align-items-center p-0 m-0">Add Vehicle</span>
             </button>
@@ -153,6 +148,11 @@ const VehicleSettings = () => {
           <div className="row">
             <div className="col-md-12">
               <div className={`${styles['password-box']} p-3`}>
+                {errorMessage && showError && (
+                  <div className="alert alert-danger mb-3" role="alert">
+                    {errorMessage}
+                  </div>
+                )}
                 <form>
                   <div className="form-group d-flex flex-column mb-3">
                     <label className={styles['form-label']} htmlFor="inputPlateNumber">Plate Number</label>
@@ -246,16 +246,20 @@ const VehicleSettings = () => {
           </div>
           <div className="row mt-3 mb-4">
             <div className="col-md-12 d-flex justify-content-end px-0 mx-0">
-              <BtnPrimary onClick={toggleShowAddVehicleForm}>Cancel</BtnPrimary>
+              <BtnPrimary onClick={hideAddVehicleForm}>Cancel</BtnPrimary>
               <BtnSecondary onClick={handleSubmit}>Submit</BtnSecondary>
             </div>
           </div>
         </>
       }
-      {!showAddVehicleForm && <div className="row">
+      {!addVehicleForm && <div className="row">
         <div className="col-md-12">
           {vehicles.map(vehicle => (
-            <VehicleCard key={key.current++} data={vehicle} onUpdate={fetchVehicles} />
+            <VehicleCard
+              key={key.current++}
+              data={vehicle}
+              onUpdate={fetchVehicles}
+            />
           ))}
         </div>
       </div>
@@ -265,55 +269,45 @@ const VehicleSettings = () => {
 };
 
 const VehicleCard = ({ data, onUpdate }) => {
-  const [enableEditing, toggleEnableEditing] = useToggle(false);
   const [color, setColor] = useState(data.color);
+  const [editing, enableEditing, disableEditing] = useSwitch();
   const [showDeleteModal, openDeleteModal, closeDeleteModal] = useSwitch();
 
-  const handleSave = async () => {
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/api/v1/vehicles/${data.id}`,
-        {
-          "color": color,
-        },
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
+  const [updateSuccess, triggerUpdateSuccess] = useTrigger();
 
-      if (response.status === 200) {
-        onUpdate();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [showErrorMessage, triggerShowErrorMessage] = useTrigger();
+
+  const handleSave = async () => {
+    updateVehicle(
+      {
+        id: data.id,
+        color: color
+      },
+      (response) => {
+        triggerUpdateSuccess(5000, () => onUpdate());
+      },
+      (error) => {
+        setErrorMessage(<>Could not update vehicle.</>)
+        triggerShowErrorMessage(5000, () => setErrorMessage(null));
+      },
+      () => disableEditing()
+    );
   }
 
   const handleDelete = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/v1/vehicles/${data.id}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
-
-      if (response.status === 200) {
+    deleteVehicle(
+      {
+        id: data.id
+      },
+      (response) => {
         onUpdate();
+      },
+      (error) => {
+        setErrorMessage(<>Could not delete vehicle.</>);
+        triggerShowErrorMessage(5000, () => setErrorMessage(null));
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    );
   }
 
   return (
@@ -325,6 +319,20 @@ const VehicleCard = ({ data, onUpdate }) => {
               <i className="fa-solid fa-image fa-10x"></i>
             </span>
           </div>
+          {updateSuccess && (
+            <div className="row">
+              <div className="alert alert-success mb-3 text-center" role="alert">
+                Vehicle saved!
+              </div>
+            </div>
+          )}
+          {errorMessage && showErrorMessage && (
+            <div className="row">
+              <div className="alert alert-danger mb-3 text-center" role="alert">
+                {errorMessage}
+              </div>
+            </div>
+          )}
           <div className={`${styles.field} row py-2`}>
             <div className="col-md-3">
               Plate Number
@@ -354,7 +362,7 @@ const VehicleCard = ({ data, onUpdate }) => {
               Color
             </div>
             <div className="col-md-9 d-flex">
-              {enableEditing ?
+              {editing ?
                 <input
                   className={`${styles['field-edit']} flex-grow-1 mx-1 p-2`}
                   placeholder="Color"
@@ -371,12 +379,15 @@ const VehicleCard = ({ data, onUpdate }) => {
       </div>
       <div className="row mt-3">
         <div className="col-md-12 d-flex justify-content-end">
-          {enableEditing ?
-            <BtnSecondary onClick={handleSave}>Save</BtnSecondary>
+          {editing ?
+            <>
+              <BtnSecondary onClick={disableEditing}>Cancel</BtnSecondary>
+              <BtnSecondary onClick={handleSave}>Save</BtnSecondary>
+            </>
             :
-            <BtnSecondary onClick={toggleEnableEditing}>Edit</BtnSecondary>
+            <BtnSecondary onClick={enableEditing}>Edit</BtnSecondary>
           }
-          {!enableEditing && <BtnPrimary onClick={openDeleteModal}>Delete</BtnPrimary>}
+          {!editing && <BtnPrimary onClick={openDeleteModal}>Delete</BtnPrimary>}
           <ConfirmDeleteModal show={showDeleteModal} onHide={closeDeleteModal} onConfirm={handleDelete} />
         </div>
       </div>

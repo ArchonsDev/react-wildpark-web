@@ -1,31 +1,26 @@
 import React, { useContext, useState } from "react";
 import { Row } from "react-bootstrap";
-import axios from "axios";
-import Cookies from "js-cookie";
 
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
+import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
-import { useToggle } from "../../hooks/useToggle";
 import { useSwitch } from "../../hooks/useSwitch";
 import { useTrigger } from "../../hooks/useTrigger";
+import { updateAccount } from "../../api/accounts";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
-import "react-datepicker/dist/react-datepicker.css";
 import styles from "./style.module.css";
-import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 const AccountSettings = () => {
-  const [enableEditing, toggleEnableEditing] = useToggle(false);
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
 
-  const [updateSuccess, triggerUpdateSuccess] = useTrigger(false);
-  const [updateFail, triggerUpdateFail] = useTrigger(false);
-  const [
-    showConfirmAccountUpdate,
-    openConfirmAccountUpdate,
-    closeConfirmAccountUpdate,
-  ] = useSwitch();
+  const [isEditing, enableEditing, disableEditing] = useSwitch(false);
+  const [showSuccess, triggerShowSuccess] = useTrigger(false);
+  const [showError, triggerShowError] = useTrigger(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const [showConfirmAccountUpdate, openConfirmAccountUpdate, closeConfirmAccountUpdate] = useSwitch();
 
   const [form, setForm] = useState({
     email: sessionUser.email,
@@ -49,31 +44,25 @@ const AccountSettings = () => {
   };
 
   const handleSave = async () => {
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/api/v1/accounts/${sessionUser.id}`,
-        {
-          ...form,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.status === 200) {
+    updateAccount(
+      {
+        id: sessionUser.id,
+        ...form,
+      },
+      (response) => {
         setSessionUser(response.data);
-        triggerUpdateSuccess(5000);
-        toggleEnableEditing();
+        triggerShowSuccess(5000);
+        disableEditing();
+      },
+      (error) => {
+        if (error.response && error.response.data) {
+          error.response && error.response.data && setErrorMessage(<>{error.response.data}</>);
+        } else {
+          setErrorMessage(<>An error occurred.</>);
+        }
+        triggerShowError(5000);
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-        triggerUpdateFail(5000);
-      }
-    }
+    );
   };
 
   return (
@@ -83,7 +72,7 @@ const AccountSettings = () => {
           className={`${styles.accountHeader} d-flex flex-column justify-content-center align-items-center py-4`}>
           <i
             className={`fa-solid fa-circle-user fa-7x mb-3 ${styles.userPfp}`}></i>
-          {enableEditing ? (
+          {isEditing ? (
             <>
               <BtnSecondary onClick={openConfirmAccountUpdate}>
                 Save Changes
@@ -97,14 +86,14 @@ const AccountSettings = () => {
               />
             </>
           ) : (
-            <BtnSecondary onClick={toggleEnableEditing}>
+            <BtnSecondary onClick={enableEditing}>
               Edit Profile
             </BtnSecondary>
           )}
         </div>
       </div>
       <Row>
-        {updateSuccess && (
+        {showSuccess && (
           <div
             className="alert alert-success d-flex justify-content-center align-items-center mb-3"
             role="alert">
@@ -112,11 +101,9 @@ const AccountSettings = () => {
           </div>
         )}
 
-        {updateFail && (
-          <div
-            className="alert alert-danger d-flex justify-content-center align-items-center mb-3"
-            role="alert">
-            Failed to update account details.
+        {errorMessage && showError && (
+          <div className="alert alert-danger d-flex justify-content-center align-items-center mb-3" role="alert">
+            {errorMessage}
           </div>
         )}
       </Row>
@@ -134,7 +121,7 @@ const AccountSettings = () => {
           <span>Name: </span>
         </div>
         <div className="col-md-9 d-flex">
-          {enableEditing ? (
+          {isEditing ? (
             <>
               <input
                 className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
@@ -164,7 +151,7 @@ const AccountSettings = () => {
           <span>Birthday: </span>
         </div>
         <div className="col-md-9 d-flex">
-          {enableEditing ? (
+          {isEditing ? (
             <input
               className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
               placeholder="Birthdate (YYYY-MM-DD)"
@@ -183,7 +170,7 @@ const AccountSettings = () => {
           <span>Phone Number:</span>
         </div>
         <div className="col-md-9 d-flex">
-          {enableEditing ? (
+          {isEditing ? (
             <input
               className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
               placeholder="Phone number"
@@ -202,7 +189,7 @@ const AccountSettings = () => {
           <span>Gender:</span>
         </div>
         <div className="col-md-9 d-flex">
-          {enableEditing ? (
+          {isEditing ? (
             <>
               <select
                 className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
@@ -225,7 +212,7 @@ const AccountSettings = () => {
           <span>Address:</span>
         </div>
         <div className="col-md-9 d-flex">
-          {enableEditing ? (
+          {isEditing ? (
             <div className="container-fluid p-0 d-flex flex-column">
               <input
                 className={`${styles["field-edit"]} flex-grow-1 m-1 p-2`}

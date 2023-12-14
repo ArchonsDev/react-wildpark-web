@@ -1,31 +1,29 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
 
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
+import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 import { useSwitch } from "../../hooks/useSwitch";
-
+import { useTrigger } from "../../hooks/useTrigger";
 import { isValidPassword } from "../Register/utils";
+import { updatePassword } from "../../api/accounts";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./style.module.css";
-import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 const SecuritySettings = () => {
   const { sessionUser, setSessionUser } = useContext(SessionUserContext);
-  const [showConfirmPassword, openConfirmPassword, closeConfirmPassword] =
-    useSwitch();
 
+  const [showConfirmPassword, openConfirmPassword, closeConfirmPassword] = useSwitch();
   const [errorMessage, setErrorMessage] = useState(null);
-  const showErrorMessage = errorMessage !== null;
-
-  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [showSuccess, triggerShowSuccess] = useTrigger(false);
   const [form, setForm] = useState({
     newPassword: "",
     confirmPassword: "",
   });
+
+  const showErrorMessage = errorMessage !== null;
 
   const handleChange = (e) => {
     setForm({
@@ -33,6 +31,14 @@ const SecuritySettings = () => {
       [e.target.name]: e.target.value,
     });
   };
+
+  const resetForm = () => {
+    setForm({
+      ...form,
+      newPassword: "",
+      confirmPassword: "",
+    });
+  }
 
   const handleSubmit = async () => {
     setErrorMessage(null);
@@ -67,37 +73,23 @@ const SecuritySettings = () => {
       return;
     }
 
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/api/v1/accounts/${sessionUser.id}`,
-        {
-          password: form.newPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json", // Add this line for the content type
-          },
-        }
-      );
-
-      if (response.status === 200) {
+    updatePassword(
+      {
+        id: sessionUser.id,
+        password: form.newPassword
+      },
+      (response) => {
         setSessionUser(response.data);
-        setSaveSuccess(true);
-        setTimeout(() => {
-          setSaveSuccess((prev) => !prev);
-          setForm({
-            ...form,
-            newPassword: "",
-            confirmPassword: "",
-          });
-        }, 5000);
-      } else if (response.status === 409) {
+        triggerShowSuccess(5000, () => resetForm());
+      },
+      (error) => {
+        if (error.response && error.response.data) {
+          setErrorMessage(<>{error.response.data}</>)
+        } else {
+          setErrorMessage(<>An error occurred.</>)
+        }
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-      }
-    }
+    );
   };
 
   return (
@@ -117,7 +109,7 @@ const SecuritySettings = () => {
                   {errorMessage}
                 </div>
               )}
-              {saveSuccess && (
+              {showSuccess && (
                 <div className="alert alert-success mb-3" role="alert">
                   Password changed!
                 </div>
