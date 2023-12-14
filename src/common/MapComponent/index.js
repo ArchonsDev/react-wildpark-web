@@ -14,6 +14,14 @@ const MapComponent = ({ startPos = [10.304294, 123.890284], markers, zoom = 13, 
   return (
     <MapContainer center={startPos} zoom={zoom} {...rest}>
       <Map onMarkerClick={onMarkerClick} />
+
+      {markers && markers.map(marker => (
+        <Marker
+          icon={customIcon}
+          position={[marker.lat, marker.lng]}>
+          <Popup>{marker.name}</Popup>
+        </Marker>
+      ))}
     </MapContainer>
   );
 };

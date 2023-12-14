@@ -1,8 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import { Button } from "react-bootstrap";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import MapComponent from "../../common/MapComponent";
+
+import { getAccountBookings } from "../../api/accounts";
+
+import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./style.module.css";
 //TO-DO:
@@ -12,9 +16,23 @@ import styles from "./style.module.css";
 // Actual rendering of booked space (not placeholder)
 
 const Bookings = () => {
+  const { sessionUser } = useContext(SessionUserContext);
+
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [bookings, setBookings] = useState(null);
+
+  const [selected, setSelected] = useState(null);
+
+  const fetchBookings = async () => {
+    await getAccountBookings(
+      { id: sessionUser.id },
+      (response) => response?.data && setBookings(response.data)
+    );
+  };
 
   useEffect(() => {
+    fetchBookings();
+
     const timer = setInterval(() => {
       setCurrentDate(new Date());
     }, 1000);
@@ -23,6 +41,8 @@ const Bookings = () => {
       clearInterval(timer);
     };
   }, []);
+
+  useEffect(() => console.log(bookings), [bookings]);
 
   return (
     <div className={styles.Bookings}>
@@ -43,58 +63,89 @@ const Bookings = () => {
             </div>
             <div className="row flex-grow-1">
               <div className={`${styles['booking-selector']} col-sm-4 mb-2 container-fluid d-flex align-items-center flex-column p-0 m-0`}>
-                <div className="row mb-4 flex-grow-1">
-                  <div className={`${styles['active-button']} col-md-12 d-flex justify-content-center`}>
-                    <Button>
-                      Registered Vehicles <br />
-                      <p>Manage your vehicles here</p>
-                    </Button>
+                {bookings && bookings.map(booking => (
+                  <div key={booking.id} className="row mb-4 flex-grow-1">
+                    <div className={`${selected === booking ? styles['active-button'] : styles['inactive-button']} col-md-12 d-flex justify-content-center`}>
+                      <Button
+                        onClick={() => selected === booking ? setSelected(null) : setSelected(booking)}>
+                        <span>{booking.organization.name}</span>
+                        <p>{booking.vehicle} @ {(new Date(booking.date)).toLocaleDateString()} {(new Date(booking.date)).toLocaleTimeString()}</p>
+                      </Button>
+                    </div>
                   </div>
-                </div>
+                ))}
 
                 <div className="row mt-auto">
                   <BtnSecondary>New Booking</BtnSecondary>
                 </div>
               </div>
 
-              <div className={`${styles['booking-details']} col-sm-8 mb-2 container-fldui d-flex flex-column m-0 p-0`}>
-                <div className={`${styles.field} row flex-grow-1 d-flex flex-column`}>
-                  <MapComponent className="col-md-12 flex-grow-1" />
+              {selected &&
+                <div className={`${styles['booking-details']} col-sm-8 mb-2 container-fldui d-flex flex-column m-0 p-0`}>
+                  <div className={`${styles.field} row flex-grow-1 d-flex flex-column`}>
+                    <MapComponent
+                      className="col-md-12 flex-grow-1"
+                      startPos={[selected.organization.latitude, selected.organization.longitude]}
+                      markers={[
+                        {
+                          name: selected.organization.name,
+                          lat: selected.organization.latitude,
+                          lng: selected.organization.longitude
+                        }
+                      ]}
+                      zoom={15}
+                    />
+                  </div>
+                  <div className={`${styles.field} row py-2 px-3`}>
+                    <div className="col-md-3">
+                      Date & Time
+                    </div>
+                    <div className="col-md-9">
+                      {(new Date(selected.date)).toLocaleDateString()} {(new Date(selected.date)).toLocaleTimeString()}
+                    </div>
+                  </div>
+                  <div className={`${styles.field} row py-2 px-3`}>
+                    <div className="col-md-3">
+                      Duration
+                    </div>
+                    <div className="col-md-9">
+                      {selected.duration / 60} minutes
+                    </div>
+                  </div>
+                  <div className={`${styles.field} row py-2 px-3`}>
+                    <div className="col-md-3">
+                      Location
+                    </div>
+                    <div className="col-md-9">
+                      {selected.organization.name}
+                    </div>
+                  </div>
+                  <div className={`${styles.field} row py-2 px-3`}>
+                    <div className="col-md-3">
+                      Parking Area
+                    </div>
+                    <div className="col-md-9">
+                      {selected.parkingArea}
+                    </div>
+                  </div>
+                  <div className={`${styles.field} row py-2 px-3`}>
+                    <div className="col-md-3">
+                      Vehicle
+                    </div>
+                    <div className="col-md-9">
+                      {selected.vehicle}
+                    </div>
+                  </div>
+                  <div className="row py-2 px-3">
+                    <div className="col-md-3">
+                      Status
+                    </div>
+                    <div className="col-md-9">
+                      {selected.status}
+                    </div>
+                  </div>
                 </div>
-                <div className={`${styles.field} row py-2 px-3`}>
-                  <div className="col-md-3">
-                    Date & Time
-                  </div>
-                  <div className="col-md-9">
-                    Date & Time
-                  </div>
-                </div>
-                <div className={`${styles.field} row py-2 px-3`}>
-                  <div className="col-md-3">
-                    Location
-                  </div>
-                  <div className="col-md-9">
-                    Date & Time
-                  </div>
-                </div>
-                <div className={`${styles.field} row py-2 px-3`}>
-                  <div className="col-md-3">
-                    Parking Area
-                  </div>
-                  <div className="col-md-9">
-                    Date & Time
-                  </div>
-                </div>
-                <div className="row py-2 px-3">
-                  <div className="col-md-3">
-                    Vehicle
-                  </div>
-                  <div className="col-md-9">
-                    Date & Time
-                  </div>
-                </div>
-              </div>
-
+              }
             </div>
           </div>
         </div>
