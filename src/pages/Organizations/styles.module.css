@@ -1,0 +1,122 @@
+.Organizations {
+  height: 100vh;
+}
+
+.content {
+  background-color: #7c0902;
+  border-radius: 10px 10px 0 0;
+  color: #18314f;
+  height: 85%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.border {
+  border: 2px solid #7c0902 !important;
+}
+
+.banner {
+  border-radius: 10px;
+  background-color: #f4f3ef;
+}
+
+.org-name {
+  font-family: "Poppins-Bold";
+  font-size: 1.4em;
+}
+
+.tab {
+  background-color: #f4f3ef !important;
+  color: #18314f !important;
+  font-family: "Poppins-Bold" !important;
+  height: 48px;
+  border-radius: 10px 0 0 10px !important;
+  border-right: none !important;
+}
+
+.tab:hover {
+  color: #f7b538;
+  background-color: #7c0902;
+  border: 2px solid #f7b538;
+}
+
+.tab:active {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+  border: 2px solid #7c0902 !important;
+  border-right: none !important;
+}
+
+.active {
+  color: #7c0902 !important;
+  background-color: #f7b538 !important;
+  border: 2px solid #7c0902 !important;
+  border-right: none !important;
+}
+
+.tab-content {
+  border-radius: 0 10px 10px 10px;
+  background-color: #f4f3ef;
+}
+
+.edit-btn {
+  font-family: "Poppins-Medium";
+  font-size: 1.1em;
+}
+
+.field {
+  font-family: "Poppins-Medium";
+  color: #18314f;
+}
+
+.field-title {
+  font-family: "Poppins-Bold";
+}
+
+.field-edit {
+  border: none !important;
+  border-bottom: 1px solid #7c0902 !important;
+}
+
+.field-edit:focus {
+  border: none;
+}
+
+.parkingHeader {
+  background-color: #f7b538 !important;
+  color: #0d0630 !important;
+  font-family: "Poppins-SemiBold";
+}
+
+.parkingContent {
+  font-family: "Poppins-Medium";
+  color: #18314f !important;
+}
+
+.parkingContent:hover {
+  font-family: "Poppins-Medium";
+  color: #f4f3ef !important;
+  background-color: #7c0902;
+}
+
+.parkingContent:hover i {
+  color: #f7b538 !important;
+}
+
+.selected-parking-content {
+  font-family: "Poppins-Medium";
+  color: #f4f3ef !important;
+  background-color: rgb(124, 9, 2, 0.85) !important;
+}
+
+.icon {
+  color: #7c0902;
+}
+
+.icon:hover {
+  color: #f7b538 !important;
+}
+
+.promote {
+  color: #568203;
+}

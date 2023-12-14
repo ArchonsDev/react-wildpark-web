@@ -1,0 +1,84 @@
+.Admin {
+  height: 100vh;
+}
+
+.backgroundContent {
+  background-color: #f4f3ef;
+}
+
+.active-button Button {
+  height: 75px;
+  width: 180px;
+  font-size: 1.2em;
+  font-family: "Poppins-Bold";
+  text-align: left;
+  border-radius: 13px;
+  color: #f7b538;
+  background-color: #7c0902;
+  border: #7c0902 2px solid;
+}
+
+.selector-button Button {
+  height: 75px;
+  width: 180px;
+  font-size: 1.2em;
+  font-family: "Poppins-Bold";
+  text-align: left;
+  border-radius: 13px;
+  color: #7c0902;
+  background-color: #f4f3ef;
+  border: #7c0902 2px solid;
+}
+
+.selector-button Button:hover {
+  color: #f7b538;
+  background-color: #7c0902;
+  border: none;
+}
+
+.selector-button Button:active {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+  border: #f7b538 2px solid !important;
+}
+
+.active-button Button:hover {
+  color: #f7b538;
+  background-color: #7c0902;
+  border: none;
+}
+
+.active-button Button:active {
+  color: #f7b538 !important;
+  background-color: #7c0902 !important;
+  border: #f7b538 2px solid !important;
+}
+
+.tableHeader {
+  background-color: #f7b538 !important;
+  color: #0d0630 !important;
+  font-family: "Poppins-SemiBold";
+}
+
+.tableContent {
+  font-family: "Poppins-Medium";
+  font-size: 0.9em;
+  color: #18314f !important;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.field-edit {
+  border: none !important;
+  border-bottom: 1px solid #7c0902 !important;
+}
+
+.field-edit:focus {
+  border: none;
+}
+
+.form {
+  font-family: "Poppins-Medium";
+}

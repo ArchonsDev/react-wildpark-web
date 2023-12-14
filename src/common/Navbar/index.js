@@ -127,7 +127,7 @@ const Navbar = () => {
                       </button>
                     </li>
                     <li>
-                      <button className="dropdown-item" type="button" onClick={e => navigate("profile")}>
+                      <button className="dropdown-item" type="button" onClick={e => navigate("/settings")}>
                         Profile
                       </button>
                     </li>

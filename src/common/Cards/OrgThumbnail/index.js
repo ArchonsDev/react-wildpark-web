@@ -3,10 +3,14 @@ import { Card, Row, Col } from "react-bootstrap";
 
 const OrgThumbnail = ({ name, owner, ...rest }) => {
   return (
-    <Card {...rest}>
-      <Row noGutters>
-        <Col md={3} className="card-icon d-flex justify-content-end align-items-center">
-          <i className="fa-solid fa-building fa-5x" style={{ color: "#0d0630" }}></i>
+    <Card {...rest} style={{ cursor: "pointer" }}>
+      <Row>
+        <Col
+          md={3}
+          className="card-icon d-flex justify-content-end align-items-center">
+          <i
+            className="fa-solid fa-building fa-5x"
+            style={{ color: "#0d0630" }}></i>
         </Col>
         <Col md={9}>
           <Card.Body>
@@ -17,6 +21,6 @@ const OrgThumbnail = ({ name, owner, ...rest }) => {
       </Row>
     </Card>
   );
-}
+};
 
 export default OrgThumbnail;
