@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import Cookies from "js-cookie";
-import axios from "axios";
+import { useNavigate } from "react-router";
 
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
@@ -11,30 +10,26 @@ import OrganizationContext from "../../contexts/OrganizationContext";
 
 import { useTrigger } from "../../hooks/useTrigger";
 import { useSwitch } from "../../hooks/useSwitch";
+import { addMember, deleteOrg, updateOrg, deleteMember } from "../../api/organizations";
 
 import styles from "./styles.module.css";
 import SessionUserContext from "../../contexts/SessionUserContext";
-import { useNavigate } from "react-router";
 
-const OrgDetails = ({ editMode, onSave }) => {
-  const { org, fetchOrg, hasPerms, accountOrgs, isMember, isOwner } = useContext(OrganizationContext);
+const OrgDetails = ({ editMode, onCancelEdit }) => {
+  const cancelEditMode = onCancelEdit;
+
   const { sessionUser, reloadUser } = useContext(SessionUserContext);
-
-  const [updateSuccess, triggerUpdateSuccess] = useTrigger(false);
-  const [updateFail, triggerUpdateFail] = useTrigger(false);
+  const { org, fetchOrg, isOrgOwner, isOrgMember } = useContext(OrganizationContext);
 
   const [showConfirmOrgDelete, openConfirmOrgDelete, closeConfirmOrgDelete] = useSwitch();
-  const [deleteFail, triggerDeleteFail] = useTrigger(false);
-
-  const [joinSuccess, triggerJoinSuccess] = useTrigger(false);
-  const [joinFail, triggerJoinFail] = useTrigger(false);
-
-  const [leaveSuccess, triggerLeaveSuccess] = useTrigger(false);
-  const [leaveFail, triggerLeaveFail] = useTrigger(false);
-
   const [showLeaveConfirm, openLeaveConfirm, closeLeaveConfirm] = useSwitch();
   const [showJoinConfirm, openJoinConfirm, closeJoinConfirm] = useSwitch();
 
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [showSuccess, triggerShowSuccess] = useTrigger();
+
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [showError, triggerShowError] = useTrigger();
 
   const [form, setForm] = useState({
     name: org.name,
@@ -53,148 +48,88 @@ const OrgDetails = ({ editMode, onSave }) => {
     });
   }
 
-  const handleJoin = async (e) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/api/v1/organizations/${org.id}/members`,
-        {
-          accountId: sessionUser.id,
-        },
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
-
-      if (response.status === 200) {
-        triggerJoinSuccess(5000);
-        fetchOrg();
-        reloadUser();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        triggerJoinFail(5000);
-        console.log(error);
-      }
-    }
-  };
-
   const handleDelete = async (e) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/v1/organizations/${org.id}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
-
-      if (response.status === 200) {
-        navigate("/dashboard");
+    deleteOrg(
+      { id: org.id },
+      (response) => navigate("/dashboard"),
+      (error) => {
+        error?.response?.data ? setErrorMessage(<>{error.response.data}</>) : setErrorMessage(<>Failed to delete this organization.</>);
+        triggerShowError(5000, () => setErrorMessage(null));
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        triggerDeleteFail(5000);
-        console.log(error);
-      }
-    }
+    );
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/api/v1/organizations/${org.id}`,
-        {
-          ...form
-        },
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
+    updateOrg(
+      {
+        id: org.id,
+        ...form
+      },
+      (response) => {
+        setSuccessMessage(<>Successfully updated organization details.</>);
+        triggerShowSuccess(5000, () => {
+          setSuccessMessage(null);
+          fetchOrg();
+        })
+      },
+      (error) => {
+        error?.response?.data ? setErrorMessage(<>{error.response.data}</>) : setErrorMessage(<>Failed to update this organization.</>);
+        triggerShowError(5000, () => setErrorMessage(null));
+      },
+      () => cancelEditMode()
+    );
+  };
 
-      if (response.status === 200 || response.status === 409) {
-        triggerUpdateSuccess(5000);
+  const handleJoin = async (e) => {
+    addMember(
+      {
+        id: org.id,
+        accountId: sessionUser.id
+      },
+      (response) => {
+        setSuccessMessage(<>You are now part of this organization.</>)
+        triggerShowSuccess(5000, () => setSuccessMessage(null));
         fetchOrg();
+        reloadUser();
+      },
+      (error) => {
+        error?.response?.data ? setErrorMessage(<>{error.response.data}</>) : setErrorMessage(<>Failed to join this organization.</>);
+        triggerShowError(5000, () => setErrorMessage(null));
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        triggerUpdateFail(5000);
-        console.log(error);
-      }
-    } finally {
-      onSave(false);
-    }
+    );
   };
 
   const handleLeave = async () => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/v1/organizations/${org.id}/members/${sessionUser.id}`,
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
-
-      if (response.status === 200 || response.status === 409) {
-        triggerLeaveSuccess(5000);
+    deleteMember(
+      {
+        id: org.id,
+        accountId: sessionUser.id
+      },
+      (response) => {
+        setSuccessMessage(<>You are no longer part of this organization.</>)
+        triggerShowSuccess(5000, () => setSuccessMessage(null));
         fetchOrg();
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        triggerLeaveFail(5000);
-        console.log(error);
-      }
-    } finally {
-      onSave(false);
-    }
+        reloadUser();
+      },
+      (error) => {
+        error?.response?.data ? setErrorMessage(<>{error.response.data}</>) : setErrorMessage(<>Failed to update this organization.</>);
+        triggerShowError(5000, () => setErrorMessage(null));
+      },
+      () => cancelEditMode()
+    );
   };
 
   return (
     <Container fluid className="p-3">
       <Row>
-        {updateSuccess &&
+        {successMessage && showSuccess &&
           <div className="alert alert-success mb-3" role="alert">
-            Organization details successfully updated!
+            {successMessage}
           </div>
         }
-        {updateFail &&
+        {errorMessage && showError &&
           <div className="alert alert-danger mb-3" role="alert">
-            Failed to update organization details.
-          </div>
-        }
-        {deleteFail &&
-          <div className="alert alert-danger mb-3" role="alert">
-            Failed to delete organization.
-          </div>
-        }
-        {joinSuccess &&
-          <div className="alert alert-success mb-3" role="alert">
-            You are now part of this organization.
-          </div>
-        }
-        {joinFail &&
-          <div className="alert alert-danger mb-3" role="alert">
-            Failed to join this organization.
-          </div>
-        }
-        {leaveSuccess &&
-          <div className="alert alert-success mb-3" role="alert">
-            You have left this organization.
-          </div>
-        }
-        {leaveFail &&
-          <div className="alert alert-danger mb-3" role="alert">
-            Failed to leave this organization.
+            {errorMessage}
           </div>
         }
       </Row>
@@ -292,20 +227,20 @@ const OrgDetails = ({ editMode, onSave }) => {
         }
       </Row>
       <Row className="mt-5">
-        {org && accountOrgs && isOwner(sessionUser, accountOrgs, org.id) &&
+        {isOrgOwner &&
           <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
             <BtnPrimary onClick={openConfirmOrgDelete}>Delete</BtnPrimary>
             <ConfirmDeleteModal show={showConfirmOrgDelete} onHide={closeConfirmOrgDelete} onConfirm={handleDelete} />
           </Col>
         }
-        {org && accountOrgs && !isMember(accountOrgs, org.id) &&
-          <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
-            <BtnPrimary onClick={openJoinConfirm}>Join</BtnPrimary>
-          </Col>
-        }
-        {org && accountOrgs && isMember(accountOrgs, org.id) && !hasPerms(sessionUser, accountOrgs, org.id) &&
+        {isOrgMember && !isOrgOwner &&
           <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
             <BtnPrimary onClick={openLeaveConfirm}>Leave</BtnPrimary>
+          </Col>
+        }
+        {!isOrgMember &&
+          <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-start align-items-center`}>
+            <BtnPrimary onClick={openJoinConfirm}>Join</BtnPrimary>
           </Col>
         }
         <Col md={6} className={`${styles['edit-btn']} d-flex justify-content-end align-items-center`}>

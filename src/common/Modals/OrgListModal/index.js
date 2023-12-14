@@ -11,6 +11,7 @@ import MapComponent from "../../MapComponent";
 
 import { useSwitch } from "../../../hooks/useSwitch";
 import { useTrigger } from "../../../hooks/useTrigger";
+import { createOrg, getAllOrgs } from "../../../api/organizations";
 
 import styles from "./style.module.css";
 import { useNavigate } from "react-router";
@@ -32,25 +33,20 @@ const OrganizationListModal = ({ show, closeCallback }) => {
 
   const navigate = useNavigate();
 
-  const fetchOrganizations = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:8080/api/v1/organizations/",
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
-        }
-      );
+  const resetForm = () => {
+    setFormData({
+      name: '',
+      latitude: 0,
+      longitude: 0,
+      paymentStrategy: '',
+      type: '',
+    });
+  }
 
-      if (response.status === 200) {
-        setOrganizations(response.data);
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+  const fetchOrganizations = async () => {
+    getAllOrgs(
+      (response) => response?.data && setOrganizations(response.data)
+    )
   };
 
   const handleChange = (e) => {
@@ -59,40 +55,18 @@ const OrganizationListModal = ({ show, closeCallback }) => {
   };
 
   const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/api/v1/organizations/`,
-        {
-          ...formData,
-        },
-        {
-          headers: {
-            "Authorization": `Bearer ${Cookies.get("userToken")}`,
-            "Content-Type": "application/json",
-          }
-        }
-      );
-
-      if (response.status === 200 || response.status === 409) {
-        if (response.data) {
-          fetchOrganizations();
-          triggerShowSuccess();
-          disableCreateMode();
-          showMapStep();
-          setFormData({
-            name: '',
-            latitude: 0,
-            longitude: 0,
-            paymentStrategy: '',
-            type: '',
-          });
-        }
+    createOrg(
+      {
+        ...formData
+      },
+      (response) => {
+        fetchOrganizations();
+        triggerShowSuccess();
+        disableCreateMode();
+        showMapStep();
+        resetForm();
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    );
   };
 
   const handleCancel = () => {

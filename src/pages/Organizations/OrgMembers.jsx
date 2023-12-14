@@ -6,6 +6,8 @@ import axios from "axios";
 import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 import { useSwitch } from "../../hooks/useSwitch";
+import { useTrigger } from "../../hooks/useTrigger";
+import { getOrgMembers, deleteAdmin, addAdmin, deleteMember } from "../../api/organizations";
 
 import OrganizationContext from "../../contexts/OrganizationContext";
 import SessionUserContext from "../../contexts/SessionUserContext";
@@ -18,32 +20,20 @@ const OrgMembers = () => {
 
   const [members, setMembers] = useState(null);
   const [selectedId, setSelectedId] = useState(0);
+
   const [showKickConfirm, openKickConfirm, closeKickConfirm] = useSwitch();
   const [showAdminKickConfirm, openAdminKickConfirm, closeAdminKickConfirm] = useSwitch();
   const [showPromoteConfirm, openPromoteConfirm, closePromoteConfirm] = useSwitch();
   const [showDemoteConfirm, openDemoteConfirm, closeDemoteConfirm] = useSwitch();
 
-  const fetchMembers = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/organizations/${org.id}/members`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
-        }
-      );
+  const [showwSuccess, triggerShowSuccess] = useTrigger();
+  const [successMessage, setSuccessMessage] = useState(null);
 
-      if (response.status === 200) {
-        if (response.data) {
-          setMembers(response.data);
-        }
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+  const [showError, triggerShowError] = useTrigger();
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const fetchMembers = async () => {
+    getOrgMembers({ id: org.id }, (response) => response?.data && setMembers(response.data));
   };
 
   const handleAdminKick = async (id) => {
@@ -52,71 +42,69 @@ const OrgMembers = () => {
   }
 
   const handleDemote = async (id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/v1/organizations/${org.id}/admins/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
+    deleteAdmin(
+      {
+        id: org.id,
+        accountId: id
+      },
+      (response) => {
+        setSuccessMessage(<>Member demoted.</>);
+        triggerShowSuccess(5000, () => setSuccessMessage(null));
         fetchMembers();
+      },
+      (error) => {
+        if (error?.response && error?.response?.data) {
+          setErrorMessage(<>{error.response.data}</>);
+        } else {
+          setErrorMessage(<>Failed to demote member.</>);
+        }
+        triggerShowError(5000, () => setErrorMessage(null));
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    );
   };
 
   const handlePromote = async (id) => {
-    try {
-      const response = await axios.post(
-        `http://localhost:8080/api/v1/organizations/${org.id}/admins`,
-        {
-          accountId: id,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
+    addAdmin(
+      {
+        id: org.id,
+        accountId: id
+      },
+      (response) => {
+        setSuccessMessage(<>Member promoted.</>);
+        triggerShowSuccess(5000, () => setSuccessMessage(null));
+        fetchMembers();
+      },
+      (error) => {
+        if (error?.response && error?.response?.data) {
+          setErrorMessage(<>{error.response.data}</>);
+        } else {
+          setErrorMessage(<>Failed to demote member.</>);
         }
-      );
-
-      if (response.status === 200) {
-        if (response.data) {
-          fetchMembers();
-        }
+        triggerShowError(5000, () => setErrorMessage(null));
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    );
   };
 
   const handleKick = async (id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/v1/organizations/${org.id}/members/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
+    deleteMember(
+      {
+        id: org.id,
+        accountId: id,
+      },
+      (response) => {
+        setSuccessMessage(<>Member removed.</>);
+        triggerShowSuccess(5000, () => setSuccessMessage(null));
         fetchMembers();
+      },
+      (error) => {
+        if (error?.response && error?.response?.data) {
+          setErrorMessage(<>{error.response.data}</>);
+        } else {
+          setErrorMessage(<>Failed to demote member.</>);
+        }
+        triggerShowError(5000, () => setErrorMessage(null));
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    );
   };
 
   useEffect(() => {
@@ -158,11 +146,13 @@ const OrgMembers = () => {
                       className={`${styles.icon} fa-solid fa-circle-chevron-down fa-xl`}
                       onClick={() => { setSelectedId(member.id); openDemoteConfirm() }}></i>}
                   </Col>
+                  {/* !! DOES NOT WORK !!
                   <Col xs={1} style={{ cursor: "pointer" }}>
                     {member.id !== sessionUser.id && <i
                       className={`${styles.icon} fa-solid fa-user-slash fa-xl`}
                       onClick={() => { setSelectedId(member.id); openAdminKickConfirm() }}></i>}
-                  </Col>
+                  </Col> 
+                  */}
                 </Row>
               </ListGroup.Item>
             ))}
@@ -197,7 +187,7 @@ const OrgMembers = () => {
         <ConfirmDeleteModal
           show={showAdminKickConfirm}
           onHide={closeAdminKickConfirm}
-          onConfirm={() => handleAdminKick(selectedId)}
+          onConfirm={async () => await handleAdminKick(selectedId)}
           header={"Kick Member"}
           message={"Do you want to kick this member?"}
         />

@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Card, Row, Col } from "react-bootstrap";
 import { useNavigate } from "react-router";
-import Cookies from "js-cookie";
-import axios from "axios";
 
 import OrgListModal from "../../common/Modals/OrgListModal";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import OrgThumbnail from "../../common/Cards/OrgThumbnail";
+
+import { getAccountOrgs } from "../../api/accounts";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
@@ -21,24 +21,16 @@ const OrganizationCard = () => {
   const navigate = useNavigate();
 
   const fetchOrgs = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/accounts/${sessionUser.id}/organizations`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
+    getAccountOrgs(
+      {
+        id: sessionUser.id
+      },
+      (response) => {
+        if (response?.data) {
+          setOrgs(response.data);
         }
-      );
-
-      if (response.status === 200) {
-        setOrgs(response.data);
       }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    )
   };
 
   useEffect(() => {

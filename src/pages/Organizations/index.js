@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import Cookies from "js-cookie";
-import axios from "axios";
 
 import OrgMembers from "./OrgMembers";
 import OrgParking from "./OrgParking";
 import OrgDetails from "./OrgDetails";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
+
+import { useSwitch } from "../../hooks/useSwitch";
+import { getAccountOrgs } from "../../api/accounts";
+import { getOrganization } from "../../api/organizations";
 
 import OrganizationContext from "../../contexts/OrganizationContext";
 import SessionUserContext from "../../contexts/SessionUserContext";
@@ -14,63 +16,49 @@ import SessionUserContext from "../../contexts/SessionUserContext";
 import styles from "./styles.module.css";
 import { useParams } from "react-router";
 
+const isOwner = (user, orgs, orgId) => {
+  return orgs?.ownedOrganizations.some((org) => org.id === parseInt(orgId)) ||
+    user.role === "ADMIN";
+}
+
+const hasPerms = (user, orgs, orgId) => {
+  // console.log(orgs, orgId);
+  return (
+    orgs?.ownedOrganizations.some((org) => org.id === parseInt(orgId)) ||
+    orgs?.adminOrganizations.some((org) => org.id === parseInt(orgId)) ||
+    user.role === "ADMIN"
+  );
+};
+
+const isMember = (orgs, orgId) => {
+  return (
+    orgs?.ownedOrganizations?.some((org) => org.id === parseInt(orgId)) ||
+    orgs?.adminOrganizations?.some((org) => org.id === parseInt(orgId)) ||
+    orgs?.memberOrganizations.some((org) => org.id === parseInt(orgId))
+  );
+};
+
 const Organizations = () => {
   const { id } = useParams();
+
   const { sessionUser, reloadUser } = useContext(SessionUserContext);
 
+  const [org, setOrg] = useState(null);
+
+  const [editMode, enableEditMode, disableEditMode] = useSwitch();
+  const [accountOrgs, setAccountOrgs] = useState(null);
   const [views, setViews] = useState({
     information: true,
     parking: false,
     members: false,
   });
-  const [org, setOrg] = useState(null);
-  const [editMode, setEditMode] = useState(false);
-  const [accountOrgs, setAccountOrgs] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
 
-  const isOwner = (user, orgs, orgId) => {
-    return orgs?.ownedOrganizations.some((org) => org.id === parseInt(orgId)) ||
-      user.role === "ADMIN";
-  }
-
-  const hasPerms = (user, orgs, orgId) => {
-    // console.log(orgs, orgId);
-    return (
-      orgs?.ownedOrganizations.some((org) => org.id === parseInt(orgId)) ||
-      orgs?.adminOrganizations.some((org) => org.id === parseInt(orgId)) ||
-      user.role === "ADMIN"
-    );
-  };
-
-  const isMember = (orgs, orgId) => {
-    return (
-      orgs?.ownedOrganizations?.some((org) => org.id === parseInt(orgId)) ||
-      orgs?.adminOrganizations?.some((org) => org.id === parseInt(orgId)) ||
-      orgs?.memberOrganizations?.some((org) => org.id === parseInt(orgId))
-    );
-  };
+  const isOrgOwner = org && accountOrgs && isOwner(sessionUser, accountOrgs, org.id);
+  const isOrgAdmin = org && accountOrgs && hasPerms(sessionUser, accountOrgs, org.id);
+  const isOrgMember = org && accountOrgs && isMember(accountOrgs, org.id);
 
   const fetchAccountOrgs = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/accounts/${sessionUser.id}/organizations`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        if (response.data) {
-          setAccountOrgs(response.data);
-        }
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    getAccountOrgs({ id: sessionUser.id }, (response) => response?.data && setAccountOrgs(response.data));
   };
 
   const handleSwitchView = (e) => {
@@ -87,26 +75,7 @@ const Organizations = () => {
   };
 
   const fetchOrg = async () => {
-    try {
-      const response = await axios.get(
-        `http://localhost:8080/api/v1/organizations/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Cookies.get("userToken")}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        if (response.data) {
-          setOrg(response.data);
-        }
-      }
-    } catch (error) {
-      if (error.response && error.response.status === 403) {
-        console.log(error);
-      }
-    }
+    getOrganization({ id: id }, (response) => response?.data && setOrg(response.data));
   };
 
   useEffect(() => {
@@ -118,19 +87,13 @@ const Organizations = () => {
     fetchAccountOrgs();
   }, [org, sessionUser])
 
-  useEffect(() => {
-    if (org && accountOrgs) {
-      setIsAdmin(hasPerms(sessionUser, accountOrgs, id));
-    }
-  }, [org, accountOrgs, sessionUser, id]);
-
   const orgContextValue = {
     org,
     accountOrgs,
     fetchOrg,
-    isOwner,
-    hasPerms,
-    isMember,
+    isOrgOwner,
+    isOrgAdmin,
+    isOrgMember
   };
 
   return (
@@ -151,13 +114,13 @@ const Organizations = () => {
               <span className={`${styles["org-name"]}`}>{org?.name}</span>
             </Col>
 
-            {isAdmin && (
+            {isOrgAdmin && (
               <>
                 {!editMode ? (
                   <Col
                     md={4}
                     className={`${styles["edit-btn"]} ms-auto d-flex justify-content-end align-items-center`}
-                    onClick={(e) => setEditMode(true)}>
+                    onClick={enableEditMode}>
                     <i className="fa-regular fa-pen-to-square mx-2"></i>
                     Edit details
                   </Col>
@@ -165,7 +128,7 @@ const Organizations = () => {
                   <Col
                     md={4}
                     className={`${styles["edit-btn"]} ms-auto d-flex justify-content-end align-items-center`}>
-                    <BtnPrimary onClick={(e) => setEditMode(false)}>
+                    <BtnPrimary onClick={disableEditMode}>
                       Cancel
                     </BtnPrimary>
                   </Col>
@@ -202,7 +165,7 @@ const Organizations = () => {
                 {/* BREEENTTTT I HOPE U CAN SEE THIS W UR BIG MONITOR!!!!! */}
                 {/* CONDITIONAL RENDERING OF MEMBERS TAB 4 OWNER & ADMINS */}
                 {/* IDK HOW TO DO THE OWNER PART SORRu */}
-                {isAdmin && (
+                {isOrgAdmin && (
                   <Row>
                     <Col md={12} className="d-flex align-items-center p-0">
                       <Button
@@ -219,7 +182,7 @@ const Organizations = () => {
             </Col>
             <Col md={9} className={`${styles["tab-content"]} ${styles.border}`}>
               {views.information && org && (
-                <OrgDetails editMode={editMode} onSave={setEditMode} />
+                <OrgDetails editMode={editMode} onCancelEdit={disableEditMode} />
               )}
               {views.parking && org && <OrgParking />}
               {views.members && org && <OrgMembers />}
