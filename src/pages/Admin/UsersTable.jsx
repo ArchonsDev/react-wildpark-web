@@ -19,11 +19,7 @@ const UsersTable = () => {
   const [isEditing, enableEditing, disableEditing] = useSwitch(false);
   const [showSuccess, triggerShowSuccess] = useTrigger(false);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [
-    showConfirmAccountUpdate,
-    openConfirmAccountUpdate,
-    closeConfirmAccountUpdate,
-  ] = useSwitch();
+  const [showModal, openModal, closeModal] = useSwitch();
   const [showError, triggerShowError] = useTrigger(false);
 
   const [form, setForm] = useState({
@@ -314,12 +310,10 @@ const UsersTable = () => {
                   <BtnPrimary onClick={disableEditing}>Cancel</BtnPrimary>
                 </Col>
                 <Col md={6} className="d-flex justify-content-end">
-                  <BtnSecondary onClick={openConfirmAccountUpdate}>
-                    Save
-                  </BtnSecondary>
+                  <BtnSecondary onClick={openModal}>Save</BtnSecondary>
                   <ConfirmDeleteModal
-                    show={showConfirmAccountUpdate}
-                    onHide={closeConfirmAccountUpdate}
+                    show={showModal}
+                    onHide={closeModal}
                     onConfirm={handleSave}
                     header={"Update Account"}
                     message={"Do you wish to save these changes?"}
