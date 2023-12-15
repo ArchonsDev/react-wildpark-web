@@ -8,7 +8,6 @@
 
 .active-button Button {
   height: 75px;
-  width: 180px;
   font-size: 1.2em;
   font-family: "Poppins-Bold";
   text-align: left;
@@ -20,7 +19,6 @@
 
 .selector-button Button {
   height: 75px;
-  width: 180px;
   font-size: 1.2em;
   font-family: "Poppins-Bold";
   text-align: left;

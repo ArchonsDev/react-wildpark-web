@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Row, Col, ListGroup, Button } from "react-bootstrap";
+import { Row, Col, Button } from "react-bootstrap";
 
 import UsersTable from "./UsersTable";
 import VehiclesTable from "./VehiclesTable";
@@ -62,12 +62,14 @@ const Admin = () => {
               <Row className="mb-3 d-flex justify-content-center">
                 <Col
                   md={12}
-                  className={`${
-                    views.users
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  }`}>
-                  <Button onClick={handleSwitchView} name="users">
+                  className={`${views.users
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    }`}>
+                  <Button
+                    className="w-100"
+                    onClick={handleSwitchView}
+                    name="users">
                     Users
                   </Button>
                 </Col>
@@ -75,12 +77,14 @@ const Admin = () => {
               <Row className="mb-3">
                 <Col
                   md={12}
-                  className={`${
-                    views.vehicles
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  }`}>
-                  <Button onClick={handleSwitchView} name="vehicles">
+                  className={`${views.vehicles
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    }`}>
+                  <Button
+                    className="w-100"
+                    onClick={handleSwitchView}
+                    name="vehicles">
                     Vehicles
                   </Button>
                 </Col>
@@ -88,12 +92,14 @@ const Admin = () => {
               <Row className="mb-3">
                 <Col
                   md={12}
-                  className={`${
-                    views.bookings
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  }`}>
-                  <Button onClick={handleSwitchView} name="bookings">
+                  className={`${views.bookings
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    }`}>
+                  <Button
+                    className="w-100"
+                    onClick={handleSwitchView}
+                    name="bookings">
                     Bookings
                   </Button>
                 </Col>
@@ -101,18 +107,20 @@ const Admin = () => {
               <Row className="mb-3">
                 <Col
                   md={12}
-                  className={`${
-                    views.payments
-                      ? styles["active-button"]
-                      : styles["selector-button"]
-                  }`}>
-                  <Button onClick={handleSwitchView} name="payments">
+                  className={`${views.payments
+                    ? styles["active-button"]
+                    : styles["selector-button"]
+                    }`}>
+                  <Button
+                    className="w-100"
+                    onClick={handleSwitchView}
+                    name="payments">
                     Payments
                   </Button>
                 </Col>
               </Row>
             </Col>
-            <Col md={10} className="d-flex flex-column">
+            <Col md={10} className="d-flex flex-column px-5">
               {views.users && <UsersTable />}
               {views.vehicles && <VehiclesTable />}
               {views.bookings && <BookingsTable />}
