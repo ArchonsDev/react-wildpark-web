@@ -50,7 +50,7 @@ const OrganizationListModal = ({ show, closeCallback }) => {
   };
 
   const handleSubmit = async () => {
-    createOrg(
+    await createOrg(
       {
         ...formData
       },
@@ -90,7 +90,7 @@ const OrganizationListModal = ({ show, closeCallback }) => {
         <Modal.Title
           id="contained-modal-title-vcenter"
           className={`${styles.title}`}>
-          {createMode ? "New Organization" : "Organizations"}
+          {createMode ? (mapStep ? "Choose location" : "Enter details") : "Organizations"}
         </Modal.Title>
       </Modal.Header>
       {createMode ?
@@ -110,7 +110,13 @@ const OrganizationListModal = ({ show, closeCallback }) => {
               </Modal.Body>
               <Modal.Footer>
                 <BtnSecondary onClick={handleCancel}>Cancel</BtnSecondary>
-                <BtnPrimary onClick={showDetailsStep} disabled={formData.lat === 0 && formData.lng === 0}>
+                <BtnPrimary
+                  onClick={showDetailsStep}
+                  disabled={
+                    formData.latitude === 0 ||
+                    formData.longitude === 0
+                  }
+                >
                   Next
                 </BtnPrimary>
               </Modal.Footer>
@@ -206,7 +212,14 @@ const OrganizationListModal = ({ show, closeCallback }) => {
               </Modal.Body>
               <Modal.Footer>
                 <BtnSecondary onClick={showMapStep}>Back</BtnSecondary>
-                <BtnPrimary onClick={handleSubmit}>Submit</BtnPrimary>
+                <BtnPrimary
+                  onClick={handleSubmit}
+                  disabled={
+                    formData.name === '' ||
+                    formData.paymentStrategy === '' ||
+                    formData.type === ''
+                  }
+                >Submit</BtnPrimary>
               </Modal.Footer>
             </>
           }

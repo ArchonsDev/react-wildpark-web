@@ -110,42 +110,43 @@ const OrgParking = () => {
       </Card>
 
       {/* Shows vehicles booked when a parking area is clicked */}
-      {selected && <Card className="mt-2" style={{ width: "100%" }}>
-        <ListGroup>
-          <ListGroup.Item className={styles.parkingHeader}>
-            <Row>
-              <Col xs={3}>Plate Number</Col>
-              <Col xs={4}>Date & Time</Col>
-              <Col xs={3}>Status</Col>
-              <Col xs={1}>{""}</Col>
-              <Col xs={1}>{""}</Col>
-            </Row>
-          </ListGroup.Item>
-        </ListGroup>
-
-        {selected.bookings.length > 0 &&
+      {selected && isOrgAdmin &&
+        <Card className="mt-2" style={{ width: "100%" }}>
           <ListGroup>
-            {selected.bookings.map(booking => (
-              <ListGroup.Item className={styles.parkingContent}>
-                <Row>
-                  <Col xs={3}>{booking.vehicle}</Col>
-                  <Col xs={4}>{(new Date(booking.date)).toLocaleDateString()} {(new Date(booking.date)).toLocaleTimeString()}</Col>
-                  <Col xs={3}>{booking.status}</Col>
-                  <Col xs={1}>{""}</Col>
-                  {isOrgAdmin &&
-                    <Col xs={1}>
-                      <i
-                        className={`${styles.icon} fa-solid fa-trash-can fa-xl`}
-                        onClick={() => { setSelectedBookingId(booking.id); showBookingDeleteConfirm() }}
-                        style={{ cursor: "pointer" }}
-                      ></i>
-                    </Col>}
-                </Row>
-              </ListGroup.Item>
-            ))}
+            <ListGroup.Item className={styles.parkingHeader}>
+              <Row>
+                <Col xs={3}>Plate Number</Col>
+                <Col xs={4}>Date & Time</Col>
+                <Col xs={3}>Status</Col>
+                <Col xs={1}>{""}</Col>
+                <Col xs={1}>{""}</Col>
+              </Row>
+            </ListGroup.Item>
           </ListGroup>
-        }
-      </Card>}
+
+          {selected.bookings.length > 0 &&
+            <ListGroup>
+              {selected.bookings.map(booking => (
+                <ListGroup.Item className={styles.parkingContent}>
+                  <Row>
+                    <Col xs={3}>{booking.vehicle}</Col>
+                    <Col xs={4}>{(new Date(booking.date)).toLocaleDateString()} {(new Date(booking.date)).toLocaleTimeString()}</Col>
+                    <Col xs={3}>{booking.status}</Col>
+                    <Col xs={1}>{""}</Col>
+                    {isOrgAdmin &&
+                      <Col xs={1}>
+                        <i
+                          className={`${styles.icon} fa-solid fa-trash-can fa-xl`}
+                          onClick={() => { setSelectedBookingId(booking.id); showBookingDeleteConfirm() }}
+                          style={{ cursor: "pointer" }}
+                        ></i>
+                      </Col>}
+                  </Row>
+                </ListGroup.Item>
+              ))}
+            </ListGroup>
+          }
+        </Card>}
 
       <ConfirmDeleteModal
         show={parkingDeleteConfirm}
@@ -273,6 +274,10 @@ const OrgParking = () => {
                     )
                     await fetchParkingAreas();
                   }}
+
+                  disabled={
+                    slotsValue <= 0
+                  }
                 >
                   Add
                 </BtnSecondary>

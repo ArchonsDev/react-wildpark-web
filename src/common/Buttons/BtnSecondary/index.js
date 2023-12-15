@@ -2,8 +2,8 @@ import React from "react";
 
 import styles from './styles.module.css';
 
-const BtnSecondary = ({ onClick, disabled, children }) => {
-  return <button type="button" className={`${styles['button-style']} px-4 py-1`} onClick={onClick} disabled={disabled}>{children}</button>;
+const BtnSecondary = ({ onClick, children, ...rest }) => {
+  return <button {...rest} type="button" className={`${styles['button-style']} px-4 py-1`} onClick={onClick}>{children}</button>;
 }
 
 export default BtnSecondary;

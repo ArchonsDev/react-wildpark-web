@@ -258,6 +258,13 @@ const BookingCard = () => {
               await getAccountBookings({ id: sessionUser.id, }, (response) => response?.data && setBookings(response.data));
               resetForm();
             }}
+            disabled={
+              !form.organizationId ||
+              !form.vehicleId ||
+              !form.parkingAreaId ||
+              form.dateTime === '' ||
+              form.duration <= 0
+            }
           >
             Create
           </BtnPrimary>
