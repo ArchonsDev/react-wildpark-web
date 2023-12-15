@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useContext } from "react";
-
 import { Button } from "react-bootstrap";
+
+import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import MapComponent from "../../common/MapComponent";
+import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
+import { useSwitch } from "../../hooks/useSwitch";
 import { getAccountBookings } from "../../api/accounts";
+import { deleteBooking } from "../../api/bookings";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
@@ -20,8 +24,9 @@ const Bookings = () => {
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [bookings, setBookings] = useState(null);
-
   const [selected, setSelected] = useState(null);
+
+  const [confirmDeleteModal, showConfirmdeleteModal, hideConfirmDeleteModal] = useSwitch();
 
   const fetchBookings = async () => {
     await getAccountBookings(
@@ -42,8 +47,6 @@ const Bookings = () => {
     };
   }, []);
 
-  useEffect(() => console.log(bookings), [bookings]);
-
   return (
     <div className={styles.Bookings}>
       <div className={`${styles.content} container d-flex flex-column justify-content-end align-items-center`}>
@@ -62,9 +65,9 @@ const Bookings = () => {
               </div>
             </div>
             <div className="row flex-grow-1">
-              <div className={`${styles['booking-selector']} col-sm-4 mb-2 container-fluid d-flex align-items-center flex-column p-0 m-0`}>
+              <div className={`${styles['booking-selector']} col-sm-4 mb-2 container-fluid d-flex align-items-start flex-column p-0 m-0`}>
                 {bookings && bookings.map(booking => (
-                  <div key={booking.id} className="row mb-4 flex-grow-1">
+                  <div key={booking.id} className="row mb-4">
                     <div className={`${selected === booking ? styles['active-button'] : styles['inactive-button']} col-md-12 d-flex justify-content-center`}>
                       <Button
                         onClick={() => selected === booking ? setSelected(null) : setSelected(booking)}>
@@ -74,10 +77,6 @@ const Bookings = () => {
                     </div>
                   </div>
                 ))}
-
-                <div className="row mt-auto">
-                  <BtnSecondary>New Booking</BtnSecondary>
-                </div>
               </div>
 
               {selected &&
@@ -144,13 +143,29 @@ const Bookings = () => {
                       {selected.status}
                     </div>
                   </div>
+                  <div className="row py-3">
+                    <div className="d-flex justify-content-between">
+                      <BtnPrimary
+                        onClick={showConfirmdeleteModal}
+                      >Cancel</BtnPrimary>
+                      <BtnSecondary>Proceed to payment</BtnSecondary>
+                    </div>
+                  </div>
                 </div>
               }
             </div>
           </div>
         </div>
-
       </div >
+
+      <ConfirmDeleteModal
+        size="md"
+        show={confirmDeleteModal}
+        onHide={hideConfirmDeleteModal}
+        onConfirm={async () => { await deleteBooking({ id: selected.id }); await fetchBookings(); setSelected(null); }}
+        header={<>Cancel Booking</>}
+        message={<>Are you sure you want to cancel this booking? (This action cannot be undone!)</>}
+      />
     </div >
   );
 };

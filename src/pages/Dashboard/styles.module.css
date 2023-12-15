@@ -72,3 +72,25 @@
 .card {
   cursor: pointer;
 }
+
+/* "New Booking" Modal */
+.nodal {
+  color: #384e77 !important;
+  font-family: "Poppins-Bold";
+}
+
+.modal-header {
+  color: #7c0902 !important;
+  font-family: "Poppins-Bold";
+}
+
+.field-edit {
+  border-bottom: 1px solid #7c0902 !important;
+  border-radius: 0 !important;
+  font-family: "Poppins-Regular";
+}
+
+.field-label {
+  color: #7c0902;
+  font-family: "Poppins-SemiBold";
+}

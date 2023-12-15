@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import L from "leaflet";
 import 'leaflet/dist/leaflet.css';
@@ -11,12 +11,15 @@ const customIcon = new L.Icon({
 });
 
 const MapComponent = ({ startPos = [10.304294, 123.890284], markers, zoom = 13, onMarkerClick, ...rest }) => {
+  const ref = useRef(0);
+
   return (
     <MapContainer center={startPos} zoom={zoom} {...rest}>
       <Map onMarkerClick={onMarkerClick} />
 
       {markers && markers.map(marker => (
         <Marker
+          key={ref.current++}
           icon={customIcon}
           position={[marker.lat, marker.lng]}>
           <Popup>{marker.name}</Popup>

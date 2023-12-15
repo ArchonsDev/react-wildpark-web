@@ -42,15 +42,15 @@ const OrgMembers = () => {
   }
 
   const handleDemote = async (id) => {
-    deleteAdmin(
+    await deleteAdmin(
       {
         id: org.id,
         accountId: id
       },
-      (response) => {
+      async (response) => {
         setSuccessMessage(<>Member demoted.</>);
         triggerShowSuccess(5000, () => setSuccessMessage(null));
-        fetchMembers();
+        await fetchMembers();
       },
       (error) => {
         if (error?.response && error?.response?.data) {
@@ -64,15 +64,15 @@ const OrgMembers = () => {
   };
 
   const handlePromote = async (id) => {
-    addAdmin(
+    await addAdmin(
       {
         id: org.id,
         accountId: id
       },
-      (response) => {
+      async (response) => {
         setSuccessMessage(<>Member promoted.</>);
         triggerShowSuccess(5000, () => setSuccessMessage(null));
-        fetchMembers();
+        await fetchMembers();
       },
       (error) => {
         if (error?.response && error?.response?.data) {
@@ -86,15 +86,15 @@ const OrgMembers = () => {
   };
 
   const handleKick = async (id) => {
-    deleteMember(
+    await deleteMember(
       {
         id: org.id,
         accountId: id,
       },
-      (response) => {
+      async (response) => {
         setSuccessMessage(<>Member removed.</>);
         triggerShowSuccess(5000, () => setSuccessMessage(null));
-        fetchMembers();
+        await fetchMembers();
       },
       (error) => {
         if (error?.response && error?.response?.data) {
@@ -146,13 +146,12 @@ const OrgMembers = () => {
                       className={`${styles.icon} fa-solid fa-circle-chevron-down fa-xl`}
                       onClick={() => { setSelectedId(member.id); openDemoteConfirm() }}></i>}
                   </Col>
-                  {/* !! DOES NOT WORK !!
                   <Col xs={1} style={{ cursor: "pointer" }}>
                     {member.id !== sessionUser.id && <i
                       className={`${styles.icon} fa-solid fa-user-slash fa-xl`}
                       onClick={() => { setSelectedId(member.id); openAdminKickConfirm() }}></i>}
-                  </Col> 
-                  */}
+                  </Col>
+
                 </Row>
               </ListGroup.Item>
             ))}
@@ -180,7 +179,7 @@ const OrgMembers = () => {
         <ConfirmDeleteModal
           show={showKickConfirm}
           onHide={closeKickConfirm}
-          onConfirm={() => handleKick(selectedId)}
+          onConfirm={async () => await handleKick(selectedId)}
           header={"Kick Member"}
           message={"Do you want to kick this member?"}
         />
@@ -194,14 +193,14 @@ const OrgMembers = () => {
         <ConfirmDeleteModal
           show={showPromoteConfirm}
           onHide={closePromoteConfirm}
-          onConfirm={() => handlePromote(selectedId)}
+          onConfirm={async () => await handlePromote(selectedId)}
           header={"Promote to Admin"}
           message={"Do you want to promote this member?"}
         />
         <ConfirmDeleteModal
           show={showDemoteConfirm}
           onHide={closeDemoteConfirm}
-          onConfirm={() => handleDemote(selectedId)}
+          onConfirm={async () => await handleDemote(selectedId)}
           header={"Demote to Member"}
           message={"Do you want to demote this member?"}
         />

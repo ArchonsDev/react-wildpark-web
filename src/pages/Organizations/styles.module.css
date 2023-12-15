@@ -110,6 +110,10 @@
   background-color: rgb(124, 9, 2, 0.85) !important;
 }
 
+.selected-parking-content i {
+  color: #f7b538 !important;
+}
+
 .icon {
   color: #7c0902;
 }

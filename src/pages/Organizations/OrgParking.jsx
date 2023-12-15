@@ -10,15 +10,12 @@ import { deleteParkingArea, addParkingArea } from "../../api/parking";
 import { deleteBooking } from "../../api/bookings";
 
 import OrganizationContext from "../../contexts/OrganizationContext";
-import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./styles.module.css";
-import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 
 const OrgParking = () => {
-  const { org, accountOrgs, isOrgAdmin } = useContext(OrganizationContext);
-  const { sessionUser } = useContext(SessionUserContext);
+  const { org, isOrgAdmin } = useContext(OrganizationContext);
 
   const [parkingAreas, setParkingAreas] = useState();
   const [parkingDeleteConfirm, showParkingDeleteConfirm, hideParkingDeleteConfirm] = useSwitch();
@@ -47,8 +44,6 @@ const OrgParking = () => {
     fetchParkingAreas();
   }, [selected])
 
-  useEffect(() => console.log(parkingAreas), [parkingAreas]);
-
   return (
     <div className="OrgParking">
       {successMessage && showSuccess &&
@@ -74,85 +69,6 @@ const OrgParking = () => {
                     className={`${styles['add-parking-icon']} fa-solid fa-square-plus fa-xl`}
                     onClick={showAddParkingModal}
                   ></i>
-                  <Modal
-                    show={addParkingModal}
-                    onHide={hideAddParkingModal}
-                    size="md"
-                    centered
-                  >
-                    <Modal.Header closeButton>
-                      <Modal.Title
-                        style={
-                          {
-                            fontFamily: "Poppins-Bold",
-                            color: "#7c0902"
-                          }
-                        }
-                      >
-                        Add a parking area
-                      </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                      <Form>
-                        <FormGroup controlId="formSlots">
-                          <FormLabel
-                            style={{
-                              fontFamily: "Poppins-SemiBold",
-                              color: "#7c0902"
-                            }}
-                          >
-                            Slots
-                          </FormLabel>
-                          <FormControl
-                            type="number"
-                            value={slotsValue}
-                            onChange={e => setSlotsValue(e.target.value)}
-                            className={styles['field-edit']}
-                          />
-                        </FormGroup>
-                      </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                      <Container
-                        fluid
-                        className="p-0">
-                        <Row
-                          className="m-0 p-0"
-                        >
-                          <Col
-                            md={12}
-                            className="d-flex justify-content-end p-0">
-                            <BtnSecondary
-                              onClick={() =>
-                                addParkingArea(
-                                  {
-                                    id: org.id,
-                                    slots: slotsValue
-                                  },
-                                  (response) => {
-                                    setSuccessMessage(<>Parking area created.</>);
-                                    triggerShowSuccess(5000, () => setSuccessMessage(null));
-                                    fetchParkingAreas();
-                                  },
-                                  (error) => {
-                                    if (error?.response && error?.response?.data) {
-                                      setErrorMessage(<>{error.response.data}</>);
-                                    } else {
-                                      setErrorMessage(<>Cannot create parking area.</>);
-                                    }
-                                    triggerShowError(5000, () => setErrorMessage(null));
-                                  },
-                                  () => hideAddParkingModal()
-                                )
-                              }
-                            >
-                              Add
-                            </BtnSecondary>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Modal.Footer>
-                  </Modal>
                 </Col>
               }
             </Row>
@@ -162,8 +78,8 @@ const OrgParking = () => {
           {parkingAreas && parkingAreas.map(parking => (
             <ListGroup.Item
               key={parking.id}
-              onClick={() => selected === parking ? setSelected(null) : setSelected(parking)}
-              className={`${selected === parking ? styles['selected-parking-content'] : styles.parkingContent}`}>
+              onClick={() => setSelected(parking)}
+              className={`${selected?.id === parking.id ? styles['selected-parking-content'] : styles.parkingContent}`}>
               <Row>
                 <Col
                   xs={5}
@@ -188,33 +104,6 @@ const OrgParking = () => {
                   </Col>
                 }
               </Row>
-              <ConfirmDeleteModal
-                show={parkingDeleteConfirm}
-                onHide={hideParkingDeleteConfirm}
-                onConfirm={() =>
-                  deleteParkingArea(
-                    {
-                      id: selectedParkingId,
-                    },
-                    (response) => {
-                      setSuccessMessage(<>Parking area deleted.</>);
-                      triggerShowSuccess(5000, () => setSuccessMessage(null));
-                      fetchParkingAreas();
-                    },
-                    (error) => {
-                      if (error?.response && error?.response?.data) {
-                        setErrorMessage(<>{error.response.data}</>);
-                      } else {
-                        setErrorMessage(<>Could not delete parking area.</>);
-                      }
-                      triggerShowError(5000, () => setErrorMessage(null));
-                    },
-                    () => setSelectedParkingId(0)
-                  )
-                }
-                header={<>Confirm Action</>}
-                message={<>Are you sure you want to delete this parking area? (It will be gone forever!)</>}
-              />
             </ListGroup.Item>
           ))}
         </ListGroup>
@@ -252,37 +141,146 @@ const OrgParking = () => {
                       ></i>
                     </Col>}
                 </Row>
-                <ConfirmDeleteModal
-                  show={bookingDeleteConfirm}
-                  onHide={hideBookingDeleteConfirm}
-                  onConfirm={() =>
-                    deleteBooking(
-                      {
-                        id: selectedBookingId
-                      },
-                      (response) => {
-                        setSuccessMessage(<>Booking deleted.</>);
-                        triggerShowSuccess(5000, () => setSuccessMessage(null));
-                        fetchParkingAreas();
-                        setSelected(null);
-                      },
-                      (error) => {
-                        if (error?.response && error?.response?.data) {
-                          setErrorMessage(<>{error.response.data}</>);
-                        } else {
-                          setErrorMessage(<>Could not delete booking.</>);
-                        }
-                        triggerShowError(5000, () => setErrorMessage(null));
-                      },
-                      () => setSelectedBookingId(0)
-                    )
-                  }
-                />
               </ListGroup.Item>
             ))}
           </ListGroup>
         }
       </Card>}
+
+      <ConfirmDeleteModal
+        show={parkingDeleteConfirm}
+        onHide={hideParkingDeleteConfirm}
+        onConfirm={() =>
+          deleteParkingArea(
+            {
+              id: selectedParkingId,
+            },
+            async (response) => {
+              setSuccessMessage(<>Parking area deleted.</>);
+              triggerShowSuccess(5000, () => setSuccessMessage(null));
+              await fetchParkingAreas();
+            },
+            (error) => {
+              if (error?.response && error?.response?.data) {
+                setErrorMessage(<>{error.response.data}</>);
+              } else {
+                setErrorMessage(<>Could not delete parking area.</>);
+              }
+              triggerShowError(5000, () => setErrorMessage(null));
+            },
+            () => setSelectedParkingId(0)
+          )
+        }
+        header={<>Confirm Action</>}
+        message={<>Are you sure you want to delete this parking area? (It will be gone forever!)</>}
+      />
+
+      <ConfirmDeleteModal
+        show={bookingDeleteConfirm}
+        onHide={hideBookingDeleteConfirm}
+        onConfirm={() =>
+          deleteBooking(
+            {
+              id: selectedBookingId
+            },
+            async (response) => {
+              setSuccessMessage(<>Booking deleted.</>);
+              triggerShowSuccess(5000, () => setSuccessMessage(null));
+              await fetchParkingAreas();
+              setSelected(null);
+            },
+            (error) => {
+              if (error?.response && error?.response?.data) {
+                setErrorMessage(<>{error.response.data}</>);
+              } else {
+                setErrorMessage(<>Could not delete booking.</>);
+              }
+              triggerShowError(5000, () => setErrorMessage(null));
+            },
+            () => setSelectedBookingId(0)
+          )
+        }
+      />
+
+      <Modal
+        show={addParkingModal}
+        onHide={hideAddParkingModal}
+        size="md"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title
+            style={
+              {
+                fontFamily: "Poppins-Bold",
+                color: "#7c0902"
+              }
+            }
+          >
+            Add a parking area
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <FormGroup controlId="formSlots">
+              <FormLabel
+                style={{
+                  fontFamily: "Poppins-SemiBold",
+                  color: "#7c0902"
+                }}
+              >
+                Slots
+              </FormLabel>
+              <FormControl
+                type="number"
+                value={slotsValue}
+                onChange={e => setSlotsValue(e.target.value)}
+                className={styles['field-edit']}
+              />
+            </FormGroup>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Container
+            fluid
+            className="p-0">
+            <Row
+              className="m-0 p-0"
+            >
+              <Col
+                md={12}
+                className="d-flex justify-content-end p-0">
+                <BtnSecondary
+                  onClick={async () => {
+                    await addParkingArea(
+                      {
+                        id: org.id,
+                        slots: slotsValue
+                      },
+                      (response) => {
+                        setSuccessMessage(<>Parking area created.</>);
+                        triggerShowSuccess(5000, () => setSuccessMessage(null));
+                      },
+                      (error) => {
+                        if (error?.response && error?.response?.data) {
+                          setErrorMessage(<>{error.response.data}</>);
+                        } else {
+                          setErrorMessage(<>Cannot create parking area.</>);
+                        }
+                        triggerShowError(5000, () => setErrorMessage(null));
+                      },
+                      () => hideAddParkingModal()
+                    )
+                    await fetchParkingAreas();
+                  }}
+                >
+                  Add
+                </BtnSecondary>
+              </Col>
+            </Row>
+          </Container>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

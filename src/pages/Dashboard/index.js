@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card } from "react-bootstrap";
 
+import BookingCard from "./BookingCard";
+
 import SessionUserContext from "../../contexts/SessionUserContext";
 
 import styles from "./styles.module.css";
@@ -88,20 +90,7 @@ const Dashboard = () => {
                     {/* BOOKINGS */}
                     <div className="row flex-grow-1">
                       <div className="col-sm-12">
-                        <Card
-                          className={styles.card}
-                          style={{ height: "100%" }}>
-                          <Card.Header
-                            className={`${styles.cardHeader} d-flex justify-content-center`}>
-                            Booking Information
-                          </Card.Header>
-                          <Card.Body
-                            className={`${styles.cardContent} d-flex flex-column justify-content-center align-items-center`}>
-                            <Card.Text className="text-muted">
-                              No bookings.
-                            </Card.Text>
-                          </Card.Body>
-                        </Card>
+                        <BookingCard />
                       </div>
                     </div>
                   </div>
