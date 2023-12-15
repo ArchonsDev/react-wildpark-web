@@ -176,7 +176,11 @@ const BookingCard = () => {
                 >
                   <option disabled value={0}>Select organization</option>
                   {parking?.map(area => (
-                    <option key={area.id} value={area.id}>{area.id}</option>
+                    <React.Fragment key={area.id}>
+                      {area.bookings.length < area.slots &&
+                        <option value={area.id}>{area.id}</option>
+                      }
+                    </React.Fragment>
                   ))}
                 </Form.Control>
               </FormGroup>
@@ -254,6 +258,13 @@ const BookingCard = () => {
               await getAccountBookings({ id: sessionUser.id, }, (response) => response?.data && setBookings(response.data));
               resetForm();
             }}
+            disabled={
+              !form.organizationId ||
+              !form.vehicleId ||
+              !form.parkingAreaId ||
+              form.dateTime === '' ||
+              form.duration <= 0
+            }
           >
             Create
           </BtnPrimary>
