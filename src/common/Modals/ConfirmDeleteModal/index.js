@@ -12,6 +12,7 @@ const ConfirmDeleteModal = ({
   onConfirm,
   header = null,
   message = null,
+  size = "sm"
 }) => {
   const handleConfirm = () => {
     onConfirm();
@@ -22,7 +23,7 @@ const ConfirmDeleteModal = ({
     <Modal
       show={show}
       onHide={onHide}
-      size="sm"
+      size={size}
       aria-labelledby="contained-modal-title-vcenter"
       centered>
       <Modal.Header closeButton>

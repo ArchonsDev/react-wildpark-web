@@ -1,9 +1,6 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React, { useEffect, useState } from "react";
 import { Col, Container, Modal, Row, Form } from "react-bootstrap";
 
-import SessionUserContext from "../../../contexts/SessionUserContext";
 import BtnPrimary from "../../Buttons/BtnPrimary";
 import BtnSecondary from "../../Buttons/BtnSecondary";
 import OrgThumbnail from "../../Cards/OrgThumbnail";
@@ -17,8 +14,6 @@ import styles from "./style.module.css";
 import { useNavigate } from "react-router";
 
 const OrganizationListModal = ({ show, closeCallback }) => {
-  const { sessionUser } = useContext(SessionUserContext);
-
   const [organizations, setOrganizations] = useState([]);
   const [createMode, enableCreateMode, disableCreateMode] = useSwitch();
   const [mapStep, showMapStep, showDetailsStep] = useSwitch();
@@ -44,7 +39,7 @@ const OrganizationListModal = ({ show, closeCallback }) => {
   }
 
   const fetchOrganizations = async () => {
-    getAllOrgs(
+    await getAllOrgs(
       (response) => response?.data && setOrganizations(response.data)
     )
   };
@@ -59,8 +54,8 @@ const OrganizationListModal = ({ show, closeCallback }) => {
       {
         ...formData
       },
-      (response) => {
-        fetchOrganizations();
+      async (response) => {
+        await fetchOrganizations();
         triggerShowSuccess();
         disableCreateMode();
         showMapStep();
@@ -82,10 +77,6 @@ const OrganizationListModal = ({ show, closeCallback }) => {
   useEffect(() => {
     fetchOrganizations();
   }, []);
-
-  useEffect(() => {
-    console.log(formData);
-  }, [formData])
 
   return (
     <Modal
