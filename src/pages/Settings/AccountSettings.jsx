@@ -44,7 +44,7 @@ const AccountSettings = () => {
   };
 
   const handleSave = async () => {
-    updateAccount(
+    await updateAccount(
       {
         id: sessionUser.id,
         ...form,

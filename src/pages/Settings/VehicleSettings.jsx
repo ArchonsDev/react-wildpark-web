@@ -85,9 +85,8 @@ const VehicleSettings = () => {
       data,
       (response) => {
         fetchVehicles();
-        triggerShowSuccess(5000, () => {
-          resetForm();
-        });
+        triggerShowSuccess(5000);
+        resetForm();
         hideAddVehicleForm();
       },
       (error) => {
@@ -108,8 +107,8 @@ const VehicleSettings = () => {
     })
   };
 
-  const handleSubmit = e => {
-    postVehicle();
+  const handleSubmit = async (e) => {
+    await postVehicle();
   };
 
   useEffect(() => {
@@ -279,13 +278,14 @@ const VehicleCard = ({ data, onUpdate }) => {
   const [showErrorMessage, triggerShowErrorMessage] = useTrigger();
 
   const handleSave = async () => {
-    updateVehicle(
+    await updateVehicle(
       {
         id: data.id,
         color: color
       },
       (response) => {
-        triggerUpdateSuccess(5000, () => onUpdate());
+        triggerUpdateSuccess(5000);
+        onUpdate();
       },
       (error) => {
         setErrorMessage(<>Could not update vehicle.</>)
@@ -296,12 +296,12 @@ const VehicleCard = ({ data, onUpdate }) => {
   }
 
   const handleDelete = async () => {
-    deleteVehicle(
+    await deleteVehicle(
       {
         id: data.id
       },
-      (response) => {
-        onUpdate();
+      async (response) => {
+        await onUpdate();
       },
       (error) => {
         setErrorMessage(<>Could not delete vehicle.</>);
