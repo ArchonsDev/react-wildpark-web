@@ -34,7 +34,6 @@ const SecuritySettings = () => {
 
   const resetForm = () => {
     setForm({
-      ...form,
       newPassword: "",
       confirmPassword: "",
     });
@@ -80,7 +79,7 @@ const SecuritySettings = () => {
       },
       (response) => {
         setSessionUser(response.data);
-        triggerShowSuccess(5000, () => resetForm());
+        triggerShowSuccess(5000);
       },
       (error) => {
         if (error.response && error.response.data) {
@@ -90,6 +89,7 @@ const SecuritySettings = () => {
         }
       }
     );
+    resetForm();
   };
 
   return (
