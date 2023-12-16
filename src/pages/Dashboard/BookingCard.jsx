@@ -11,7 +11,6 @@ import styles from "./styles.module.css";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import { useSwitch } from "../../hooks/useSwitch";
 import { useNavigate } from "react-router-dom";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const BookingCard = () => {
@@ -81,7 +80,7 @@ const BookingCard = () => {
       className={styles.card}
       style={{ height: "100%" }}>
       <Card.Header
-        className={`${styles.cardHeader}`}>
+        className={`${styles.cardHeader} d-flex justify-content-center`}>
         Booking Information
       </Card.Header>
       {bookings && bookings.length > 0 ?
