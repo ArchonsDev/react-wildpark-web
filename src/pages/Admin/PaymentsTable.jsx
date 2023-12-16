@@ -6,8 +6,9 @@ import { Card, Row, Col, ListGroup, Container, Form, Button } from "react-bootst
 import { useTrigger } from "../../hooks/useTrigger";
 import { updatePayment, deletePayment } from "../../api/payments"; // Update API imports
 
-
 import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
+import BtnPrimary from "../../common/Buttons/BtnPrimary";
+import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import styles from "./style.module.css";
 
 const PaymentsTable = () => {
@@ -18,8 +19,8 @@ const PaymentsTable = () => {
     id: "",
     date: "",
     amount: "",
-    payment_type: "",
-    payor_id: "",
+    paymentType: "",
+    payor: "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -47,7 +48,7 @@ const PaymentsTable = () => {
   const enableEditing = () => {
     setIsEditing(true);
   };
-  
+
   const disableEditing = () => {
     setIsEditing(false);
     setForm({
@@ -62,7 +63,7 @@ const PaymentsTable = () => {
   const fetchPayments = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:8080/api/v1/payments/", 
+        "http://localhost:8080/api/v1/payments/",
         {
           headers: {
             Authorization: `Bearer ${Cookies.get("userToken")}`,
@@ -124,13 +125,23 @@ const PaymentsTable = () => {
     );
   };
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+  };
+
+
   useEffect(() => {
     if (selectedPayment) {
       setForm({
         date: selectedPayment.date,
         amount: selectedPayment.amount,
-        payment_type: selectedPayment.payment_type,
-        payor_id: selectedPayment.payor_id,
+        paymentType: selectedPayment.paymentType,
+        payor: selectedPayment.payor,
       });
     }
   }, [selectedPayment]);
@@ -166,10 +177,17 @@ const PaymentsTable = () => {
 
               {/* FORM */}
               <Row className="mb-3">
+                <Col md={3}>Payor</Col>
+                <Col md={9} className="d-flex" style={{ fontFamily: "Poppins-SemiBold" }}>
+                  {form.payor}
+                </Col>
+              </Row>
+
+              <Row className="mb-3">
                 <Col md={3}>Date</Col>
                 <Col md={9} className="d-flex">
                   <Form.Control
-                    type="date"
+                    type="text"
                     placeholder="Date"
                     name="date"
                     value={form.date}
@@ -197,21 +215,8 @@ const PaymentsTable = () => {
                   <Form.Control
                     type="text"
                     placeholder="Payment Type"
-                    name="payment_type"
-                    value={form.payment_type}
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
-
-              <Row className="mb-3">
-                <Col md={3}>Payor ID</Col>
-                <Col md={9} className="d-flex">
-                  <Form.Control
-                    type="text"
-                    placeholder="Payor ID"
-                    name="payor_id"
-                    value={form.payor_id}
+                    name="paymentType"
+                    value={form.paymentType}
                     onChange={handleChange}
                   />
                 </Col>
@@ -219,12 +224,12 @@ const PaymentsTable = () => {
 
               <Row className="mb-3">
                 <Col>
-                  <Button variant="primary" onClick={handleSave}>
-                    Save
-                  </Button>{" "}
-                  <Button variant="secondary" onClick={disableEditing}>
+                  <BtnPrimary variant="secondary" onClick={disableEditing}>
                     Cancel
-                  </Button>
+                  </BtnPrimary>
+                  <BtnSecondary variant="primary" onClick={handleSave}>
+                    Save
+                  </BtnSecondary>
                 </Col>
               </Row>
             </Col>
@@ -257,9 +262,9 @@ const PaymentsTable = () => {
                 <Row>
                   <Col xs={1}>ID</Col>
                   <Col xs={2}>Date</Col>
-                  <Col xs={3}>Amount</Col>
-                  <Col xs={3}>Payment Type</Col>
-                  <Col xs={3}>Payor ID</Col>
+                  <Col xs={2}>Amount</Col>
+                  <Col xs={2}>Payment Type</Col>
+                  <Col xs={3}>Payor</Col>
                 </Row>
               </ListGroup.Item>
             </ListGroup>
@@ -268,10 +273,10 @@ const PaymentsTable = () => {
                 <ListGroup.Item key={payment.id} className={styles.tableContent}>
                   <Row>
                     <Col xs={1}>{payment.id}</Col>
-                    <Col xs={2}>{payment.date}</Col>
+                    <Col xs={2}>{formatDate(payment.date)}</Col>
                     <Col xs={2}>{payment.amount}</Col>
-                    <Col xs={2}>{payment.payment_type}</Col>
-                    <Col xs={2}>{payment.payors_id}</Col>
+                    <Col xs={2}>{payment.paymentType}</Col>
+                    <Col xs={3}>{payment.payor}</Col>
                     <Col xs={1}>
                       <i
                         className={`${styles.icon} fa-solid fa-pen`}
