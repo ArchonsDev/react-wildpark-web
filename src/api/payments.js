@@ -13,6 +13,8 @@ export const deletePayment = async (data, onSuccess, onFail, onCleanup) => {
       }
     );
 
+    console.log("Delete response status:", response.status);
+
     if (response.status === 200) {
       onSuccess && onSuccess(response);
     }
