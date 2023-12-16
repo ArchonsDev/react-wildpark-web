@@ -27,6 +27,7 @@ export const updateVehicle = async (data, onSuccess, onFail, onCleanup) => {
     const response = await axios.put(
       `http://localhost:8080/api/v1/vehicles/${data.id}`,
       {
+        "plateNumber": data.plateNumber,
         "color": data.color,
       },
       {

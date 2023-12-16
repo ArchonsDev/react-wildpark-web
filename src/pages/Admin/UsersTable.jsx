@@ -336,7 +336,6 @@ const UsersTable = () => {
                 <Col xs={2}>Lastname</Col>
                 <Col xs={3}>E-mail</Col>
                 <Col xs={3}>Role</Col>
-                <Col xs={1}>{""}</Col>
               </Row>
             </ListGroup.Item>
           </ListGroup>
