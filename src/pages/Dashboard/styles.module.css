@@ -85,12 +85,25 @@
 }
 
 .field-edit {
+  border: none !important;
   border-bottom: 1px solid #7c0902 !important;
   border-radius: 0 !important;
   font-family: "Poppins-Regular";
 }
 
+.field-edit:focus {
+  border: none !important;
+  border-bottom: 1px solid #7c0902 !important;
+  border-radius: 0 !important;
+  font-family: "Poppins-Regular";
+  box-shadow: 0 0 4px 4px rgb(247, 181, 56, 0.5) !important;
+}
+
 .field-label {
   color: #7c0902;
   font-family: "Poppins-SemiBold";
+}
+
+.invalid-option {
+  color: #7c0902;
 }

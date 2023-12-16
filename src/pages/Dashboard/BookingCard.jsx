@@ -11,6 +11,8 @@ import styles from "./styles.module.css";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import { useSwitch } from "../../hooks/useSwitch";
 import { useNavigate } from "react-router-dom";
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const BookingCard = () => {
   const { sessionUser } = useContext(SessionUserContext);
@@ -64,6 +66,15 @@ const BookingCard = () => {
       })
     }
   }, [form.organizationId]);
+
+  useEffect(() => {
+    if (form.duration < 0) {
+      setForm({
+        ...form,
+        duration: 0,
+      });
+    }
+  }, [form.duration]);
 
   return (
     <Card
@@ -174,13 +185,16 @@ const BookingCard = () => {
                   onChange={e => setForm({ ...form, [e.target.name]: e.target.value })}
                   required
                 >
-                  <option disabled value={0}>Select organization</option>
+                  <option disabled value={0}>Select parking area</option>
                   {parking?.map(area => (
-                    <React.Fragment key={area.id}>
-                      {area.bookings.length < area.slots &&
-                        <option value={area.id}>{area.id}</option>
-                      }
-                    </React.Fragment>
+                    <option
+                      key={area.id}
+                      disabled={area.bookings.length >= area.slots}
+                      value={area.id}
+                      className={`${area.bookings.length >= area.slots ? styles['invalid-option'] : ''}`}
+                    >
+                      Block {area.id}{area.bookings.length >= area.slots ? " | Full Parking" : ''}
+                    </option>
                   ))}
                 </Form.Control>
               </FormGroup>
@@ -206,7 +220,14 @@ const BookingCard = () => {
                 <option disabled value={0}>Select vehicle</option>
                 {vehicles?.map(vehicle => (
                   <React.Fragment key={vehicle.id}>
-                    {!vehicle.parkingAreaId && <option key={vehicle.id} value={vehicle.id}>{vehicle.plateNumber} | {vehicle.make} {vehicle.model}</option>}
+                    <option
+                      key={vehicle.id}
+                      disabled={vehicle.parkingAreaId}
+                      value={vehicle.id}
+                      className={`${vehicle.parkingAreaId ? styles['invalid-option'] : ''}`}
+                    >
+                      {vehicle.plateNumber} | {vehicle.make} {vehicle.model} {vehicle.parkingAreaId ? "(Booked)" : ''}
+                    </option>
                   </React.Fragment>
                 ))}
               </Form.Control>
@@ -218,7 +239,7 @@ const BookingCard = () => {
               <Form.Label
                 className={`${styles['field-label']} m-0`}
               >
-                Date & Time
+                Date & Time (24-hour format)
               </Form.Label>
               <Form.Control
                 className={`${styles['field-edit']} w-100`}
@@ -270,7 +291,7 @@ const BookingCard = () => {
           </BtnPrimary>
         </Modal.Footer>
       </Modal>
-    </Card>
+    </Card >
   );
 };
 
