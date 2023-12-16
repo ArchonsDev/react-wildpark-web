@@ -33,3 +33,27 @@ export const addPayment = async (data, onSuccess, onFail, onCleanup) => {
     onCleanup && onCleanup();
   }
 };
+
+export const deletePayment = async (data, onSuccess, onFail, onCleanup) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8080/api/v1/payments/${data.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Cookies.get("userToken")}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Delete response status:", response.status);
+
+    if (response.status === 200) {
+      onSuccess && onSuccess(response);
+    }
+  } catch (error) {
+    onFail && onFail(error);
+  } finally {
+    onCleanup && onCleanup();
+  }
+};

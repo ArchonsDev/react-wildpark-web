@@ -7,3 +7,9 @@
   font-family: "Poppins-SemiBold";
   color: #0d0630 !important;
 }
+
+.field-edit {
+  border: none !important;
+  border: 1px solid #7c0902 !important;
+  font-family: "Poppins-Medium";
+}

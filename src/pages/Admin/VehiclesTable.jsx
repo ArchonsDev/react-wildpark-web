@@ -15,21 +15,18 @@ import styles from "./style.module.css";
 const VehiclesTable = () => {
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState();
-  const [errorMessage, setErrorMessage] = useState(null);
+
   const [isEditing, enableEditing, disableEditing] = useSwitch(false);
   const [showModal, openModal, closeModal] = useSwitch();
+
   const [showSuccess, triggerShowSuccess] = useTrigger(false);
   const [showError, triggerShowError] = useTrigger(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
 
   const [form, setForm] = useState({
     plateNumber: "",
-    color: "",
-    displacement: "",
-    type: "",
-    make: "",
-    model: "",
-    ownerId: "",
-    parkingAreaId: "",
+    color: ""
   });
 
   const fetchVehicles = async () => {
@@ -94,6 +91,7 @@ const VehiclesTable = () => {
       },
       (response) => {
         fetchVehicles();
+        triggerShowSuccess(3000);
       },
       (error) => {
         if (error.response && error.response.data) {
@@ -153,7 +151,7 @@ const VehiclesTable = () => {
               </Row>
 
               {/* FORM */}
-              <Row className="mb-2">
+              <Row className="mb-3">
                 <Col md={3}>Vehicle Type</Col>
                 <Col md={9} className="d-flex">
                   {selectedVehicle &&
@@ -171,54 +169,55 @@ const VehiclesTable = () => {
                 </Col>
               </Row>
 
-              <Row className="mb-2">
+              <Row className="mb-3">
                 <Col md={3}>Owner ID</Col>
                 <Col md={9} className="d-flex">
-                  <input
-                    className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
-                    placeholder="Owner ID"
-                    value={form.ownerId}
-                    name="ownerId"
-                    onChange={handleChange}
-                  />
+                  <span style={{ fontFamily: "Poppins-SemiBold" }}>
+                    {selectedVehicle.ownerId}
+                  </span>
                 </Col>
               </Row>
 
               {selectedVehicle &&
                 selectedVehicle.hasOwnProperty("displacement") && (
-                  <Row className="mb-2">
+                  <Row className="mb-3">
                     <Col md={3}>Displacement</Col>
                     <Col md={9} className="d-flex">
-                      <input
-                        className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
-                        placeholder="Plate number"
-                        value={form.displacement}
-                        name="displacement"
-                        onChange={handleChange}
-                      />
+                      <span style={{ fontFamily: "Poppins-SemiBold" }}>
+                        {selectedVehicle.displacement}
+                      </span>
                     </Col>
                   </Row>
                 )}
 
               {selectedVehicle && selectedVehicle.hasOwnProperty("type") && (
-                <Row className="mb-2">
+                <Row className="mb-3">
                   <Col md={3}>Vehicle Size</Col>
                   <Col md={9} className="d-flex">
-                    <select
-                      className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
-                      value={form.type}
-                      onChange={handleChange}
-                      name="type">
-                      <option value="">Select vehicle size</option>
-                      <option value="Sedan">Sedan</option>
-                      <option value="SUV">SUV</option>
-                      <option value="Van">Van</option>
-                    </select>
+                    <span style={{ fontFamily: "Poppins-SemiBold" }}>
+                      {selectedVehicle.type}
+                    </span>
                   </Col>
                 </Row>
               )}
 
-              <Row className="mb-2">
+              <Row className="mb-3">
+                <Col md={3}>Make</Col>
+                <Col md={9} className="d-flex">
+                  <span style={{ fontFamily: "Poppins-SemiBold" }}>
+                    {selectedVehicle.make}
+                  </span>
+                </Col>
+              </Row>
+
+              <Row className="mb-3">
+                <Col md={3}>Model</Col>
+                <Col md={9} className="d-flex">
+                  <span style={{ fontFamily: "Poppins-SemiBold" }}>{selectedVehicle.model}</span>
+                </Col>
+              </Row>
+
+              <Row className="mb-3">
                 <Col md={3}>Plate Number</Col>
                 <Col md={9} className="d-flex">
                   <input
@@ -231,33 +230,7 @@ const VehiclesTable = () => {
                 </Col>
               </Row>
 
-              <Row className="mb-2">
-                <Col md={3}>Make</Col>
-                <Col md={9} className="d-flex">
-                  <input
-                    className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
-                    placeholder="Make"
-                    value={form.make}
-                    name="make"
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
-
-              <Row className="mb-2">
-                <Col md={3}>Model</Col>
-                <Col md={9} className="d-flex">
-                  <input
-                    className={`${styles["field-edit"]} flex-grow-1 mx-1 p-2`}
-                    placeholder="Model"
-                    value={form.model}
-                    name="model"
-                    onChange={handleChange}
-                  />
-                </Col>
-              </Row>
-
-              <Row className="mb-4">
+              <Row className="mb-5">
                 <Col md={3}>Color</Col>
                 <Col md={9} className="d-flex">
                   <input
@@ -296,7 +269,7 @@ const VehiclesTable = () => {
               <div
                 className="alert alert-success d-flex justify-content-center align-items-center mb-3"
                 role="alert">
-                Vehicle successfully deleted!
+                Vehicles table successfully updated!
               </div>
             )}
             {errorMessage && showError && (
@@ -316,12 +289,9 @@ const VehiclesTable = () => {
                 <Row>
                   <Col xs={1}>ID</Col>
                   <Col xs={2}>Plate Number</Col>
-                  <Col xs={2}>Make</Col>
-                  <Col xs={2}>Model</Col>
+                  <Col xs={3}>Vehicle</Col>
                   <Col xs={2}>Type</Col>
-                  <Col xs={1}>Owner</Col>
-                  <Col xs={1}>{""}</Col>
-                  <Col xs={1}>{""}</Col>
+                  <Col xs={2}>Owner ID</Col>
                 </Row>
               </ListGroup.Item>
             </ListGroup>
@@ -336,11 +306,10 @@ const VehiclesTable = () => {
                     <Row>
                       <Col xs={1}>{vehicle.id}</Col>
                       <Col xs={2}>{vehicle.plateNumber}</Col>
-                      <Col xs={2}>{vehicle.make}</Col>
-                      <Col xs={2}>{vehicle.model}</Col>
+                      <Col xs={3}>{vehicle.make}{" "}{vehicle.model}</Col>
                       {isTwoWheeler && <Col xs={2}>Two_Wheeler</Col>}
                       {isFourWheeler && <Col xs={2}>Four_Wheeler</Col>}
-                      <Col xs={1}>{vehicle.ownerId}</Col>
+                      <Col xs={2}>{vehicle.ownerId}</Col>
                       <Col xs={1}>
                         <i
                           className={`${styles.icon} fa-solid fa-pen`}
