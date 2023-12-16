@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Form, FormControl, FormGroup, FormLabel, Modal } from "react-bootstrap";
 
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
@@ -7,8 +7,10 @@ import MapComponent from "../../common/MapComponent";
 import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
 
 import { useSwitch } from "../../hooks/useSwitch";
+import { useTrigger } from "../../hooks/useTrigger";
 import { getAccountBookings } from "../../api/accounts";
 import { deleteBooking } from "../../api/bookings";
+import { addPayment } from "../../api/payments";
 
 import SessionUserContext from "../../contexts/SessionUserContext";
 
@@ -27,12 +29,56 @@ const Bookings = () => {
   const [selected, setSelected] = useState(null);
 
   const [confirmDeleteModal, showConfirmdeleteModal, hideConfirmDeleteModal] = useSwitch();
+  const [paymentModal, showPaymentModal, hidePaymentModal] = useSwitch();
+
+  const [paymentSuccess, triggerPaymentSuccess] = useTrigger();
+  const [paymentFail, triggerPaymentFail] = useTrigger();
+
+  const [form, setForm] = useState(
+    {
+      type: '',
+      amount: 0,
+    }
+  );
+
+  const resetForm = () => {
+    setForm(
+      {
+        type: '',
+        amount: 0,
+      }
+    );
+  };
+
+  const handleChange = e => setForm({
+    ...form,
+    [e.target.name]: e.target.value
+  });
 
   const fetchBookings = async () => {
     await getAccountBookings(
       { id: sessionUser.id },
       (response) => response?.data && setBookings(response.data)
     );
+  };
+
+  const handleMakePayment = async () => {
+    await addPayment(
+      {
+        ...form,
+        bookingId: selected.id,
+        payorId: sessionUser.id
+      },
+      (response) => {
+        triggerPaymentSuccess(5000);
+        hidePaymentModal();
+      },
+      (error) => {
+        triggerPaymentFail(5000);
+      }
+    );
+
+    await fetchBookings();
   };
 
   useEffect(() => {
@@ -46,6 +92,21 @@ const Bookings = () => {
       clearInterval(timer);
     };
   }, []);
+
+  useEffect(() => {
+    selected && setSelected(bookings.find(booking => booking.id === selected.id));
+  }, [bookings]);
+
+  useEffect(() => resetForm(), [paymentModal]);
+
+  useEffect(() => {
+    if (form.amount < 0) {
+      setForm({
+        ...form,
+        amount: 0
+      })
+    }
+  }, [form.amount]);
 
   return (
     <div className={styles.Bookings}>
@@ -148,7 +209,11 @@ const Bookings = () => {
                       <BtnPrimary
                         onClick={showConfirmdeleteModal}
                       >Cancel</BtnPrimary>
-                      <BtnSecondary>Proceed to payment</BtnSecondary>
+                      {selected.status === 'PENDING_PAYMENT' &&
+                        <BtnSecondary
+                          onClick={showPaymentModal}
+                        >Proceed to payment</BtnSecondary>
+                      }
                     </div>
                   </div>
                 </div>
@@ -166,6 +231,79 @@ const Bookings = () => {
         header={<>Cancel Booking</>}
         message={<>Are you sure you want to cancel this booking? (This action cannot be undone!)</>}
       />
+
+      <Modal
+        show={paymentModal}
+        onHide={hidePaymentModal}
+        size="md"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title
+            className={`${styles['modal-header']}`}
+          >
+            Booking Payment
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {paymentFail &&
+            <div className="alert alert-danger mb-3" role="alert">
+              Payment could not be posted at this time.
+            </div>
+          }
+          {paymentSuccess &&
+            <div className="alert alert-success mb-3" role="alert">
+              Payment successful.
+            </div>
+          }
+          <Form>
+            <FormGroup
+              className="mb-3"
+            >
+              <FormLabel
+                className={`${styles['field-label']} m-0 p-0 pb-1`}
+              >Amount</FormLabel>
+              <FormControl
+                type="number"
+                name="amount"
+                value={form.amount}
+                onChange={handleChange}
+                className={`${styles['field-input']}`}
+                disabled={paymentSuccess}
+              />
+            </FormGroup>
+            <FormGroup
+              className="mb-3"
+            >
+              <FormLabel
+                className={`${styles['field-label']} m-0 p-0 pb-1`}
+              >
+                Payment Method
+              </FormLabel>
+              <FormControl
+                as="select"
+                name="type"
+                value={form.type}
+                onChange={handleChange}
+                className={`${styles['field-input']}`}
+                disabled={paymentSuccess}
+              >
+                <option disabled value="">Select payment method</option>
+                <option value="CARD">Pay using card</option>
+                <option value="E_WALLET">Pay using E-Wallet</option>
+              </FormControl>
+            </FormGroup>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <BtnPrimary
+            onClick={async () => { await handleMakePayment(); }}
+            disabled={form.type === '' || form.amount <= 0}
+          >
+            Proceed
+          </BtnPrimary>
+        </Modal.Footer>
+      </Modal>
     </div >
   );
 };
