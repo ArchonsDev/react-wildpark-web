@@ -8,6 +8,11 @@
   color: #0d0630 !important;
 }
 
+.detail {
+  font-family: "Poppins-Medium";
+  color: #0d0630 !important;
+}
+
 .field-edit {
   border: none !important;
   border: 1px solid #7c0902 !important;

@@ -15,8 +15,8 @@ const PaymentsTable = () => {
   const [payments, setPayments] = useState([]);
   const [selectedPayment, setSelectedPayment] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const[showSuccess, triggerShowSuccess] = useTrigger(false);
-  const[showError, triggerShowError] = useTrigger(false);
+  const [showSuccess, triggerShowSuccess] = useTrigger(false);
+  const [showError, triggerShowError] = useTrigger(false);
 
   const [showModal, openModal, closeModal] = useSwitch();
 
@@ -41,48 +41,13 @@ const PaymentsTable = () => {
     }
   };
 
-  {/* const handleDelete = async () => {
-    try {
-      if (!selectedPayment) {
-        console.error("No payment selected for deletion");
-        return;
-      }
-  
-      const response = await deletePayment(
-        {
-          id: selectedPayment.id,
-        },
-        () => {
-          triggerShowSuccess(3000);
-        },
-        (error) => {
-          if (error.response && error.response.data) {
-            setErrorMessage(<>{error.response.data}</>);
-          } else {
-            setErrorMessage(<>An error occurred.</>);
-          }
-          triggerShowError(5000);
-        }
-      );
-  
-      if (response && response.status === 200) {
-        // If the deletion was successful, update the state
-        fetchPayments();
-      } else {
-        console.error("Failed to delete payment");
-      }
-    } finally {
-      closeModal();
-    }
-  }; */}
-
   const handleDelete = async () => {
     deletePayment(
       {
         id: selectedPayment.id,
       },
       (response) => {
-        fetchPayments(); 
+        fetchPayments();
         triggerShowSuccess(3000);
       },
       (error) => {
@@ -99,8 +64,8 @@ const PaymentsTable = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
 
     return `${year}-${month}-${day}`;
   };
@@ -143,25 +108,25 @@ const PaymentsTable = () => {
           </ListGroup.Item>
         </ListGroup>
         <ListGroup>
-        {payments.map((payment) => (
-          <ListGroup.Item key={payment.id} className={styles.tableContent}>
-            <Row>
-              <Col xs={1}>{payment.id}</Col>
-              <Col xs={2}>{formatDate(payment.date)}</Col>
-              <Col xs={2}>{payment.amount}</Col>
-              <Col xs={2}>{payment.paymentType}</Col>
-              <Col xs={4}>{payment.payor}</Col>
-              <Col xs={1}>
-                <i
-                  className={`${styles.icon} fa-solid fa-trash-can`}
-                  onClick={() => {
-                    openModal();
-                    setSelectedPayment(payment);
-                  }}></i>
-              </Col>
-            </Row>
-          </ListGroup.Item>
-        ))}
+          {payments.map((payment) => (
+            <ListGroup.Item key={payment.id} className={styles.tableContent}>
+              <Row>
+                <Col xs={1}>{payment.id}</Col>
+                <Col xs={2}>{formatDate(payment.date)}</Col>
+                <Col xs={2}>{payment.amount}</Col>
+                <Col xs={2}>{payment.paymentType}</Col>
+                <Col xs={4}>{payment.payor}</Col>
+                <Col xs={1}>
+                  <i
+                    className={`${styles.icon} fa-solid fa-trash-can`}
+                    onClick={() => {
+                      openModal();
+                      setSelectedPayment(payment);
+                    }}></i>
+                </Col>
+              </Row>
+            </ListGroup.Item>
+          ))}
           <ConfirmDeleteModal
             show={showModal}
             onHide={closeModal}

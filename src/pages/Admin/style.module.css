@@ -64,6 +64,13 @@
   color: #18314f !important;
 }
 
+.tableContent:hover {
+  font-family: "Poppins-Medium";
+  font-size: 0.9em;
+  color: white !important;
+  background-color: #384e77 !important;
+}
+
 .icon {
   cursor: pointer;
 }
