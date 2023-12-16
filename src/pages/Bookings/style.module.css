@@ -128,3 +128,19 @@
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.modal-header {
+  color: #7c0902;
+  font-family: "Poppins-Bold";
+}
+
+.field-label {
+  color: #7c0902;
+  font-family: "Poppins-SemiBold";
+}
+
+.field-input {
+  font-family: "Poppins-Regular";
+  border-bottom: 1px solid #7c0902;
+  border-radius: 0;
+}
