@@ -19,3 +19,22 @@ export const login = async (data, onSuccess, onFail, onCleanup) => {
     onCleanup && onCleanup();
   }
 };
+
+export const resetPassword = async (data, onSuccess, onFail, onCleanup) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:8080/api/v1/auth/resetpassword`,
+      {
+        email: data.email
+      }
+    );
+
+    if (response.status === 200) {
+      onSuccess && onSuccess(response);
+    }
+  } catch (error) {
+    onFail && onFail(error);
+  } finally {
+    onCleanup && onCleanup();
+  }
+};

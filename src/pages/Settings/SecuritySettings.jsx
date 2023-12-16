@@ -73,7 +73,7 @@ const SecuritySettings = () => {
       return;
     }
 
-    updatePassword(
+    await updatePassword(
       {
         id: sessionUser.id,
         password: form.newPassword
