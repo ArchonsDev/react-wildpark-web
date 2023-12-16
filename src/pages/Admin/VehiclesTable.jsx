@@ -10,18 +10,19 @@ import { updateVehicle, deleteVehicle } from "../../api/vehicles";
 import BtnPrimary from "../../common/Buttons/BtnPrimary";
 import BtnSecondary from "../../common/Buttons/BtnSecondary";
 import ConfirmDeleteModal from "../../common/Modals/ConfirmDeleteModal";
-import AddVehicleModal from "../../common/Modals/AddVehicleModal";
 import styles from "./style.module.css";
 
 const VehiclesTable = () => {
   const [vehicles, setVehicles] = useState([]);
   const [selectedVehicle, setSelectedVehicle] = useState();
-  const [errorMessage, setErrorMessage] = useState(null);
+
   const [isEditing, enableEditing, disableEditing] = useSwitch(false);
   const [showModal, openModal, closeModal] = useSwitch();
-  const [showAddVehicle, openAddVehicle, closeAddVehicle] = useSwitch();
+
   const [showSuccess, triggerShowSuccess] = useTrigger(false);
   const [showError, triggerShowError] = useTrigger(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
 
   const [form, setForm] = useState({
     plateNumber: "",
@@ -291,8 +292,6 @@ const VehiclesTable = () => {
                   <Col xs={3}>Vehicle</Col>
                   <Col xs={2}>Type</Col>
                   <Col xs={2}>Owner ID</Col>
-                  <Col xs={1}>{""}</Col>
-                  <Col xs={1}><i className={`${styles.icon} fa-solid fa-square-plus`} onClick={openAddVehicle}></i></Col>
                 </Row>
               </ListGroup.Item>
             </ListGroup>
@@ -337,12 +336,6 @@ const VehiclesTable = () => {
                 onConfirm={handleDelete}
                 header={"Delete Vehicle"}
                 message={"Do you wish to delete this vehicle?"}
-              />
-
-              <AddVehicleModal
-                show={showAddVehicle}
-                onHide={closeAddVehicle}
-                onConfirm={fetchVehicles}
               />
             </ListGroup>
           </Card>
